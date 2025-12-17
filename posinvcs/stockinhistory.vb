@@ -57,7 +57,6 @@ Public Class stockinhistory
                 ORDER BY sh.date_in DESC
             "
 
-            ' APPLY LIMIT ONLY IF pageSize > 0
             If pageSize > 0 Then
                 query &= " LIMIT @limit OFFSET @offset "
             End If
