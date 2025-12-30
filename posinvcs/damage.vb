@@ -62,8 +62,23 @@ Public Class damage
 
                 Dim dt As New DataTable()
                 da.Fill(dt)
+                datagridview2.Columns.Clear()
+                datagridview2.AutoGenerateColumns = False
                 datagridview2.DataSource = dt
+
+
+                For Each col As DataColumn In dt.Columns
+                    Dim dgvCol As New DataGridViewTextBoxColumn()
+                    dgvCol.DataPropertyName = col.ColumnName
+                    dgvCol.Name = col.ColumnName
+                    dgvCol.HeaderText = col.ColumnName.Replace("_", " ").ToUpper()
+                    datagridview2.Columns.Add(dgvCol)
+                Next
+
+                EnsureReturnColumn()
+                datagridview2.Refresh()
                 UpdateReturnIcons()
+
             End Using
 
 
@@ -74,35 +89,37 @@ Public Class damage
         End Try
     End Sub
 
-    Private Sub damage_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        datagridview2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+    Private Sub EnsureReturnColumn()
+        If datagridview2.Columns.Contains("colReturn") Then Exit Sub
 
-        If Not datagridview2.Columns.Contains("colReturn") Then
-            Dim imgCol As New DataGridViewImageColumn()
-            imgCol.Name = "colReturn"
-            imgCol.HeaderText = "Action"
-            imgCol.ImageLayout = DataGridViewImageCellLayout.Zoom
-            imgCol.DefaultCellStyle.NullValue = Nothing
-            imgCol.Width = 60
-            datagridview2.Columns.Add(imgCol)
-        End If
-        LoadDamageItems()
+        Dim imgCol As New DataGridViewImageColumn()
+        imgCol.Name = "colReturn"
+        imgCol.HeaderText = "Action"
+        imgCol.ImageLayout = DataGridViewImageCellLayout.Zoom
+        imgCol.Width = 60
+        imgCol.ReadOnly = True
 
+
+        imgCol.DefaultCellStyle.NullValue = My.Resources.exchange
+
+        datagridview2.Columns.Add(imgCol)
+        imgCol.DisplayIndex = datagridview2.Columns.Count - 1
     End Sub
 
 
     Private Sub UpdateReturnIcons()
-
-        If datagridview2.Rows.Count = 0 Then Exit Sub
-        If Not datagridview2.Columns.Contains("colReturn") Then Exit Sub
-
         For Each row As DataGridViewRow In datagridview2.Rows
             If row.IsNewRow Then Continue For
 
-            Dim status As String = row.Cells("status").Value.ToString()
+            Dim status As String = ""
 
-            If status = "Returned" Then
+            If row.Cells("status").Value IsNot Nothing AndAlso
+           Not IsDBNull(row.Cells("status").Value) Then
+                status = row.Cells("status").Value.ToString().ToUpper()
+            End If
+
+            If status = "RETURNED" Then
                 row.Cells("colReturn").Value = My.Resources.exchange2
                 row.Cells("colReturn").Tag = "disabled"
                 row.DefaultCellStyle.ForeColor = Color.Gray
@@ -112,37 +129,88 @@ Public Class damage
                 row.DefaultCellStyle.ForeColor = Color.Black
             End If
         Next
-
     End Sub
 
-    Private Sub datagridview2_DataBindingComplete(
-        sender As Object,
-        e As DataGridViewBindingCompleteEventArgs
-    ) Handles datagridview2.DataBindingComplete
 
-        UpdateReturnIcons()
-
-    End Sub
 
 
 
     Private Sub ReturnDamageItem(damageID As Integer)
-        Try
-            Using conn As MySqlConnection = DBConnection.GetConnection()
-                conn.Open()
-                Dim query As String = "UPDATE damage_items SET status='Returned', date_returned=NOW() WHERE id=@id"
-                Using cmd As New MySqlCommand(query, conn)
-                    cmd.Parameters.AddWithValue("@id", damageID)
-                    cmd.ExecuteNonQuery()   
-                End Using
+
+        Using conn As MySqlConnection = DBConnection.GetConnection()
+            conn.Open()
+
+            Using tran = conn.BeginTransaction()
+                Try
+                    Dim sku As String = ""
+                    Dim damageQty As Integer = 0
+
+                    ' 1️⃣ GET SKU + QTY FROM DAMAGE
+                    Using getCmd As New MySqlCommand("
+                    SELECT SKU, damage_qty
+                    FROM damage_items
+                    WHERE id = @id AND status <> 'RETURNED'
+                ", conn, tran)
+
+                        getCmd.Parameters.AddWithValue("@id", damageID)
+
+                        Using rdr = getCmd.ExecuteReader()
+                            If Not rdr.Read() Then
+                                Throw New Exception("Item already returned or not found.")
+                            End If
+
+                            sku = rdr("SKU").ToString()
+                            damageQty = Convert.ToInt32(rdr("damage_qty"))
+                        End Using
+                    End Using
+
+                    Using updateDamage As New MySqlCommand("
+                        UPDATE damage_items
+                        SET status = 'RETURNED',
+                            date_returned = NOW()
+                        WHERE id = @id
+                    ", conn, tran)
+
+                        updateDamage.Parameters.AddWithValue("@id", damageID)
+                        updateDamage.ExecuteNonQuery()
+
+                        If updateDamage.ExecuteNonQuery() = 0 Then
+                            Throw New Exception("Inventory update failed. SKU not found.")
+                        End If
+                    End Using
+
+                    ' 3️⃣ MARK DAMAGE AS RETURNED
+                    Using updateDamage As New MySqlCommand("
+                    UPDATE damage_items
+                    SET status = 'RETURNED'
+                    WHERE id = @id
+                ", conn, tran)
+
+                        updateDamage.Parameters.AddWithValue("@id", damageID)
+                        updateDamage.ExecuteNonQuery()
+                    End Using
+
+                    tran.Commit()
+
+
+                    MessageBox.Show(
+                    "Item successfully returned to inventory.",
+                    "Success",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                )
+
+                Catch ex As Exception
+                    tran.Rollback()
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
             End Using
+        End Using
 
-            MessageBox.Show("Item has been marked as RETURNED.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-        Catch ex As Exception
-            MessageBox.Show("Error returning item: " & ex.Message)
-        End Try
     End Sub
+
+
+
 
 
     Private Sub datagridview2_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles datagridview2.CellContentClick
@@ -157,7 +225,9 @@ Public Class damage
             Exit Sub
         End If
 
-        Dim itemID As Integer = datagridview2.Rows(e.RowIndex).Cells("id").Value
+        Dim damageID As Integer =
+    Convert.ToInt32(datagridview2.Rows(e.RowIndex).Cells("id").Value)
+
         Dim itemName As String = datagridview2.Rows(e.RowIndex).Cells("item_name").Value
 
         Dim ask = MessageBox.Show(
@@ -168,7 +238,7 @@ Public Class damage
     )
 
         If ask = DialogResult.Yes Then
-            ReturnDamageItem(itemID)
+            ReturnDamageItem(damageID)
             LoadDamageItems()
         End If
     End Sub
@@ -188,6 +258,8 @@ Public Class damage
         End If
 
     End Sub
+
+
 
 
 

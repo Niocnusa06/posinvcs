@@ -1,4 +1,5 @@
 ﻿Imports MySql.Data.MySqlClient
+Imports Org.BouncyCastle.Crypto.Engines
 Public Class category
 
     Private Sub frmCategory_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -50,7 +51,7 @@ Public Class category
     End Sub
 
     ' ========== ADD CATEGORY ==========
-    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnadd.Click
         If txtcategory.Text.Trim() = "" Then
             MessageBox.Show("Please enter a category name.")
             Return
@@ -66,7 +67,8 @@ Public Class category
                 End Using
             End Using
 
-            MessageBox.Show("Category added successfully!")
+            AlertFormMngr.ShowAlert(New AlertCategoryAddSuccess(), me)
+
             LoadCategories()
             txtcategory.Clear()
 
@@ -92,7 +94,7 @@ Public Class category
     End Sub
 
     ' ========== UPDATE CATEGORY ==========
-    Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
+    Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnupdate.Click
         If txtcategory.Tag Is Nothing Then
             MessageBox.Show("Please select a category to update.")
             Return
@@ -116,7 +118,7 @@ Public Class category
 
             txtcategory.Clear()
             txtcategory.Tag = Nothing
-            btnUpdate.Enabled = False
+            btnupdate.Enabled = False
             btnadd.Enabled = True
 
         Catch ex As Exception
@@ -136,7 +138,7 @@ Public Class category
         If dgvcategory.Columns(e.ColumnIndex).Name = "Edit" Then
             txtcategory.Text = categoryName
             txtcategory.Tag = id   ' store the id temporarily
-            btnUpdate.Enabled = True
+            btnupdate.Enabled = True
             btnadd.Enabled = False
         End If
 
@@ -161,13 +163,16 @@ Public Class category
                 End Using
             End Using
 
-            MessageBox.Show("Category deleted successfully!")
-            LoadCategories()
+
+            AlertFormMngr.ShowAlert(New AlertCategorySureDelete(), Me)
+
 
         Catch ex As Exception
             MessageBox.Show("Error deleting category: " & ex.Message)
         End Try
     End Sub
 
+    Private Sub btnadd_Click_1(sender As Object, e As EventArgs) Handles btnadd.Click
 
+    End Sub
 End Class

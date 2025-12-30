@@ -416,7 +416,7 @@ Public Class Form1
         sb.AppendLine("Date: " & DateTime.Now.ToString("yyyy-MM-dd HH:mm"))
         sb.AppendLine("-------------------------------------------")
 
-        ' Column headers (fixed width)
+
         sb.AppendLine(String.Format("{0,-14}{1,4}{2,10}{3,10}", "Item", "Qty", "Price", "SubTot"))
         sb.AppendLine("-------------------------------------------")
 
@@ -441,7 +441,7 @@ Public Class Form1
         sb.AppendLine(String.Format("CASH:             {0,19:N2}", cashPaid))
         sb.AppendLine(String.Format("CHANGE:           {0,19:N2}", change))
         sb.AppendLine("===========================================")
-        sb.AppendLine("If issues, contact us: 09154180402")
+        sb.AppendLine("Contact us: 09154180402")
         sb.AppendLine("BIR NO#:               2312-12-514")
         sb.AppendLine("TIN NO#:         309-539-118-00000")
         sb.AppendLine("-------------------------------------------")
@@ -480,20 +480,11 @@ Public Class Form1
 
         receiptText = BuildReceiptText(cashPaid)
 
-        ' --- Show print preview ---
+
         Dim preview As New PrintPreviewDialog With {.Document = PrintDocument2, .WindowState = FormWindowState.Normal}
-        preview.Width = 340
-        preview.Height = 700
-        preview.PrintPreviewControl.Zoom = 1.0
-        preview.ShowDialog()
-
-        ' Print document
+       
         PrintDocument2.Print()
-
-        ' Save transaction
         SaveTransaction(1)
-
-        ' Clear order after print
         orderList.Clear()
         UpdateListPanel()
         Total.Clear()
@@ -502,22 +493,21 @@ Public Class Form1
 
 
     Private Sub PrintDocument2_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument2.PrintPage
-        ' Fixed monospaced font
-        Dim fontSize As Single = 5.5F ' good for 58mm paper
-        Dim baseFont As New Font("Consolas", fontSize, FontStyle.Regular)
 
-        ' Split receipt text into lines
+
+        Dim baseFont As New Font("Consolas", 8.0F, FontStyle.Regular)
+
+
         Dim lines() As String = receiptText.Split({vbCrLf, vbLf}, StringSplitOptions.None)
 
-        ' Set margins
-        Dim leftMargin As Single = 2
-        Dim topMargin As Single = 2
+
+        Dim leftMargin As Single = 5
+        Dim topMargin As Single = 5
         Dim y As Single = topMargin
 
-        ' Draw each line with fixed font size
         For Each line As String In lines
             e.Graphics.DrawString(line, baseFont, Brushes.Black, leftMargin, y)
-            y += baseFont.GetHeight(e.Graphics) + 1 ' small spacing between lines
+            y += baseFont.GetHeight(e.Graphics)
         Next
 
         e.HasMorePages = False

@@ -181,8 +181,8 @@ Public Class inv
 
                 cmd.ExecuteNonQuery()
 
-                Dim alert1 As New AlertInventorySuccessAddItem()
-                ShowAlert(alert1, admin_inventory)
+                AlertFormMngr.ShowAlert(New AlertInventorySuccessAddItem(), Me)
+
 
 
             End Using
@@ -351,6 +351,8 @@ Public Class inv
                 End Using
 
 
+
+
                 Dim insertQuery As String = "
                 INSERT INTO damage_items 
                 (SKU, item_name, category, price, damage_qty, unit_type, remarks, date_reported, status)
@@ -367,8 +369,8 @@ Public Class inv
                 End Using
             End Using
 
-            Dim alert2 As New AlertInventoryDamageSuccess()
-            ShowAlert(alert2, admin_inventory)
+            AlertFormMngr.ShowAlert(New AlertInventoryDamageSuccess(), Me)
+
 
 
             If Application.OpenForms().OfType(Of damage).Any() Then
@@ -464,8 +466,8 @@ Public Class inv
                 cmd.Parameters.AddWithValue("@qty", Integer.Parse(qty.Text))
                 cmd.ExecuteNonQuery()
 
-                Dim alert3 As New AlertInventoryUpdateItem()
-                ShowAlert(alert3, admin_inventory)
+                AlertFormMngr.ShowAlert(New AlertInventoryUpdateItem(), Me)
+
             End Using
 
             LoadInventory()
@@ -851,7 +853,11 @@ Public Class inv
                 printDocReport.PrinterSettings = ps
 
                 printDocReport.Print()
-                MessageBox.Show("PDF exported successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                LockBackground(True)
+                alertpdfinv.Visible = True
+
+
+
             End If
 
         Catch ex As Exception
@@ -1071,7 +1077,21 @@ Public Class inv
         AddActionButtons()
     End Sub
 
-    Private Sub lblentries_Click(sender As Object, e As EventArgs) Handles lblentries.Click
+    Private Sub PictureBox1_Click(sender As Object, e As EventArgs)
 
+    End Sub
+
+
+    Private Sub LockBackground(lock As Boolean)
+        For Each ctrl As Control In Me.Controls
+            If ctrl IsNot alertpdfinv Then
+                ctrl.Enabled = Not lock
+            End If
+        Next
+    End Sub
+
+    Private Sub Button2_Click_1(sender As Object, e As EventArgs) Handles Button2.Click
+        alertpdfinv.Visible = False
+        LockBackground(False)
     End Sub
 End Class

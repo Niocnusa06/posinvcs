@@ -23,11 +23,11 @@ Partial Class inv
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Guna2Elipse1 = New Guna.UI2.WinForms.Guna2Elipse(Me.components)
         Me.Guna2Elipse2 = New Guna.UI2.WinForms.Guna2Elipse(Me.components)
         Me.newitem = New System.Windows.Forms.Panel()
@@ -93,6 +93,13 @@ Partial Class inv
         Me.Label1 = New System.Windows.Forms.Label()
         Me.searchtb = New Guna.UI2.WinForms.Guna2TextBox()
         Me.additembtn = New Guna.UI2.WinForms.Guna2Button()
+        Me.Guna2MessageDialog1 = New Guna.UI2.WinForms.Guna2MessageDialog()
+        Me.alertpdfinv = New System.Windows.Forms.Panel()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Label21 = New System.Windows.Forms.Label()
         Me.newitem.SuspendLayout()
         CType(Me.barcode, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Guna2Panel1.SuspendLayout()
@@ -100,6 +107,9 @@ Partial Class inv
         Me.Guna2Panel2.SuspendLayout()
         CType(Me.datagridview1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.admin_inventory.SuspendLayout()
+        Me.alertpdfinv.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'Guna2Elipse1
@@ -895,46 +905,46 @@ Partial Class inv
         '
         Me.datagridview1.AllowUserToAddRows = False
         Me.datagridview1.AllowUserToDeleteRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.datagridview1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle11.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.datagridview1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle11
         Me.datagridview1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.datagridview1.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.datagridview1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(48, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.datagridview1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(48, Byte), Integer))
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.datagridview1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle12
         Me.datagridview1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Lavender
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.datagridview1.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle13.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.Lavender
+        DataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.datagridview1.DefaultCellStyle = DataGridViewCellStyle13
         Me.datagridview1.EnableHeadersVisualStyles = False
         Me.datagridview1.GridColor = System.Drawing.Color.LightGray
         Me.datagridview1.Location = New System.Drawing.Point(28, 198)
         Me.datagridview1.MultiSelect = False
         Me.datagridview1.Name = "datagridview1"
         Me.datagridview1.ReadOnly = True
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.datagridview1.RowHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle14.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.datagridview1.RowHeadersDefaultCellStyle = DataGridViewCellStyle14
         Me.datagridview1.RowHeadersVisible = False
         Me.datagridview1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        Me.datagridview1.RowsDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle15.BackColor = System.Drawing.Color.White
+        Me.datagridview1.RowsDefaultCellStyle = DataGridViewCellStyle15
         Me.datagridview1.RowTemplate.Height = 40
         Me.datagridview1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.datagridview1.Size = New System.Drawing.Size(1538, 742)
@@ -955,7 +965,6 @@ Partial Class inv
         'admin_inventory
         '
         Me.admin_inventory.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.admin_inventory.Controls.Add(Me.newitem)
         Me.admin_inventory.Controls.Add(Me.cmbQuickFilter)
         Me.admin_inventory.Controls.Add(Me.btnpdf)
         Me.admin_inventory.Controls.Add(Me.btnNext)
@@ -974,6 +983,7 @@ Partial Class inv
         Me.admin_inventory.Controls.Add(Me.additembtn)
         Me.admin_inventory.Controls.Add(Me.Label3)
         Me.admin_inventory.Controls.Add(Me.damage_panel)
+        Me.admin_inventory.Controls.Add(Me.newitem)
         Me.admin_inventory.Location = New System.Drawing.Point(0, 0)
         Me.admin_inventory.Name = "admin_inventory"
         Me.admin_inventory.Size = New System.Drawing.Size(1594, 986)
@@ -1197,11 +1207,93 @@ Partial Class inv
         Me.additembtn.Text = "ADD ITEM"
         Me.additembtn.TextOffset = New System.Drawing.Point(10, 0)
         '
+        'Guna2MessageDialog1
+        '
+        Me.Guna2MessageDialog1.Buttons = Guna.UI2.WinForms.MessageDialogButtons.OK
+        Me.Guna2MessageDialog1.Caption = Nothing
+        Me.Guna2MessageDialog1.Icon = Guna.UI2.WinForms.MessageDialogIcon.None
+        Me.Guna2MessageDialog1.Parent = Nothing
+        Me.Guna2MessageDialog1.Style = Guna.UI2.WinForms.MessageDialogStyle.[Default]
+        Me.Guna2MessageDialog1.Text = Nothing
+        '
+        'alertpdfinv
+        '
+        Me.alertpdfinv.Controls.Add(Me.PictureBox1)
+        Me.alertpdfinv.Controls.Add(Me.Button2)
+        Me.alertpdfinv.Controls.Add(Me.Label23)
+        Me.alertpdfinv.Controls.Add(Me.Panel2)
+        Me.alertpdfinv.Location = New System.Drawing.Point(592, 378)
+        Me.alertpdfinv.Name = "alertpdfinv"
+        Me.alertpdfinv.Size = New System.Drawing.Size(412, 244)
+        Me.alertpdfinv.TabIndex = 49
+        Me.alertpdfinv.Visible = False
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Image = Global.posinvcs.My.Resources.Resources.icons8_success
+        Me.PictureBox1.Location = New System.Drawing.Point(53, 78)
+        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(68, 73)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox1.TabIndex = 53
+        Me.PictureBox1.TabStop = False
+        '
+        'Button2
+        '
+        Me.Button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PowderBlue
+        Me.Button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SkyBlue
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("Lucida Sans", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.ForeColor = System.Drawing.Color.Black
+        Me.Button2.Location = New System.Drawing.Point(36, 193)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(344, 28)
+        Me.Button2.TabIndex = 52
+        Me.Button2.Text = "OK"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Font = New System.Drawing.Font("Lucida Fax", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label23.ForeColor = System.Drawing.Color.Black
+        Me.Label23.Location = New System.Drawing.Point(125, 90)
+        Me.Label23.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(219, 48)
+        Me.Label23.TabIndex = 51
+        Me.Label23.Text = "Report Successfully" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " Exported!"
+        Me.Label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Panel2
+        '
+        Me.Panel2.BackColor = System.Drawing.Color.Black
+        Me.Panel2.Controls.Add(Me.Label21)
+        Me.Panel2.Location = New System.Drawing.Point(0, 0)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(412, 42)
+        Me.Panel2.TabIndex = 49
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Font = New System.Drawing.Font("Lucida Fax", 13.0!)
+        Me.Label21.ForeColor = System.Drawing.Color.White
+        Me.Label21.Location = New System.Drawing.Point(16, 11)
+        Me.Label21.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(164, 21)
+        Me.Label21.TabIndex = 54
+        Me.Label21.Text = "Inventory Report"
+        '
         'inv
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1593, 986)
+        Me.Controls.Add(Me.alertpdfinv)
         Me.Controls.Add(Me.admin_inventory)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "inv"
@@ -1218,6 +1310,11 @@ Partial Class inv
         CType(Me.datagridview1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.admin_inventory.ResumeLayout(False)
         Me.admin_inventory.PerformLayout()
+        Me.alertpdfinv.ResumeLayout(False)
+        Me.alertpdfinv.PerformLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1287,4 +1384,11 @@ Partial Class inv
     Friend WithEvents btnNext As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents btnpdf As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents cmbQuickFilter As Guna.UI2.WinForms.Guna2ComboBox
+    Friend WithEvents Guna2MessageDialog1 As Guna.UI2.WinForms.Guna2MessageDialog
+    Friend WithEvents alertpdfinv As Panel
+    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Label23 As Label
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Label21 As Label
 End Class

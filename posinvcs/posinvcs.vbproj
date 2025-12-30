@@ -253,6 +253,7 @@
     <Compile Include="Alerts\AlertForgotPassUsernameNotMatch.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Alerts\AlertFormMngr.vb" />
     <Compile Include="Alerts\AlertInventoryDamageSuccess.Designer.vb">
       <DependentUpon>AlertInventoryDamageSuccess.vb</DependentUpon>
     </Compile>
@@ -757,6 +758,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\exchange2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pdf.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
