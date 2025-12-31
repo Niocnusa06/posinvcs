@@ -1,8 +1,19 @@
-﻿Imports MySql.Data.MySqlClient
-Imports System.Security.Cryptography
+﻿Imports System.Security.Cryptography
 Imports System.Text
+Imports DocumentFormat.OpenXml.Office2010.CustomUI
+Imports MySql.Data.MySqlClient
+Imports System.Windows.Forms
 
 Public Class LoginForm
+
+
+    Private failedAttempts As Integer = 0
+    Private lockStage As Integer = 0
+
+    Private lockTimer As New Timer()
+    Private countdownTimer As New Timer()
+    Private remainingSeconds As Integer = 0
+
 
 
     Dim connectionString As String = "server=localhost;port=3307;user id=root;password=;database=posinv;"
@@ -44,6 +55,11 @@ Public Class LoginForm
                     Dim reader = cmd.ExecuteReader
 
                     If reader.Read Then
+
+                        failedAttempts = 0
+                        lockStage = 0
+
+
                         Dim accountType = reader("account_type").ToString.ToLower
 
 
@@ -63,8 +79,52 @@ Public Class LoginForm
                             Form1.Focus()
                         End If
                     Else
-                        MessageBox.Show("Invalid username or password.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        failedAttempts += 1
+
+                        MessageBox.Show(
+        "Invalid username or password.",
+        "Access Denied",
+        MessageBoxButtons.OK,
+        MessageBoxIcon.Error
+    )
+
+                        Select Case lockStage
+
+        ' Stage 0 → 3 failures = 30 seconds
+                            Case 0
+                                If failedAttempts >= 3 Then
+                                    lockStage = 1
+                                    LockLogin(30)
+                                End If
+
+        ' Stage 1 → 1 failure = 1 minute
+                            Case 1
+                                lockStage = 2
+                                LockLogin(60)
+
+        ' Stage 2 → 1 failure = 3 minutes
+                            Case 2
+                                lockStage = 3
+                                LockLogin(180)
+
+        ' Stage 3 → 1 failure = 5 minutes
+                            Case 3
+                                lockStage = 4
+                                LockLogin(300)
+
+        ' Stage 4 → 1 failure = 30 minutes
+                            Case 4
+                                lockStage = 5
+                                LockLogin(1800)
+
+        ' Stage 5 → 1 failure = 1 hour
+                            Case 5
+                                lockStage = 6
+                                LockLogin(3600)
+                        End Select
                     End If
+
+
 
                     reader.Close()
                 End Using
@@ -143,7 +203,9 @@ Public Class LoginForm
     End Sub
 
     Private Sub ButtonHover(sender As Object, e As EventArgs)
-        Dim btn As Button = CType(sender, Button)
+        Dim btn As System.Windows.Forms.Button =
+    CType(sender, System.Windows.Forms.Button)
+
         If btn.Name.Contains("close") Then
             btn.BackColor = Color.Red
             btn.ForeColor = Color.White
@@ -154,7 +216,9 @@ Public Class LoginForm
     End Sub
 
     Private Sub ButtonLeave(sender As Object, e As EventArgs)
-        Dim btn As Button = CType(sender, Button)
+        Dim btn As System.Windows.Forms.Button =
+    CType(sender, System.Windows.Forms.Button)
+
         If btn.Name.Contains("close") Then
             btn.BackColor = Color.White
             btn.ForeColor = Color.Black
@@ -166,7 +230,9 @@ Public Class LoginForm
     '-------------------------------------------------------------------------
     'FOR THE SHOW/HIDE PASSWORD BUTTONS
     Private Sub TogglePasswordVisibility(sender As Object, e As EventArgs)
-        Dim btn As Button = CType(sender, Button)
+        Dim btn As System.Windows.Forms.Button =
+    CType(sender, System.Windows.Forms.Button)
+
 
         Select Case btn.Name
             Case "ShowPassBtn"
@@ -180,7 +246,11 @@ Public Class LoginForm
         End Select
     End Sub
 
-    Private Sub ToggleVisibility(tb As TextBox, btn As Button)
+    Private Sub ToggleVisibility(
+    tb As TextBox,
+    btn As System.Windows.Forms.Button
+)
+
         If tb.UseSystemPasswordChar Then
             tb.UseSystemPasswordChar = False
             btn.Text = "🙈"
@@ -324,5 +394,94 @@ Public Class LoginForm
 
     Private Sub closebtn_Click(sender As Object, e As EventArgs) Handles closebtn.Click
         Application.Exit()
+    End Sub
+
+    Private Sub LockLogin(seconds As Integer)
+
+        remainingSeconds = seconds
+
+        loginbtn.Enabled = False
+        usernametb.Enabled = False
+        passwordtb.Enabled = False
+
+        lblLockCountdown.Visible = True
+        UpdateCountdownLabel()
+
+
+        countdownTimer.Interval = 1000
+        AddHandler countdownTimer.Tick, AddressOf CountdownTick
+        countdownTimer.Start()
+
+        ' Timer for unlock
+        lockTimer.Interval = seconds * 1000
+        AddHandler lockTimer.Tick, AddressOf UnlockLogin
+        lockTimer.Start()
+    End Sub
+
+    Private Sub CountdownTick(sender As Object, e As EventArgs)
+        remainingSeconds -= 1
+
+        If remainingSeconds <= 0 Then
+            countdownTimer.Stop()
+            RemoveHandler countdownTimer.Tick, AddressOf CountdownTick
+            lblLockCountdown.Visible = False
+            Exit Sub
+        End If
+
+        UpdateCountdownLabel()
+    End Sub
+    Private Sub UpdateCountdownLabel()
+        lblLockCountdown.Text =
+        "Login failed. Try again in " & FormatRemainingTime(remainingSeconds)
+    End Sub
+
+
+    Private Function FormatRemainingTime(seconds As Integer) As String
+
+
+        If seconds < 60 Then
+            Return $"{seconds} second{If(seconds = 1, "", "s")}"
+        End If
+
+        If seconds < 3600 AndAlso seconds Mod 60 = 0 Then
+            Dim mins As Integer = seconds \ 60
+            Return $"{mins} minute{If(mins = 1, "", "s")}"
+        End If
+
+
+        If seconds < 3600 Then
+            Dim mins As Integer = seconds \ 60
+            Dim secs As Integer = seconds Mod 60
+            Return $"{mins}:{secs:00}"
+        End If
+
+
+        Dim hours As Integer = Math.Ceiling(seconds / 3600.0)
+        Return $"{hours} hour{If(hours = 1, "", "s")}"
+
+    End Function
+
+
+
+    Private Sub UnlockLogin(sender As Object, e As EventArgs)
+
+        lockTimer.Stop()
+        RemoveHandler lockTimer.Tick, AddressOf UnlockLogin
+
+        loginbtn.Enabled = True
+        usernametb.Enabled = True
+        passwordtb.Enabled = True
+
+        lblLockCountdown.Visible = False
+
+        failedAttempts = 0
+    End Sub
+
+    Private Sub LoginPanel_Paint(sender As Object, e As PaintEventArgs) Handles LoginPanel.Paint
+
+    End Sub
+
+    Private Sub lblLockCountdown_Click(sender As Object, e As EventArgs) Handles lblLockCountdown.Click
+
     End Sub
 End Class

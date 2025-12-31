@@ -152,29 +152,36 @@ Public Class _1dashboard
                 End Using
             End Using
 
-
                 With Chart1.ChartAreas(0)
-                .AxisX.LabelStyle.Format = "MM-dd"
-                .AxisX.IntervalType = DataVisualization.Charting.DateTimeIntervalType.Days
-                .AxisX.MajorGrid.LineColor = Color.FromArgb(220, 220, 220)
-                .AxisY.MajorGrid.LineColor = Color.FromArgb(220, 220, 220)
-                .BackColor = Color.White
-            End With
+                    .BackColor = Color.White
 
+                    .AxisX.MajorGrid.LineColor = Color.FromArgb(230, 230, 230)
+                    .AxisY.MajorGrid.LineColor = Color.FromArgb(230, 230, 230)
+
+                    .AxisX.LabelStyle.Font = New Font("Segoe UI", 9)
+                    .AxisY.LabelStyle.Font = New Font("Segoe UI", 9)
+
+                    .AxisX.LineColor = Color.FromArgb(200, 200, 200)
+                    .AxisY.LineColor = Color.FromArgb(200, 200, 200)
+                End With
 
                 Dim series As Series = Chart1.Series("Sales")
+
                 With series
-                    .ChartType = SeriesChartType.Area
-                    .Color = Color.FromArgb(120, 100, 180, 240) ' main fill
-                    .BackSecondaryColor = Color.FromArgb(120, 140, 200, 255)
+                    .ChartType = SeriesChartType.SplineArea
+                    .BorderWidth = 3
+                    .BorderColor = Color.FromArgb(90, 120, 200)
+
+                    ' Pastel blue gradient
+                    .Color = Color.FromArgb(140, 180, 220)
+                    .BackSecondaryColor = Color.FromArgb(220, 240, 255)
                     .BackGradientStyle = GradientStyle.TopBottom
-                    .BorderColor = Color.FromArgb(60, 90, 160)
-                    .BorderWidth = 2
 
                     .IsValueShownAsLabel = False
                     .MarkerStyle = MarkerStyle.None
-                    .CustomProperties = "AreaDrawingStyle=Gradient"
+                    .ToolTip = "#VALX : ₱ #VALY{N2}"
                 End With
+
 
 
                 If Chart1.Series("Sales").Points.Count > 0 Then
@@ -217,7 +224,8 @@ Public Class _1dashboard
                         series.YValueMembers = "total_sold"
                         series.Font = New Font("Segoe UI", 11, FontStyle.Bold)
 
-                        series.Label = "#PERCENT{P2}"         ' % value
+                        series.Label = "#PERCENT{P0}"
+                        series.LabelForeColor = Color.FromArgb(80, 80, 80)
                         series.LegendText = "#VALX"           ' category name
                         series.IsValueShownAsLabel = True
 
@@ -239,6 +247,19 @@ Public Class _1dashboard
 
                         chartBestCategory.DataSource = dt
                         chartBestCategory.DataBind()
+                        Dim pastelColors As Color() = {
+                            Color.FromArgb(168, 213, 186), ' soft green
+                            Color.FromArgb(174, 198, 207), ' soft blue
+                            Color.FromArgb(255, 223, 186), ' soft peach
+                            Color.FromArgb(203, 195, 227), ' soft purple
+                            Color.FromArgb(255, 204, 213), ' soft pink
+                            Color.FromArgb(210, 225, 190)  ' soft olive
+}
+
+                        For i As Integer = 0 To series.Points.Count - 1
+                            series.Points(i).Color = pastelColors(i Mod pastelColors.Length)
+                        Next
+
                     End Using
                 End Using
             End Using
@@ -249,5 +270,7 @@ Public Class _1dashboard
 
     End Sub
 
+    Private Sub chartBestCategory_Click(sender As Object, e As EventArgs) Handles chartBestCategory.Click
 
+    End Sub
 End Class
