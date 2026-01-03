@@ -193,6 +193,7 @@ Public Class main
         salesp.Hide()
         brp.Hide()
         usersp.Hide()
+        inventoryPage.RefreshInventory()
     End Sub
 
     Private Sub Btn_dmg_Click(sender As Object, e As EventArgs) Handles Btn_dmg.Click
@@ -217,6 +218,16 @@ Public Class main
     End Sub
 
     Private Sub logoutbtn_Click(sender As Object, e As EventArgs) Handles logoutbtn.Click
+        Dim result As DialogResult = MessageBox.Show(
+      "Are you sure you want to logout?",
+      "Confirm Logout",
+      MessageBoxButtons.YesNo,
+      MessageBoxIcon.Question
+  )
 
+        If result = DialogResult.Yes Then
+            Me.Hide()
+            LoginForm.Show()
+        End If
     End Sub
 End Class

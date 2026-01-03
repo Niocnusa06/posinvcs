@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{22E9CB11-E757-44DC-A80B-63BB89F72EEF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>posinvcs.My.MyApplication</StartupObject>
+    <StartupObject>posinvcs.main</StartupObject>
     <RootNamespace>posinvcs</RootNamespace>
     <AssemblyName>posinvcs</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsForms</MyType>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>

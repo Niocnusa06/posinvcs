@@ -66,7 +66,7 @@ Public Class damage
                 datagridview2.AutoGenerateColumns = False
                 datagridview2.DataSource = dt
 
-
+                ' ================= CREATE COLUMNS =================
                 For Each col As DataColumn In dt.Columns
                     Dim dgvCol As New DataGridViewTextBoxColumn()
                     dgvCol.DataPropertyName = col.ColumnName
@@ -74,6 +74,44 @@ Public Class damage
                     dgvCol.HeaderText = col.ColumnName.Replace("_", " ").ToUpper()
                     datagridview2.Columns.Add(dgvCol)
                 Next
+
+                ' ================= ADD ACTION COLUMN =================
+                EnsureReturnColumn()
+
+                ' ================= HIDE UNWANTED COLUMNS =================
+                Dim hiddenCols = {"id", "item_id", "unit_type"}
+
+                For Each colName In hiddenCols
+                    If datagridview2.Columns.Contains(colName) Then
+                        datagridview2.Columns(colName).Visible = False
+                    End If
+                Next
+
+                ' ================= FIX COLUMN ORDER =================
+                Dim columnOrder As String() = {
+                            "SKU",
+                            "item_name",
+                            "category",
+                            "price",
+                            "damage_qty",
+                            "remarks",
+                            "date_reported",
+                            "status",
+                            "date_returned",
+                            "colReturn"
+                        }
+
+                For i As Integer = 0 To columnOrder.Length - 1
+                    If datagridview2.Columns.Contains(columnOrder(i)) Then
+                        datagridview2.Columns(columnOrder(i)).DisplayIndex = i
+                    End If
+                Next
+
+                ' ================= FINAL UI TWEAKS =================
+                datagridview2.RowHeadersVisible = False
+                datagridview2.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                datagridview2.AllowUserToOrderColumns = False
+                datagridview2.AllowUserToResizeColumns = False
 
                 EnsureReturnColumn()
                 datagridview2.Refresh()
@@ -109,6 +147,11 @@ Public Class damage
 
 
     Private Sub UpdateReturnIcons()
+
+
+        If Not datagridview2.Columns.Contains("status") _
+        OrElse Not datagridview2.Columns.Contains("colReturn") Then Exit Sub
+
         For Each row As DataGridViewRow In datagridview2.Rows
             If row.IsNewRow Then Continue For
 
@@ -129,10 +172,8 @@ Public Class damage
                 row.DefaultCellStyle.ForeColor = Color.Black
             End If
         Next
+
     End Sub
-
-
-
 
 
     Private Sub ReturnDamageItem(damageID As Integer)
@@ -145,7 +186,7 @@ Public Class damage
                     Dim sku As String = ""
                     Dim damageQty As Integer = 0
 
-                    ' 1️⃣ GET SKU + QTY FROM DAMAGE
+
                     Using getCmd As New MySqlCommand("
                     SELECT SKU, damage_qty
                     FROM damage_items
@@ -164,25 +205,26 @@ Public Class damage
                         End Using
                     End Using
 
-                    Using updateDamage As New MySqlCommand("
-                        UPDATE damage_items
-                        SET status = 'RETURNED',
-                            date_returned = NOW()
-                        WHERE id = @id
-                    ", conn, tran)
 
-                        updateDamage.Parameters.AddWithValue("@id", damageID)
-                        updateDamage.ExecuteNonQuery()
+                    Using updateInv As New MySqlCommand("
+                    UPDATE products
+                    SET qty = qty + @qty
+                    WHERE SKU = @sku
+                ", conn, tran)
 
-                        If updateDamage.ExecuteNonQuery() = 0 Then
+                        updateInv.Parameters.AddWithValue("@qty", damageQty)
+                        updateInv.Parameters.AddWithValue("@sku", sku)
+
+                        If updateInv.ExecuteNonQuery() = 0 Then
                             Throw New Exception("Inventory update failed. SKU not found.")
                         End If
                     End Using
 
-                    ' 3️⃣ MARK DAMAGE AS RETURNED
+
                     Using updateDamage As New MySqlCommand("
                     UPDATE damage_items
-                    SET status = 'RETURNED'
+                    SET status = 'RETURNED',
+                        date_returned = NOW()
                     WHERE id = @id
                 ", conn, tran)
 
@@ -191,7 +233,6 @@ Public Class damage
                     End Using
 
                     tran.Commit()
-
 
                     MessageBox.Show(
                     "Item successfully returned to inventory.",
@@ -210,6 +251,15 @@ Public Class damage
     End Sub
 
 
+
+    Private Sub datagridview2_DataBindingComplete(
+    sender As Object,
+    e As DataGridViewBindingCompleteEventArgs
+) Handles datagridview2.DataBindingComplete
+
+        EnsureReturnColumn()
+        UpdateReturnIcons()
+    End Sub
 
 
 

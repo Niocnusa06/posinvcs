@@ -28,6 +28,12 @@ Public Class inv
     Private pdfRows As DataTable
     Private currentRowIndex As Integer = 0
 
+    Public Sub RefreshInventory()
+        LoadInventory()
+        ApplySearchFilter()
+        ApplyQuickFilter()
+        ShowPage(1)
+    End Sub
 
     Private Function ItemNameExistsLocal(name As String, Optional excludeSKU As String = "") As Boolean
         If String.IsNullOrWhiteSpace(name) Then Return False

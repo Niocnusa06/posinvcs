@@ -11,7 +11,27 @@ Public Class _1dashboard
         LoadLowStock()
         LoadTodaySalesChart()
         LoadBestSellingCategories()
+        LoadTodayDamage()
+        LoadCurrentMonth()
     End Sub
+    Private Sub _1dashboard_VisibleChanged(sender As Object, e As EventArgs) _
+    Handles Me.VisibleChanged
+
+        If Me.Visible Then
+            RefreshDashboard()
+        End If
+
+    End Sub
+
+    Public Sub RefreshDashboard()
+        LoadTodaySales()
+        LoadTodayStockIn()
+        LoadTodayDamage()
+        LoadLowStock()
+        LoadSalesChart()
+        LoadBestSellingCategories()
+    End Sub
+
 
     '==================== TOTAL SALES (TODAY) ====================
     Private Sub LoadTodaySales()
@@ -30,6 +50,30 @@ Public Class _1dashboard
             MessageBox.Show("Error loading today's sales: " & ex.Message)
         End Try
     End Sub
+    '==================== TOTAL DAMAGE (TODAY) ====================
+    Private Sub LoadTodayDamage()
+        Dim total As Integer = 0
+        Try
+            Using conn As MySqlConnection = DBConnection.GetConnection()
+                conn.Open()
+
+                Dim query As String =
+                "SELECT IFNULL(SUM(damage_qty),0)
+                 FROM damage_items
+                 WHERE DATE(date_reported) = CURDATE()"
+
+                Using cmd As New MySqlCommand(query, conn)
+                    total = Convert.ToInt32(cmd.ExecuteScalar())
+                End Using
+            End Using
+
+            totaldmg.Text = total.ToString()
+
+        Catch ex As Exception
+            MessageBox.Show("Error loading today's damage: " & ex.Message)
+        End Try
+    End Sub
+
 
     '==================== TOTAL STOCK-IN (TODAY) ====================
     Private Sub LoadTodayStockIn()
@@ -62,11 +106,7 @@ Public Class _1dashboard
                 DGV_LowStock.DataSource = table
             End Using
 
-            ' Style the grid
-            DGV_LowStock.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-            DGV_LowStock.ColumnHeadersDefaultCellStyle.Font = New Font("Segoe UI", 10, FontStyle.Bold)
-            DGV_LowStock.DefaultCellStyle.Font = New Font("Segoe UI", 9)
-            DGV_LowStock.RowTemplate.Height = 25
+            StyleLowStockGrid()
 
         Catch ex As Exception
             MessageBox.Show("Error loading low stock: " & ex.Message)
@@ -107,9 +147,26 @@ Public Class _1dashboard
     End Sub
 
 
-    Private Sub btnFilter_Click(sender As Object, e As EventArgs) Handles btnFilter.Click
+    Private Sub dtFrom_ValueChanged(sender As Object, e As EventArgs) Handles dtFrom.ValueChanged
+        AutoLoadSalesChart()
+    End Sub
+    Private Sub dtTo_ValueChanged(sender As Object, e As EventArgs) Handles dtTo.ValueChanged
+        AutoLoadSalesChart()
+    End Sub
+    Private Sub AutoLoadSalesChart()
+        If dtFrom.Value.Date > dtTo.Value.Date Then Exit Sub
         LoadSalesChart()
     End Sub
+    Private Sub LoadCurrentMonth()
+        Dim today As Date = Date.Today
+
+
+        dtFrom.Value = New Date(today.Year, today.Month, 1)
+        dtTo.Value = dtFrom.Value.AddMonths(1).AddDays(-1)
+
+        LoadSalesChart()
+    End Sub
+
 
     Private Sub LoadSalesChart()
         Try
@@ -126,11 +183,11 @@ Public Class _1dashboard
             "
 
             Using cmd As New MySqlCommand(query, conn)
-                ' Use DateTime parameters (beginning and end of day)
-                Dim fromDt As DateTime = dtFrom.Value.Date ' 00:00:00
-                Dim toDt As DateTime = dtTo.Value.Date.AddDays(1).AddSeconds(-1) ' 23:59:59
 
-                cmd.Parameters.Add("@dateFrom", MySqlDbType.DateTime).Value = fromDt
+                    Dim fromDt As DateTime = dtFrom.Value.Date
+                    Dim toDt As DateTime = dtTo.Value.Date.AddDays(1).AddSeconds(-1)
+
+                    cmd.Parameters.Add("@dateFrom", MySqlDbType.DateTime).Value = fromDt
                 cmd.Parameters.Add("@dateTo", MySqlDbType.DateTime).Value = toDt
 
                 Using reader = cmd.ExecuteReader()
@@ -139,7 +196,8 @@ Public Class _1dashboard
                     s.ChartType = DataVisualization.Charting.SeriesChartType.SplineArea
                     s.BorderWidth = 2
                     s.IsValueShownAsLabel = False
-                    s.ToolTip = "#VALX : ₱ #VALY{N2}"
+                        s.ToolTip = "#VALX{MM-dd} : ₱ #VALY{N2}"
+
 
 
                         s.Color = Color.FromArgb(90, 90, 200)
@@ -147,8 +205,8 @@ Public Class _1dashboard
                         While reader.Read()
                         Dim saleDate As DateTime = Convert.ToDateTime(reader("sale_date"))
                             Dim totalSales As Decimal = If(IsDBNull(reader("daily_total")), 0D, Convert.ToDecimal(reader("daily_total")))
-                            s.Points.AddXY(saleDate.ToOADate(), totalSales)
-                    End While
+                            s.Points.AddXY(saleDate, totalSales)
+                        End While
                 End Using
             End Using
 
@@ -157,12 +215,15 @@ Public Class _1dashboard
 
                     .AxisX.MajorGrid.LineColor = Color.FromArgb(230, 230, 230)
                     .AxisY.MajorGrid.LineColor = Color.FromArgb(230, 230, 230)
-
                     .AxisX.LabelStyle.Font = New Font("Segoe UI", 9)
                     .AxisY.LabelStyle.Font = New Font("Segoe UI", 9)
-
                     .AxisX.LineColor = Color.FromArgb(200, 200, 200)
                     .AxisY.LineColor = Color.FromArgb(200, 200, 200)
+                    .AxisX.LabelStyle.Format = "MM-dd"
+                    .AxisX.IntervalType = DataVisualization.Charting.DateTimeIntervalType.Days
+                    .AxisX.Interval = 1
+                    .AxisX.MajorTickMark.IntervalType = DataVisualization.Charting.DateTimeIntervalType.Days
+
                 End With
 
                 Dim series As Series = Chart1.Series("Sales")
@@ -270,7 +331,46 @@ Public Class _1dashboard
 
     End Sub
 
-    Private Sub chartBestCategory_Click(sender As Object, e As EventArgs) Handles chartBestCategory.Click
+    Private Sub StyleLowStockGrid()
+
+        With DGV_LowStock
+            ' Structure
+            .BorderStyle = BorderStyle.None
+            .CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal
+            .EnableHeadersVisualStyles = False
+            .RowHeadersVisible = False
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            .MultiSelect = False
+            .ReadOnly = True
+
+            ' Background
+            .BackgroundColor = Color.White
+            .GridColor = Color.FromArgb(235, 235, 235)
+
+            ' Header style
+            .ColumnHeadersHeight = 38
+            .ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(210, 225, 245) ' pastel blue
+            .ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(60, 60, 60)
+            .ColumnHeadersDefaultCellStyle.Font = New Font("Segoe UI", 10, FontStyle.Bold)
+            .ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+
+            ' Cell style
+            .DefaultCellStyle.Font = New Font("Segoe UI", 9.5)
+            .DefaultCellStyle.ForeColor = Color.FromArgb(50, 50, 50)
+            .DefaultCellStyle.BackColor = Color.White
+            .DefaultCellStyle.SelectionBackColor = Color.FromArgb(220, 235, 255) ' pastel selection
+            .DefaultCellStyle.SelectionForeColor = Color.Black
+            .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+
+            ' Alternating rows (soft pastel)
+            .AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 249, 255)
+
+            ' Row height
+            .RowTemplate.Height = 32
+        End With
 
     End Sub
+
+
+
 End Class

@@ -1,84 +1,113 @@
 ﻿Imports System.IO
+Imports System.Diagnostics
 
 Public Class backuprestore
+
+    Private ReadOnly mysqlBin As String = "D:\xampp\mysql\bin"
+    Private ReadOnly dbName As String = "posinv"
+    Private ReadOnly dbUser As String = "root"
+    Private ReadOnly dbPassword As String = "" ' ← leave blank if none
+
+    ' ================= BACKUP =================
     Private Sub BackupDatabase()
+
         Try
-            Dim backupFolder As String = Application.StartupPath & "\backup\"
-            If Not Directory.Exists(backupFolder) Then
-                Directory.CreateDirectory(backupFolder)
+            Dim mysqlBin As String = "D:\xampp\mysql\bin\"
+            Dim backupDir As String = Path.Combine(Application.StartupPath, "backup")
+
+            If Not Directory.Exists(backupDir) Then
+                Directory.CreateDirectory(backupDir)
             End If
 
-            Dim fileName As String = "POSINV_BACKUP_" & DateTime.Now.ToString("yyyy-MM-dd_HHmmss") & ".sql"
-            Dim backupPath As String = backupFolder & fileName
+            Dim fileName As String =
+            $"datebackup_{DateTime.Now:yyyy-MM-dd_HHmmss}_MariaAthena_DB.sql"
 
-            Dim cmd As String = "C:\xampp\mysql\bin\mysqldump.exe"
-            Dim args As String = "-u root -p --databases posinv --result-file=""" & backupPath & """"
+            Dim backupPath As String = Path.Combine(backupDir, fileName)
 
-            Dim psi As New ProcessStartInfo(cmd, args)
-            psi.RedirectStandardInput = True
-            psi.RedirectStandardOutput = True
+            Dim psi As New ProcessStartInfo()
+            psi.FileName = Path.Combine(mysqlBin, "mysqldump.exe")
+            psi.Arguments = $"-u root -P 3307 posinv --result-file=""{backupPath}"""
             psi.UseShellExecute = False
+            psi.CreateNoWindow = True
 
-            Dim process As Process = Process.Start(psi)
+            Dim proc As Process = Process.Start(psi)
+            proc.WaitForExit()
 
-
-            Dim password As String = ""
-            process.StandardInput.WriteLine(password)
-            process.StandardInput.Flush()
-
-            process.WaitForExit()
-
-            MessageBox.Show("Database backup created successfully!" & vbCrLf & backupPath,
-                        "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            If proc.ExitCode = 0 AndAlso File.Exists(backupPath) Then
+                MessageBox.Show(
+                "Backup completed successfully!" & vbCrLf & backupPath,
+                "Backup Success",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            )
+            Else
+                Throw New Exception("mysqldump execution failed.")
+            End If
 
         Catch ex As Exception
-            MessageBox.Show("Backup failed: " & ex.Message)
+            MessageBox.Show(
+            "Backup failed: " & ex.Message,
+            "Error",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Error
+        )
         End Try
+
     End Sub
 
+
+    ' ================= RESTORE =================
     Private Sub RestoreDatabase()
+
         Try
             Dim ofd As New OpenFileDialog()
-            ofd.Filter = "SQL Backup (*.sql)|*.sql"
-            ofd.Title = "Select a Backup File"
+            ofd.InitialDirectory = Path.Combine(Application.StartupPath, "backup")
+            ofd.Filter = "Maria Athena Backup|datebackup_*_MariaAthena_DB.sql"
 
-            If ofd.ShowDialog() = DialogResult.OK Then
-                Dim sqlFile As String = ofd.FileName
+            If ofd.ShowDialog() <> DialogResult.OK Then Exit Sub
 
-                Dim cmd As String = "C:\xampp\mysql\bin\mysql.exe"
-                Dim args As String = "-u root -p posinv"
+            Dim confirm = MessageBox.Show(
+            "This will overwrite the current database. Continue?",
+            "Confirm Restore",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Warning
+        )
 
-                Dim psi As New ProcessStartInfo(cmd)
-                psi.Arguments = args
-                psi.RedirectStandardInput = True
-                psi.UseShellExecute = False
+            If confirm <> DialogResult.Yes Then Exit Sub
 
-                Dim process As Process = Process.Start(psi)
+            Dim psi As New ProcessStartInfo()
+            psi.FileName = "D:\xampp\mysql\bin\mysql.exe"
+            psi.Arguments = "-u root -P 3307 posinv"
+            psi.RedirectStandardInput = True
+            psi.UseShellExecute = False
+            psi.CreateNoWindow = True
 
-                Dim password As String = ""
-                process.StandardInput.WriteLine(password)
+            Using proc As Process = Process.Start(psi)
+                Using sw As StreamWriter = proc.StandardInput
+                    sw.Write(File.ReadAllText(ofd.FileName))
+                End Using
+                proc.WaitForExit()
+            End Using
 
-
-                Dim sqlText As String = File.ReadAllText(sqlFile)
-                process.StandardInput.WriteLine(sqlText)
-
-                process.StandardInput.Close()
-                process.WaitForExit()
-
-                MessageBox.Show("Database has been successfully restored!",
-                            "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            End If
+            MessageBox.Show("Database restored successfully!", "Restore Success")
 
         Catch ex As Exception
             MessageBox.Show("Restore failed: " & ex.Message)
         End Try
+
+    End Sub
+
+
+    ' ================= BUTTON EVENTS =================
+    Private Sub btnbackup_Click(sender As Object, e As EventArgs) Handles btnbackup.Click
+        BackupDatabase()
     End Sub
 
     Private Sub btnrestore_Click(sender As Object, e As EventArgs) Handles btnrestore.Click
         RestoreDatabase()
     End Sub
 
-    Private Sub btnbackup_Click(sender As Object, e As EventArgs) Handles btnbackup.Click
+    Private Sub backupPicBox_Click(sender As Object, e As EventArgs) Handles backupPicBox.Click
         BackupDatabase()
     End Sub
 
@@ -86,7 +115,4 @@ Public Class backuprestore
         RestoreDatabase()
     End Sub
 
-    Private Sub backupPicBox_Click(sender As Object, e As EventArgs) Handles backupPicBox.Click
-        BackupDatabase()
-    End Sub
 End Class

@@ -55,7 +55,6 @@ Partial Class _1dashboard
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
-        Me.btnFilter = New System.Windows.Forms.Button()
         Me.dtTo = New Guna.UI2.WinForms.Guna2DateTimePicker()
         Me.dtFrom = New Guna.UI2.WinForms.Guna2DateTimePicker()
         Me.Guna2Panel6 = New Guna.UI2.WinForms.Guna2Panel()
@@ -349,7 +348,6 @@ Partial Class _1dashboard
         Me.Guna2Panel5.Controls.Add(Me.Label6)
         Me.Guna2Panel5.Controls.Add(Me.Label8)
         Me.Guna2Panel5.Controls.Add(Me.Chart1)
-        Me.Guna2Panel5.Controls.Add(Me.btnFilter)
         Me.Guna2Panel5.Controls.Add(Me.dtTo)
         Me.Guna2Panel5.Controls.Add(Me.dtFrom)
         Me.Guna2Panel5.Location = New System.Drawing.Point(35, 614)
@@ -399,17 +397,6 @@ Partial Class _1dashboard
         Me.Chart1.Size = New System.Drawing.Size(1468, 244)
         Me.Chart1.TabIndex = 4
         Me.Chart1.Text = "Chart1"
-        '
-        'btnFilter
-        '
-        Me.btnFilter.BackColor = System.Drawing.Color.LightGray
-        Me.btnFilter.Location = New System.Drawing.Point(1326, 51)
-        Me.btnFilter.Margin = New System.Windows.Forms.Padding(2)
-        Me.btnFilter.Name = "btnFilter"
-        Me.btnFilter.Size = New System.Drawing.Size(129, 39)
-        Me.btnFilter.TabIndex = 3
-        Me.btnFilter.Text = "Filter"
-        Me.btnFilter.UseVisualStyleBackColor = False
         '
         'dtTo
         '
@@ -491,9 +478,9 @@ Partial Class _1dashboard
         Me.Label7.Location = New System.Drawing.Point(4, 1)
         Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(225, 25)
+        Me.Label7.Size = New System.Drawing.Size(188, 25)
         Me.Label7.TabIndex = 25
-        Me.Label7.Text = "TRANSACTION CHART"
+        Me.Label7.Text = "CATEGORY CHART"
         '
         'Label5
         '
@@ -611,7 +598,6 @@ Partial Class _1dashboard
     Friend WithEvents chartBestCategory As DataVisualization.Charting.Chart
     Friend WithEvents dtTo As Guna.UI2.WinForms.Guna2DateTimePicker
     Friend WithEvents dtFrom As Guna.UI2.WinForms.Guna2DateTimePicker
-    Friend WithEvents btnFilter As Button
     Friend WithEvents Chart1 As DataVisualization.Charting.Chart
     Friend WithEvents Label6 As Label
     Friend WithEvents Label8 As Label

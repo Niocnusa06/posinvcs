@@ -678,4 +678,8 @@ Public Class Form1
         End Try
         HoldPanel.Show()
     End Sub
+
+    Private Sub HoldPanel_Paint(sender As Object, e As PaintEventArgs) Handles HoldPanel.Paint
+
+    End Sub
 End Class

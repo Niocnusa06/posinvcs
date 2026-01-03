@@ -324,7 +324,7 @@ Partial Class main
         Me.logoutbtn.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.logoutbtn.ImageOffset = New System.Drawing.Point(45, 0)
         Me.logoutbtn.ImageSize = New System.Drawing.Size(50, 50)
-        Me.logoutbtn.Location = New System.Drawing.Point(2, 958)
+        Me.logoutbtn.Location = New System.Drawing.Point(2, 972)
         Me.logoutbtn.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.logoutbtn.Name = "logoutbtn"
         Me.logoutbtn.Padding = New System.Windows.Forms.Padding(56, 0, 0, 0)
