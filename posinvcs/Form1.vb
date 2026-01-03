@@ -401,32 +401,30 @@ Public Class Form1
     Private Sub SubmitItemButton_Click(sender As Object, e As EventArgs) Handles SubmitItemButton.Click
         AddItemToOrderList()
     End Sub
-
-    '==================== BUILD RECEIPT ==============================
     Private Function BuildReceiptText(cashPaid As Decimal) As String
         Dim sb As New System.Text.StringBuilder()
-        sb.AppendLine()
-        sb.AppendLine()
-        sb.AppendLine()
+        Const W As Integer = 32
 
-        sb.AppendLine("MARIA ATHENA MOTORCYCLE PARTS & ACCESSORIES")
-        sb.AppendLine("       #408 Inocensio St. Pasay City")
-        sb.AppendLine("-------------------------------------------")
-        sb.AppendLine("Receipt No: " & currentReceiptNumber)
+        sb.AppendLine(CenterText("MARIA ATHENA MOTORCYCLE PARTS", W))
+        sb.AppendLine(CenterText("& ACCESSORIES", W))
+        sb.AppendLine(CenterText("#408 Inocensio St., Pasay", W))
+        sb.AppendLine(New String("-"c, W))
+
+        sb.AppendLine("Receipt #: " & currentReceiptNumber)
         sb.AppendLine("Date: " & DateTime.Now.ToString("yyyy-MM-dd HH:mm"))
-        sb.AppendLine("-------------------------------------------")
+        sb.AppendLine(New String("-"c, W))
 
-
-        sb.AppendLine(String.Format("{0,-14}{1,4}{2,10}{3,10}", "Item", "Qty", "Price", "SubTot"))
-        sb.AppendLine("-------------------------------------------")
+        sb.AppendLine("ITEM        QTY   AMOUNT")
+        sb.AppendLine(New String("-"c, W))
 
         Dim totalValue As Decimal = 0D
+
         For Each row As DataRow In orderList.Rows
-            Dim itemName As String = Truncate(row("Item Name").ToString(), 14)
+            Dim name As String = Truncate(row("Item Name").ToString(), 10)
             Dim qty As Integer = CInt(row("Qty"))
-            Dim price As Decimal = CDec(row("Price"))
             Dim subtotal As Decimal = CDec(row("Subtotal"))
-            sb.AppendLine(String.Format("{0,-14}{1,4}{2,10:N2}{3,10:N2}", itemName, qty, price, subtotal))
+
+            sb.AppendLine(String.Format("{0,-10} {1,3} {2,10:N2}", name, qty, subtotal))
             totalValue += subtotal
         Next
 
@@ -434,28 +432,39 @@ Public Class Form1
         Dim basePrice As Decimal = Decimal.Round(totalValue - vatAmount, 2)
         Dim change As Decimal = cashPaid - totalValue
 
-        sb.AppendLine("-------------------------------------------")
-        sb.AppendLine(String.Format("TOTAL (VAT EXCL): {0,19:N2}", basePrice))
-        sb.AppendLine(String.Format("VAT(12%):         {0,19:N2}", vatAmount))
-        sb.AppendLine(String.Format("GRAND TOTAL:      {0,19:N2}", totalValue))
-        sb.AppendLine(String.Format("CASH:             {0,19:N2}", cashPaid))
-        sb.AppendLine(String.Format("CHANGE:           {0,19:N2}", change))
-        sb.AppendLine("===========================================")
-        sb.AppendLine("Contact us: 09154180402")
-        sb.AppendLine("BIR NO#:               2312-12-514")
-        sb.AppendLine("TIN NO#:         309-539-118-00000")
-        sb.AppendLine("-------------------------------------------")
-        sb.AppendLine("                THANK YOU!!")
-        sb.AppendLine("           RIDE SAFE,COME AGAIN!")
-        sb.AppendLine("-------------------------------------------")
+        sb.AppendLine(New String("-"c, W))
+        sb.AppendLine(FormatLine("VAT Sales", basePrice, W))
+        sb.AppendLine(FormatLine("VAT (12%)", vatAmount, W))
+        sb.AppendLine(FormatLine("TOTAL", totalValue, W))
+        sb.AppendLine(FormatLine("Cash", cashPaid, W))
+        sb.AppendLine(FormatLine("Change", change, W))
+
+        sb.AppendLine(New String("="c, W))
+        sb.AppendLine("BIR No: 2312-12-514")
+        sb.AppendLine("TIN No: 309-539-118")
+        sb.AppendLine("Contact: 0915-418-0402")
+        sb.AppendLine(New String("-"c, W))
+
+        sb.AppendLine(CenterText("THANK YOU!", W))
+        sb.AppendLine(CenterText("RIDE SAFE, COME AGAIN!", W))
 
         Return sb.ToString()
+    End Function
+    Private Function CenterText(text As String, width As Integer) As String
+        If text.Length >= width Then Return text
+        Dim padding As Integer = (width - text.Length) \ 2
+        Return New String(" "c, padding) & text
+    End Function
+
+    Private Function FormatLine(label As String, amount As Decimal, width As Integer) As String
+        Return label & ":" & amount.ToString("N2").PadLeft(width - label.Length - 1)
     End Function
 
     Private Function Truncate(text As String, maxLen As Integer) As String
         If text.Length <= maxLen Then Return text
         Return text.Substring(0, maxLen - 3) & "..."
     End Function
+
 
     '==================== PRINT ======================
     Private Sub PrintButton_Click(sender As Object, e As EventArgs) Handles PrintButton.Click
@@ -681,5 +690,19 @@ Public Class Form1
 
     Private Sub HoldPanel_Paint(sender As Object, e As PaintEventArgs) Handles HoldPanel.Paint
 
+    End Sub
+
+    Private Sub Guna2ImageButton1_Click(sender As Object, e As EventArgs) Handles Guna2ImageButton1.Click
+        Dim result As DialogResult = MessageBox.Show(
+           "Are you sure you want to logout?",
+           "Confirm Logout",
+           MessageBoxButtons.YesNo,
+           MessageBoxIcon.Question
+        )
+
+        If result = DialogResult.Yes Then
+            Me.Hide()
+            LoginForm.Show()
+        End If
     End Sub
 End Class

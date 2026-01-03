@@ -97,6 +97,35 @@ Public Class backuprestore
 
     End Sub
 
+    Private Sub AutoBackupDatabase()
+        Try
+            Dim mysqlBin As String = "D:\xampp\mysql\bin\"
+            Dim backupDir As String = Path.Combine(Application.StartupPath, "autobackup")
+
+            If Not Directory.Exists(backupDir) Then
+                Directory.CreateDirectory(backupDir)
+            End If
+
+            Dim fileName As String =
+            $"auto_{DateTime.Now:yyyy-MM-dd_HHmmss}_posinv.sql"
+
+            Dim backupPath As String = Path.Combine(backupDir, fileName)
+
+            Dim psi As New ProcessStartInfo()
+            psi.FileName = Path.Combine(mysqlBin, "mysqldump.exe")
+            psi.Arguments = "-u root -P 3307 posinv --single-transaction --quick --result-file=""" & backupPath & """"
+            psi.UseShellExecute = False
+            psi.CreateNoWindow = True
+
+            Using proc As Process = Process.Start(psi)
+                proc.WaitForExit()
+            End Using
+
+        Catch
+
+        End Try
+    End Sub
+
 
     ' ================= BUTTON EVENTS =================
     Private Sub btnbackup_Click(sender As Object, e As EventArgs) Handles btnbackup.Click
