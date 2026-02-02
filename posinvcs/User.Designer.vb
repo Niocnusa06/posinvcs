@@ -22,6 +22,11 @@ Partial Class User
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.usernametxtb = New System.Windows.Forms.TextBox()
         Me.passwordtxtb = New System.Windows.Forms.TextBox()
         Me.sanswertxtb = New System.Windows.Forms.TextBox()
@@ -32,13 +37,13 @@ Partial Class User
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.UserDGV = New System.Windows.Forms.DataGridView()
         Me.recordCountLbl = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.add_btn = New Guna.UI2.WinForms.Guna2Button()
         Me.clear_btn = New Guna.UI2.WinForms.Guna2Button()
         Me.update_btn = New Guna.UI2.WinForms.Guna2Button()
         Me.delete_btn = New Guna.UI2.WinForms.Guna2Button()
+        Me.UserDGV = New System.Windows.Forms.DataGridView()
         CType(Me.UserDGV, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -140,27 +145,13 @@ Partial Class User
         Me.Label5.TabIndex = 10
         Me.Label5.Text = "Account Type"
         '
-        'UserDGV
-        '
-        Me.UserDGV.AllowUserToAddRows = False
-        Me.UserDGV.AllowUserToDeleteRows = False
-        Me.UserDGV.AllowUserToOrderColumns = True
-        Me.UserDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.UserDGV.BackgroundColor = System.Drawing.Color.White
-        Me.UserDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.UserDGV.Location = New System.Drawing.Point(779, 144)
-        Me.UserDGV.Name = "UserDGV"
-        Me.UserDGV.ReadOnly = True
-        Me.UserDGV.Size = New System.Drawing.Size(787, 813)
-        Me.UserDGV.TabIndex = 11
-        '
         'recordCountLbl
         '
         Me.recordCountLbl.AutoSize = True
-        Me.recordCountLbl.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.recordCountLbl.Location = New System.Drawing.Point(468, 652)
+        Me.recordCountLbl.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.recordCountLbl.Location = New System.Drawing.Point(39, 937)
         Me.recordCountLbl.Name = "recordCountLbl"
-        Me.recordCountLbl.Size = New System.Drawing.Size(0, 20)
+        Me.recordCountLbl.Size = New System.Drawing.Size(0, 25)
         Me.recordCountLbl.TabIndex = 14
         '
         'Label6
@@ -265,18 +256,68 @@ Partial Class User
         Me.delete_btn.TabIndex = 37
         Me.delete_btn.Text = "DELETE"
         '
+        'UserDGV
+        '
+        Me.UserDGV.AllowUserToAddRows = False
+        Me.UserDGV.AllowUserToDeleteRows = False
+        DataGridViewCellStyle6.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.UserDGV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle6
+        Me.UserDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.UserDGV.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.UserDGV.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(48, Byte), Integer))
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.UserDGV.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        Me.UserDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.Lavender
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.UserDGV.DefaultCellStyle = DataGridViewCellStyle8
+        Me.UserDGV.EnableHeadersVisualStyles = False
+        Me.UserDGV.GridColor = System.Drawing.Color.LightGray
+        Me.UserDGV.Location = New System.Drawing.Point(734, 144)
+        Me.UserDGV.MultiSelect = False
+        Me.UserDGV.Name = "UserDGV"
+        Me.UserDGV.ReadOnly = True
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.UserDGV.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        Me.UserDGV.RowHeadersVisible = False
+        Me.UserDGV.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle10.BackColor = System.Drawing.Color.White
+        Me.UserDGV.RowsDefaultCellStyle = DataGridViewCellStyle10
+        Me.UserDGV.RowTemplate.Height = 40
+        Me.UserDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.UserDGV.Size = New System.Drawing.Size(831, 796)
+        Me.UserDGV.TabIndex = 38
+        '
         'User
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1593, 986)
+        Me.Controls.Add(Me.UserDGV)
         Me.Controls.Add(Me.delete_btn)
         Me.Controls.Add(Me.update_btn)
         Me.Controls.Add(Me.clear_btn)
         Me.Controls.Add(Me.add_btn)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.recordCountLbl)
-        Me.Controls.Add(Me.UserDGV)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
@@ -307,11 +348,11 @@ Partial Class User
     Friend WithEvents Label3 As Label
     Friend WithEvents Label4 As Label
     Friend WithEvents Label5 As Label
-    Friend WithEvents UserDGV As DataGridView
     Friend WithEvents recordCountLbl As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents add_btn As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents clear_btn As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents update_btn As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents delete_btn As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents UserDGV As DataGridView
 End Class

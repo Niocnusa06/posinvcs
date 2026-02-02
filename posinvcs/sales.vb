@@ -2,7 +2,9 @@
 
 Public Class sales
     Dim conn As New MySqlConnection("server=localhost;port=3307;user id=root;password=;database=posinv;")
-
+    Private Function GetDownloadsPath() As String
+        Return Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\Downloads\"
+    End Function
     Private Sub SalesReportForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadSalesData()
         LoadTodaySales()
@@ -133,65 +135,116 @@ Public Class sales
 
     Private Sub btnpdf_Click(sender As Object, e As EventArgs) Handles btnpdf.Click
         Try
-            Dim saveFile As New SaveFileDialog
-            saveFile.Filter = "PDF Files|*.pdf"
-            saveFile.Title = "Save Sales Report as PDF"
+            Dim downloadPath As String = GetDownloadsPath()
+            Dim today As String = Date.Now.ToString("yyyy-MM-dd")
+            Dim filePath As String = downloadPath & "SalesReport_" & today & ".pdf"
 
-            If saveFile.ShowDialog = DialogResult.OK Then
+            Dim pdfDoc As New iTextSharp.text.Document(iTextSharp.text.PageSize.A4, 20, 20, 20, 20)
+            Dim writer = iTextSharp.text.pdf.PdfWriter.GetInstance(pdfDoc, New IO.FileStream(filePath, IO.FileMode.Create))
 
-                Dim pdfTable As New iTextSharp.text.pdf.PdfPTable(dgvsales.ColumnCount)
+            pdfDoc.Open()
 
+            ' Fonts
+            Dim titleFont = iTextSharp.text.FontFactory.GetFont("Arial", 16, iTextSharp.text.Font.BOLD)
+            Dim normalFont = iTextSharp.text.FontFactory.GetFont("Arial", 10)
 
-                For Each col As DataGridViewColumn In dgvsales.Columns
-                    pdfTable.AddCell(New iTextSharp.text.Phrase(col.HeaderText))
-                Next
+            ' Store Name
+            Dim title As New iTextSharp.text.Paragraph("Maria Athena Motorshop and Accessories", titleFont)
+            title.Alignment = iTextSharp.text.Element.ALIGN_CENTER
+            pdfDoc.Add(title)
 
-                For Each row As DataGridViewRow In dgvsales.Rows
-                    If Not row.IsNewRow Then
-                        For Each cell As DataGridViewCell In row.Cells
-                            pdfTable.AddCell(cell.Value?.ToString)
-                        Next
-                    End If
-                Next
+            pdfDoc.Add(New iTextSharp.text.Paragraph("Sales Report", normalFont))
+            pdfDoc.Add(New iTextSharp.text.Paragraph("Date Generated: " & Date.Now.ToString("MMMM dd, yyyy"), normalFont))
+            pdfDoc.Add(New iTextSharp.text.Paragraph(" "))
 
-                Dim pdfDoc As New iTextSharp.text.Document
-                iTextSharp.text.pdf.PdfWriter.GetInstance(pdfDoc, New IO.FileStream(saveFile.FileName, IO.FileMode.Create))
+            ' Table
+            Dim pdfTable As New iTextSharp.text.pdf.PdfPTable(dgvsales.ColumnCount)
+            pdfTable.WidthPercentage = 100
 
-                pdfDoc.Open()
-                pdfDoc.Add(pdfTable)
-                pdfDoc.Close()
+            ' Header
+            For Each col As DataGridViewColumn In dgvsales.Columns
+                Dim cell As New iTextSharp.text.pdf.PdfPCell(New iTextSharp.text.Phrase(col.HeaderText))
+                cell.BackgroundColor = iTextSharp.text.BaseColor.LIGHT_GRAY
+                pdfTable.AddCell(cell)
+            Next
 
-                MessageBox.Show("PDF Exported Successfully!")
-            End If
+            ' Data
+            For Each row As DataGridViewRow In dgvsales.Rows
+                If Not row.IsNewRow Then
+                    For Each cell As DataGridViewCell In row.Cells
+                        pdfTable.AddCell(If(cell.Value IsNot Nothing, cell.Value.ToString(), ""))
+                    Next
+                End If
+            Next
+
+            pdfDoc.Add(pdfTable)
+            pdfDoc.Close()
+
+            MessageBox.Show("PDF saved automatically to Downloads!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Catch ex As Exception
             MessageBox.Show("Error exporting PDF: " & ex.Message)
         End Try
     End Sub
 
+
     Private Sub excelbtn_Click(sender As Object, e As EventArgs) Handles excelbtn.Click
         Try
-            Dim saveFile As New SaveFileDialog
-            saveFile.Filter = "Excel Workbook|*.xlsx"
-            saveFile.Title = "Export Sales Report to Excel"
+            Dim downloadPath As String = GetDownloadsPath()
+            Dim today As String = Date.Now.ToString("yyyy-MM-dd")
+            Dim filePath As String = downloadPath & "SalesReport_" & today & ".xlsx"
 
-            If saveFile.ShowDialog = DialogResult.OK Then
+            Dim wb As New ClosedXML.Excel.XLWorkbook
+            Dim dt = CType(dgvsales.DataSource, DataTable)
 
-                Dim wb As New ClosedXML.Excel.XLWorkbook
-                Dim dt = CType(dgvsales.DataSource, DataTable)
+            Dim ws = wb.Worksheets.Add("Sales Report")
 
-                wb.Worksheets.Add(dt, "Sales Report")
-                wb.SaveAs(saveFile.FileName)
+            ' ===== HEADER DESIGN =====
+            ws.Cell("A1").Value = "Maria Athena Motorshop and Accessories"
+            ws.Cell("A2").Value = "Sales Report"
+            ws.Cell("A3").Value = "Date Generated: " & Date.Now.ToString("MMMM dd, yyyy")
 
-                MessageBox.Show("Excel File Exported Successfully!")
-            End If
+
+            ws.Range("A1:G1").Merge().Style.Font.Bold = True
+            ws.Range("A1:G1").Style.Font.FontSize = 14
+            ws.Range("A1:G4").Style.Font.Bold = True
+
+            ' ===== TABLE START ROW =====
+            ws.Cell("A6").InsertTable(dt)
+
+            ' ===== DATE COLUMN FIX =====
+            ws.Column(1).Style.DateFormat.Format = "yyyy-mm-dd"
+
+            ' ===== DESIGN FIX =====
+            ws.Columns().AdjustToContents()
+            ws.Rows().AdjustToContents()
+
+            ws.RangeUsed().Style.Border.OutsideBorder = ClosedXML.Excel.XLBorderStyleValues.Thin
+            ws.RangeUsed().Style.Border.InsideBorder = ClosedXML.Excel.XLBorderStyleValues.Thin
+
+            wb.SaveAs(filePath)
+
+            MessageBox.Show("Excel sales report saved to Downloads!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Catch ex As Exception
             MessageBox.Show("Error exporting Excel: " & ex.Message)
         End Try
     End Sub
 
+
     Private Sub FILTERBTN_Click(sender As Object, e As EventArgs) Handles FILTERBTN.Click
         FilterByDate()
+    End Sub
+    Private Sub LockBackground(lock As Boolean)
+        For Each ctrl As Control In Me.Controls
+            If ctrl IsNot alertpdfinv Then
+                ctrl.Enabled = Not lock
+            End If
+        Next
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        alertpdfinv.Visible = False
+        LockBackground(False)
     End Sub
 End Class

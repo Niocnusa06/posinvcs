@@ -2,10 +2,12 @@
 Imports MySql.Data.MySqlClient
 
 Public Class Form1
+    Public LoggedInUsername As String
     ' --- MySQL connection ---
     Private conn As MySqlConnection
     Private cmd As MySqlCommand
     Private reader As MySqlDataReader
+
 
     ' --- Order list ---
     Private orderList As New DataTable()
@@ -16,6 +18,8 @@ Public Class Form1
     Private orderLabels As New Dictionary(Of String, Panel)
     Private selectedOrderSKU As String = ""
     Private selectedHeldReceipt As String = ""
+
+
 
     ' --- PrintDocument (declare WithEvents manually) ---
 
@@ -42,6 +46,10 @@ Public Class Form1
 
         ' Focus on SKU input
         SKUBarcodee.Focus()
+
+        lblDate.Text = DateTime.Now.ToString("MMMM dd, yyyy")
+        UpdateTime()
+        tmrClock.Start()
     End Sub
 
     '==================== RECEIPT NUMBER GENERATOR ====================
@@ -137,167 +145,174 @@ Public Class Form1
     '==================== UPDATE LISTPANEL =============================
     Private Sub UpdateListPanel()
 
+        ListPanel.SuspendLayout()
         ListPanel.Controls.Clear()
         orderLabels.Clear()
-        ListPanel.AutoScroll = True  ' Enable vertical scrolling
+
+        ListPanel.AutoScroll = True
         ListPanel.HorizontalScroll.Enabled = False
         ListPanel.HorizontalScroll.Visible = False
 
-        ' ========== SETTINGS ==========
-        Dim headerFont As New Font("Segoe UI", 10, FontStyle.Bold)
-        Dim rowFont As New Font("Segoe UI", 10, FontStyle.Regular)
+        Dim headerFont As New Font("Segoe UI", 9.5F, FontStyle.Bold)
+        Dim rowFont As New Font("Segoe UI", 9.5F, FontStyle.Regular)
 
-        Dim rowHeight As Integer = 50
-        Dim headerHeight As Integer = 30
+        Dim headerHeight As Integer = 32
+        Dim rowHeight As Integer = 52
 
-        ' Header background color (entire row)
-        Dim headerBackColor As Color = Color.LightBlue  ' full row light blue
+        ' ===== DYNAMIC COLUMN WIDTHS =====
+        Dim totalWidth As Integer = ListPanel.ClientSize.Width - 20
 
-        ' Column headers
-        Dim headers As String() = {"Item Name", "Qty", "Price", "Subtotal", "Actions"}
+        Dim colItem As Integer = totalWidth * 0.4
+        Dim colQty As Integer = totalWidth * 0.2
+        Dim colPrice As Integer = totalWidth * 0.15
+        Dim colSub As Integer = totalWidth * 0.15
+        Dim colAct As Integer = totalWidth * 0.1
 
-        ' Column widths
-        Dim colWidths As Integer() = {150, 120, 100, 150, 100}
+        Dim xItem = 0
+        Dim xQty = xItem + colItem
+        Dim xPrice = xQty + colQty
+        Dim xSub = xPrice + colPrice
+        Dim xAct = xSub + colSub
 
-        Dim xPositions(colWidths.Length - 1) As Integer
-        Dim runningX As Integer = 0
-        For i As Integer = 0 To colWidths.Length - 1
-            xPositions(i) = runningX
-            runningX += colWidths(i)
-        Next
-
-        ' ===== HEADER PANEL (FULL WIDTH, LIGHT BLUE) =====
+        ' ===== HEADER =====
         Dim headerPanel As New Panel With {
-        .Width = ListPanel.Width,
+        .Dock = DockStyle.Top,
         .Height = headerHeight,
-        .Location = New Point(0, 0),
-        .BackColor = headerBackColor
+        .BackColor = Color.FromArgb(224, 242, 254)
     }
 
-        ' Add header labels
-        For i As Integer = 0 To headers.Length - 1
-            Dim lbl As New Label With {
-            .Text = headers(i),
-            .Location = New Point(xPositions(i), 0),
-            .Width = colWidths(i),
-            .Height = headerHeight,
-            .TextAlign = ContentAlignment.MiddleCenter,
-            .Font = headerFont,
-            .BackColor = Color.Transparent
-        }
-            headerPanel.Controls.Add(lbl)
-        Next
+        AddHeader(headerPanel, "Item", xItem, colItem, headerFont, ContentAlignment.MiddleLeft)
+        AddHeader(headerPanel, "Qty", xQty, colQty, headerFont, ContentAlignment.MiddleCenter)
+        AddHeader(headerPanel, "Price", xPrice, colPrice, headerFont, ContentAlignment.MiddleRight)
+        AddHeader(headerPanel, "Subtotal", xSub, colSub, headerFont, ContentAlignment.MiddleRight)
+        AddHeader(headerPanel, "Action", xAct, colAct, headerFont, ContentAlignment.MiddleCenter)
 
         ListPanel.Controls.Add(headerPanel)
 
-        Dim yPos As Integer = headerHeight + 5
+        Dim yPos As Integer = headerHeight + 4
 
-        ' ===== EACH ROW ITEM =====
+        ' ===== ROWS =====
         For Each row As DataRow In orderList.Rows
-            Dim sku As String = row("SKU").ToString()
-            Dim itemName As String = row("Item Name").ToString()
-            Dim qty As Integer = CInt(row("Qty"))
-            Dim price As Decimal = CDec(row("Price"))
-            Dim subtotal As Decimal = CDec(row("Subtotal"))
+
+            Dim sku = row("SKU").ToString()
 
             Dim itemPanel As New Panel With {
-            .Width = ListPanel.Width - 4,
+            .Width = totalWidth,
             .Height = rowHeight,
-            .Location = New Point(2, yPos),
-            .BorderStyle = BorderStyle.None,
+            .Location = New Point(8, yPos),
+            .BackColor = Color.FromArgb(243, 244, 246),
             .Tag = sku
         }
 
+            Dim separator As New Panel With {
+     .Dock = DockStyle.Bottom,
+     .Height = 1,
+     .BackColor = Color.FromArgb(229, 231, 235)
+ }
+
+            itemPanel.Controls.Add(separator)
+            separator.BringToFront()
+
+
+
             ' Item Name
-            Dim nameLbl As New Label With {
-            .Text = itemName,
-            .Location = New Point(xPositions(0), 4),
-            .Width = colWidths(0),
-            .Height = rowHeight - 6,
-            .TextAlign = ContentAlignment.MiddleCenter,
-            .Font = rowFont,
-            .BackColor = Color.Transparent
-        }
+            itemPanel.Controls.Add(CreateLabel(
+            row("Item Name").ToString(), xItem + 6, colItem - 12,
+            rowFont, ContentAlignment.MiddleLeft))
 
             ' Qty
-            Dim qtyLbl As New Label With {
-            .Text = qty.ToString(),
-            .Location = New Point(xPositions(1), 4),
-            .Width = 40,
-            .Height = 22,
-            .TextAlign = ContentAlignment.MiddleCenter,
-            .Font = rowFont,
-            .BackColor = Color.Transparent
-        }
+            ' ===== QTY DISPLAY =====
+            ' ===== QTY CONTAINER =====
+            Dim qtyPanel As New Panel With {
+    .Size = New Size(colQty - 16, 36),
+    .Location = New Point(xQty + 8, 8),
+    .BackColor = Color.Transparent
+}
 
-            ' + BUTTON
+            ' PLUS BUTTON (LEFT)
             Dim plusBtn As New Button With {
-            .Size = New Size(24, 20),
-            .Location = New Point(xPositions(1) + 50, 2),
-            .Tag = sku,
-            .FlatStyle = FlatStyle.Flat,
-            .BackColor = Color.Transparent,
-            .Text = "",
-            .BackgroundImage = My.Resources.Plus_icon_icons_com_71848,
-            .BackgroundImageLayout = ImageLayout.Stretch
-        }
+    .Size = New Size(32, 32),
+    .Location = New Point(0, 2),
+    .Tag = sku,
+    .FlatStyle = FlatStyle.Flat,
+    .BackColor = Color.FromArgb(34, 197, 94),
+    .ForeColor = Color.White,
+    .Font = New Font("Segoe MDL2 Assets", 14),
+    .Text = ChrW(&HE109),
+    .Cursor = Cursors.Hand
+}
+            plusBtn.FlatAppearance.BorderSize = 0
+            AddHandler plusBtn.Click, AddressOf PlusBtn_Click
 
-            ' - BUTTON
+            ' QTY LABEL (PERFECTLY CENTERED)
+            Dim qtyLbl As New Label With {
+    .Size = New Size(40, 32),
+    .Location = New Point((qtyPanel.Width - 40) \ 2, 2),
+    .Text = row("Qty").ToString(),
+    .Font = New Font("Segoe UI", 10, FontStyle.Bold),
+    .TextAlign = ContentAlignment.MiddleCenter,
+    .BackColor = Color.White,
+    .ForeColor = Color.Black,
+    .BorderStyle = BorderStyle.FixedSingle,
+    .AutoSize = False
+}
+
+            ' MINUS BUTTON (RIGHT)
             Dim minusBtn As New Button With {
-            .Size = New Size(24, 20),
-            .Location = New Point(xPositions(1) + 50, 28),
-            .Tag = sku,
-            .FlatStyle = FlatStyle.Flat,
-            .BackColor = Color.Transparent,
-            .Text = "",
-            .BackgroundImage = My.Resources.minus_111123,
-            .BackgroundImageLayout = ImageLayout.Stretch
-        }
+    .Size = New Size(32, 32),
+    .Location = New Point(qtyPanel.Width - 32, 2),
+    .Tag = sku,
+    .FlatStyle = FlatStyle.Flat,
+    .BackColor = Color.FromArgb(239, 68, 68),
+    .ForeColor = Color.White,
+    .Font = New Font("Segoe MDL2 Assets", 14),
+    .Text = ChrW(&HE108),
+    .Cursor = Cursors.Hand
+}
+            minusBtn.FlatAppearance.BorderSize = 0
+            AddHandler minusBtn.Click, AddressOf MinusBtn_Click
+
+            ' ADD CONTROLS
+            qtyPanel.Controls.Add(plusBtn)
+            qtyPanel.Controls.Add(qtyLbl)
+            qtyPanel.Controls.Add(minusBtn)
+
+            itemPanel.Controls.Add(qtyPanel)
+
+
+
+            ' Ensure buttons are visible
+            plusBtn.BringToFront()
+            minusBtn.BringToFront()
+
+
 
             ' Price
-            Dim priceLbl As New Label With {
-            .Text = "₱ " & price.ToString("0.00"),
-            .Location = New Point(xPositions(2), 4),
-            .Width = colWidths(2),
-            .Height = rowHeight - 6,
-            .TextAlign = ContentAlignment.MiddleCenter,
-            .Font = rowFont,
-            .BackColor = Color.Transparent
-        }
+            itemPanel.Controls.Add(CreateLabel(
+            "₱ " & CDec(row("Price")).ToString("N2"),
+            xPrice, colPrice, rowFont, ContentAlignment.MiddleRight))
 
             ' Subtotal
-            Dim subtotalLbl As New Label With {
-            .Text = "₱ " & subtotal.ToString("0.00"),
-            .Location = New Point(xPositions(3), 4),
-            .Width = colWidths(3),
-            .Height = rowHeight - 6,
-            .TextAlign = ContentAlignment.MiddleCenter,
-            .Font = rowFont,
-            .BackColor = Color.Transparent
-        }
+            itemPanel.Controls.Add(CreateLabel(
+            "₱ " & CDec(row("Subtotal")).ToString("N2"),
+            xSub, colSub, rowFont, ContentAlignment.MiddleRight))
 
-            ' Delete Button
-            Dim deleteBtn As New Button With {
-            .Size = New Size(30, 30),
-            .Location = New Point(xPositions(4) + 30, 10),
+            ' Delete
+            Dim delBtn As New Button With {
+            .Size = New Size(36, 36),
+            .Location = New Point(xAct + (colAct - 36) \ 2, 8),
             .Tag = sku,
             .FlatStyle = FlatStyle.Flat,
-            .BackColor = Color.Transparent,
-            .Text = "",
-            .BackgroundImage = My.Resources.trash_can_115312__2_,
-            .BackgroundImageLayout = ImageLayout.Stretch
+            .Image = New Bitmap(My.Resources.trashcan, New Size(25, 25)),
+            .ImageAlign = ContentAlignment.MiddleCenter,
+            .Cursor = Cursors.Hand
         }
 
-            ' ADD TO PANEL
-            itemPanel.Controls.AddRange({
-            nameLbl, qtyLbl, plusBtn, minusBtn,
-            priceLbl, subtotalLbl, deleteBtn
-        })
 
-            ' EVENTS
-            AddHandler plusBtn.Click, AddressOf PlusBtn_Click
-            AddHandler minusBtn.Click, AddressOf MinusBtn_Click
-            AddHandler deleteBtn.Click, AddressOf DeleteBtn_Click
+            delBtn.FlatAppearance.BorderSize = 0
+            AddHandler delBtn.Click, AddressOf DeleteBtn_Click
+            itemPanel.Controls.Add(delBtn)
+
 
             ListPanel.Controls.Add(itemPanel)
             orderLabels.Add(sku, itemPanel)
@@ -305,7 +320,61 @@ Public Class Form1
             yPos += rowHeight + 2
         Next
 
+        ListPanel.ResumeLayout()
         UpdateTotal()
+    End Sub
+    Private Function CreateLabel(text As String, x As Integer, w As Integer,
+                             f As Font, align As ContentAlignment) As Label
+        Return New Label With {
+        .Text = text,
+        .Location = New Point(x, 0),
+        .Size = New Size(w, 52),
+        .Font = f,
+        .TextAlign = align
+    }
+    End Function
+
+    Private Function CreateIconButton(
+    text As String,
+    x As Integer,
+    y As Integer,
+    tag As String,
+    handler As EventHandler,
+    bgColor As Color
+) As Button
+
+        Dim btn As New Button With {
+        .Size = New Size(36, 36),
+        .Location = New Point(x, y),
+        .Text = text,
+        .Tag = tag,
+        .BackColor = bgColor,
+        .ForeColor = Color.White,
+        .FlatStyle = FlatStyle.Flat,
+        .Font = New Font("Segoe UI", 16, FontStyle.Bold),
+        .TextAlign = ContentAlignment.MiddleCenter,
+        .Cursor = Cursors.Hand
+    }
+
+        btn.FlatAppearance.BorderSize = 0
+        AddHandler btn.Click, handler
+
+        Return btn
+    End Function
+
+
+
+
+
+    Private Sub AddHeader(p As Panel, text As String, x As Integer, w As Integer,
+                      f As Font, align As ContentAlignment)
+        p.Controls.Add(New Label With {
+        .Text = text,
+        .Location = New Point(x, 0),
+        .Size = New Size(w, p.Height),
+        .Font = f,
+        .TextAlign = align
+    })
     End Sub
 
 
@@ -395,15 +464,17 @@ Public Class Form1
         If e.KeyCode = Keys.Enter Then
             AddItemToOrderList()
             e.SuppressKeyPress = True
+            SKUBarcodee.Clear()
+            SKUBarcodee.Focus()
         End If
     End Sub
     '==================== MANUAL SUBMIT ==============================
     Private Sub SubmitItemButton_Click(sender As Object, e As EventArgs) Handles SubmitItemButton.Click
         AddItemToOrderList()
     End Sub
-    Private Function BuildReceiptText(cashPaid As Decimal) As String
+    Private Function BuildReceiptText(cashPaid As Decimal, cashierName As String) As String
         Dim sb As New System.Text.StringBuilder()
-        Const W As Integer = 32
+        Const W As Integer = 40
 
         sb.AppendLine(CenterText("MARIA ATHENA MOTORCYCLE PARTS", W))
         sb.AppendLine(CenterText("& ACCESSORIES", W))
@@ -412,6 +483,8 @@ Public Class Form1
 
         sb.AppendLine("Receipt #: " & currentReceiptNumber)
         sb.AppendLine("Date: " & DateTime.Now.ToString("yyyy-MM-dd HH:mm"))
+        sb.AppendLine("Cashier: " & cashierName.ToUpper())
+
         sb.AppendLine(New String("-"c, W))
 
         sb.AppendLine("ITEM        QTY   AMOUNT")
@@ -424,7 +497,8 @@ Public Class Form1
             Dim qty As Integer = CInt(row("Qty"))
             Dim subtotal As Decimal = CDec(row("Subtotal"))
 
-            sb.AppendLine(String.Format("{0,-10} {1,3} {2,10:N2}", name, qty, subtotal))
+            sb.AppendLine(String.Format("{0,-18} {1,4} {2,14}", name, qty, subtotal.ToString("0.00")))
+
             totalValue += subtotal
         Next
 
@@ -456,9 +530,12 @@ Public Class Form1
         Return New String(" "c, padding) & text
     End Function
 
-    Private Function FormatLine(label As String, amount As Decimal, width As Integer) As String
-        Return label & ":" & amount.ToString("N2").PadLeft(width - label.Length - 1)
+    Private Function FormatLine(label As String, value As Decimal, width As Integer) As String
+        Dim amount As String = value.ToString("0.00") ' FORCE 2 DECIMALS
+        Return String.Format("{0,-20}{1,20}", label, amount)
+
     End Function
+
 
     Private Function Truncate(text As String, maxLen As Integer) As String
         If text.Length <= maxLen Then Return text
@@ -487,11 +564,14 @@ Public Class Form1
             Return
         End If
 
-        receiptText = BuildReceiptText(cashPaid)
+        Dim cashierName As String = DBConnection.GetCashierName(LoggedInUsername)
+        receiptText = BuildReceiptText(cashPaid, cashierName)
+
+
 
 
         Dim preview As New PrintPreviewDialog With {.Document = PrintDocument2, .WindowState = FormWindowState.Normal}
-       
+
         PrintDocument2.Print()
         SaveTransaction(1)
         orderList.Clear()
@@ -503,8 +583,8 @@ Public Class Form1
 
     Private Sub PrintDocument2_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument2.PrintPage
 
+        Dim baseFont As New Font("Consolas", 9.0F, FontStyle.Regular)
 
-        Dim baseFont As New Font("Consolas", 8.0F, FontStyle.Regular)
 
 
         Dim lines() As String = receiptText.Split({vbCrLf, vbLf}, StringSplitOptions.None)
@@ -692,7 +772,59 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Guna2ImageButton1_Click(sender As Object, e As EventArgs) Handles Guna2ImageButton1.Click
+    Private Sub Guna2ImageButton1_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub tmrClock_Tick(sender As Object, e As EventArgs) Handles tmrClock.Tick
+        UpdateTime()
+    End Sub
+
+    Private Sub UpdateTime()
+        lblTime.Text = DateTime.Now.ToString("hh:mm:ss tt")
+    End Sub
+    Private Function GetCashierName(username As String) As String
+        Dim name As String = ""
+
+        Using con As MySqlConnection = DBConnection.GetConnection()
+            con.Open()
+
+            Using cmd As New MySqlCommand(
+            "SELECT username FROM user WHERE username=@u", con)
+
+                cmd.Parameters.AddWithValue("@u", username)
+
+                Dim result = cmd.ExecuteScalar()
+                If result IsNot Nothing Then
+                    name = result.ToString()
+                End If
+            End Using
+        End Using
+
+        Return name
+    End Function
+    Private Sub Form1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
+        ' Only redirect letters & numbers (barcode chars)
+        If Char.IsLetterOrDigit(e.KeyChar) Then
+
+            ' If scanner is used while focus is elsewhere
+            If Not SKUBarcodee.Focused Then
+                SKUBarcodee.Focus()
+            End If
+
+            ' Manually write the character
+            SKUBarcodee.Text &= e.KeyChar
+            SKUBarcodee.SelectionStart = SKUBarcodee.Text.Length
+
+            ' STOP it from going to the wrong control
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub Guna2CirclePictureBox1_Click(sender As Object, e As EventArgs)
+    End Sub
+
+    Private Sub PictureBox3_Click(sender As Object, e As EventArgs) Handles PictureBox3.Click
         Dim result As DialogResult = MessageBox.Show(
            "Are you sure you want to logout?",
            "Confirm Logout",

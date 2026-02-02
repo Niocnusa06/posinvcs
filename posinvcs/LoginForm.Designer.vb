@@ -33,6 +33,7 @@ Partial Class LoginForm
         Me.Label7 = New System.Windows.Forms.Label()
         Me.fpassbtn = New System.Windows.Forms.Button()
         Me.LoginPanel = New System.Windows.Forms.Panel()
+        Me.lblLockCountdown = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
@@ -80,7 +81,6 @@ Partial Class LoginForm
         Me.SaveBtn = New System.Windows.Forms.Button()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
-        Me.lblLockCountdown = New System.Windows.Forms.Label()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LoginPanel.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -104,10 +104,9 @@ Partial Class LoginForm
         'PictureBox2
         '
         Me.PictureBox2.Image = Global.posinvcs.My.Resources.Resources.profile
-        Me.PictureBox2.Location = New System.Drawing.Point(733, 71)
-        Me.PictureBox2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PictureBox2.Location = New System.Drawing.Point(550, 58)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(160, 148)
+        Me.PictureBox2.Size = New System.Drawing.Size(120, 120)
         Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox2.TabIndex = 2
         Me.PictureBox2.TabStop = False
@@ -117,10 +116,9 @@ Partial Class LoginForm
         Me.usernametb.BackColor = System.Drawing.Color.Gainsboro
         Me.usernametb.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.usernametb.Font = New System.Drawing.Font("Lucida Fax", 16.0!)
-        Me.usernametb.Location = New System.Drawing.Point(624, 370)
-        Me.usernametb.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.usernametb.Location = New System.Drawing.Point(468, 301)
         Me.usernametb.Name = "usernametb"
-        Me.usernametb.Size = New System.Drawing.Size(377, 33)
+        Me.usernametb.Size = New System.Drawing.Size(284, 33)
         Me.usernametb.TabIndex = 3
         '
         'passwordtb
@@ -128,10 +126,9 @@ Partial Class LoginForm
         Me.passwordtb.BackColor = System.Drawing.Color.Gainsboro
         Me.passwordtb.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.passwordtb.Font = New System.Drawing.Font("Lucida Fax", 16.0!)
-        Me.passwordtb.Location = New System.Drawing.Point(624, 469)
-        Me.passwordtb.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.passwordtb.Location = New System.Drawing.Point(468, 381)
         Me.passwordtb.Name = "passwordtb"
-        Me.passwordtb.Size = New System.Drawing.Size(377, 33)
+        Me.passwordtb.Size = New System.Drawing.Size(284, 33)
         Me.passwordtb.TabIndex = 4
         '
         'loginbtn
@@ -141,10 +138,9 @@ Partial Class LoginForm
         Me.loginbtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.loginbtn.Font = New System.Drawing.Font("Lucida Fax", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.loginbtn.ForeColor = System.Drawing.Color.White
-        Me.loginbtn.Location = New System.Drawing.Point(624, 522)
-        Me.loginbtn.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.loginbtn.Location = New System.Drawing.Point(468, 424)
         Me.loginbtn.Name = "loginbtn"
-        Me.loginbtn.Size = New System.Drawing.Size(379, 48)
+        Me.loginbtn.Size = New System.Drawing.Size(284, 39)
         Me.loginbtn.TabIndex = 5
         Me.loginbtn.Text = "Log In"
         Me.loginbtn.UseVisualStyleBackColor = False
@@ -155,8 +151,7 @@ Partial Class LoginForm
         Me.Label2.BackColor = System.Drawing.Color.White
         Me.Label2.Font = New System.Drawing.Font("Lucida Fax", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Black
-        Me.Label2.Location = New System.Drawing.Point(741, 239)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label2.Location = New System.Drawing.Point(556, 194)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(109, 32)
         Me.Label2.TabIndex = 6
@@ -168,8 +163,7 @@ Partial Class LoginForm
         Me.Label3.BackColor = System.Drawing.Color.White
         Me.Label3.Font = New System.Drawing.Font("Lucida Fax", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Black
-        Me.Label3.Location = New System.Drawing.Point(623, 336)
-        Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label3.Location = New System.Drawing.Point(467, 273)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(121, 25)
         Me.Label3.TabIndex = 7
@@ -181,8 +175,7 @@ Partial Class LoginForm
         Me.Label4.BackColor = System.Drawing.Color.White
         Me.Label4.Font = New System.Drawing.Font("Lucida Fax", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.Black
-        Me.Label4.Location = New System.Drawing.Point(617, 434)
-        Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label4.Location = New System.Drawing.Point(463, 353)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(118, 25)
         Me.Label4.TabIndex = 8
@@ -195,10 +188,9 @@ Partial Class LoginForm
         Me.closebtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.closebtn.Font = New System.Drawing.Font("Gill Sans Ultra Bold", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.closebtn.ForeColor = System.Drawing.Color.Black
-        Me.closebtn.Location = New System.Drawing.Point(1067, 4)
-        Me.closebtn.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.closebtn.Location = New System.Drawing.Point(800, 3)
         Me.closebtn.Name = "closebtn"
-        Me.closebtn.Size = New System.Drawing.Size(37, 28)
+        Me.closebtn.Size = New System.Drawing.Size(28, 23)
         Me.closebtn.TabIndex = 11
         Me.closebtn.Text = "X"
         Me.closebtn.UseVisualStyleBackColor = False
@@ -209,8 +201,7 @@ Partial Class LoginForm
         Me.Label7.BackColor = System.Drawing.Color.White
         Me.Label7.Font = New System.Drawing.Font("Lucida Fax", 10.0!)
         Me.Label7.ForeColor = System.Drawing.Color.Black
-        Me.Label7.Location = New System.Drawing.Point(625, 700)
-        Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label7.Location = New System.Drawing.Point(469, 569)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(279, 16)
         Me.Label7.TabIndex = 14
@@ -225,10 +216,10 @@ Partial Class LoginForm
         Me.fpassbtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.fpassbtn.Font = New System.Drawing.Font("Lucida Fax", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.fpassbtn.ForeColor = System.Drawing.Color.RoyalBlue
-        Me.fpassbtn.Location = New System.Drawing.Point(688, 578)
+        Me.fpassbtn.Location = New System.Drawing.Point(516, 470)
         Me.fpassbtn.Margin = New System.Windows.Forms.Padding(1)
         Me.fpassbtn.Name = "fpassbtn"
-        Me.fpassbtn.Size = New System.Drawing.Size(247, 43)
+        Me.fpassbtn.Size = New System.Drawing.Size(185, 35)
         Me.fpassbtn.TabIndex = 15
         Me.fpassbtn.Text = "Forgot Password?"
         Me.fpassbtn.UseVisualStyleBackColor = False
@@ -250,10 +241,22 @@ Partial Class LoginForm
         Me.LoginPanel.Controls.Add(Me.Label3)
         Me.LoginPanel.Controls.Add(Me.Label2)
         Me.LoginPanel.Location = New System.Drawing.Point(0, 0)
-        Me.LoginPanel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.LoginPanel.Name = "LoginPanel"
-        Me.LoginPanel.Size = New System.Drawing.Size(1108, 766)
+        Me.LoginPanel.Size = New System.Drawing.Size(831, 622)
         Me.LoginPanel.TabIndex = 14
+        '
+        'lblLockCountdown
+        '
+        Me.lblLockCountdown.AutoSize = True
+        Me.lblLockCountdown.BackColor = System.Drawing.Color.White
+        Me.lblLockCountdown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblLockCountdown.Font = New System.Drawing.Font("Lucida Fax", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblLockCountdown.ForeColor = System.Drawing.Color.Red
+        Me.lblLockCountdown.Location = New System.Drawing.Point(487, 232)
+        Me.lblLockCountdown.Name = "lblLockCountdown"
+        Me.lblLockCountdown.Size = New System.Drawing.Size(2, 18)
+        Me.lblLockCountdown.TabIndex = 32
+        Me.lblLockCountdown.Visible = False
         '
         'Panel1
         '
@@ -265,10 +268,9 @@ Partial Class LoginForm
         Me.Panel1.Controls.Add(Me.Label12)
         Me.Panel1.Controls.Add(Me.Label22)
         Me.Panel1.Controls.Add(Me.PictureBox11)
-        Me.Panel1.Location = New System.Drawing.Point(0, -5)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Panel1.Location = New System.Drawing.Point(0, -4)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(515, 770)
+        Me.Panel1.Size = New System.Drawing.Size(386, 626)
         Me.Panel1.TabIndex = 31
         '
         'Label24
@@ -277,8 +279,7 @@ Partial Class LoginForm
         Me.Label24.BackColor = System.Drawing.Color.Black
         Me.Label24.Font = New System.Drawing.Font("Lucida Fax", 13.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label24.ForeColor = System.Drawing.Color.White
-        Me.Label24.Location = New System.Drawing.Point(157, 76)
-        Me.Label24.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label24.Location = New System.Drawing.Point(118, 62)
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(227, 84)
         Me.Label24.TabIndex = 33
@@ -289,10 +290,9 @@ Partial Class LoginForm
         'PictureBox3
         '
         Me.PictureBox3.Image = Global.posinvcs.My.Resources.Resources.LOGO_MSHOP
-        Me.PictureBox3.Location = New System.Drawing.Point(44, 78)
-        Me.PictureBox3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PictureBox3.Location = New System.Drawing.Point(33, 63)
         Me.PictureBox3.Name = "PictureBox3"
-        Me.PictureBox3.Size = New System.Drawing.Size(111, 102)
+        Me.PictureBox3.Size = New System.Drawing.Size(83, 83)
         Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox3.TabIndex = 16
         Me.PictureBox3.TabStop = False
@@ -300,10 +300,9 @@ Partial Class LoginForm
         'PictureBox1
         '
         Me.PictureBox1.Image = Global.posinvcs.My.Resources.Resources.logoschool
-        Me.PictureBox1.Location = New System.Drawing.Point(47, 714)
-        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PictureBox1.Location = New System.Drawing.Point(35, 580)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(53, 49)
+        Me.PictureBox1.Size = New System.Drawing.Size(40, 40)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox1.TabIndex = 32
         Me.PictureBox1.TabStop = False
@@ -315,8 +314,7 @@ Partial Class LoginForm
         Me.Label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label1.Font = New System.Drawing.Font("Lucida Fax", 10.0!)
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(104, 720)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label1.Location = New System.Drawing.Point(78, 585)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(265, 32)
         Me.Label1.TabIndex = 31
@@ -328,8 +326,7 @@ Partial Class LoginForm
         Me.Label12.BackColor = System.Drawing.Color.Black
         Me.Label12.Font = New System.Drawing.Font("Lucida Fax", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label12.ForeColor = System.Drawing.Color.White
-        Me.Label12.Location = New System.Drawing.Point(39, 159)
-        Me.Label12.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label12.Location = New System.Drawing.Point(29, 129)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(329, 38)
         Me.Label12.TabIndex = 21
@@ -341,8 +338,7 @@ Partial Class LoginForm
         Me.Label22.BackColor = System.Drawing.Color.Black
         Me.Label22.Font = New System.Drawing.Font("Lucida Fax", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label22.ForeColor = System.Drawing.Color.White
-        Me.Label22.Location = New System.Drawing.Point(37, 39)
-        Me.Label22.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label22.Location = New System.Drawing.Point(28, 32)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(329, 38)
         Me.Label22.TabIndex = 20
@@ -351,10 +347,9 @@ Partial Class LoginForm
         'PictureBox11
         '
         Me.PictureBox11.Image = Global.posinvcs.My.Resources.Resources.bg21
-        Me.PictureBox11.Location = New System.Drawing.Point(-3, 214)
-        Me.PictureBox11.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PictureBox11.Location = New System.Drawing.Point(-2, 174)
         Me.PictureBox11.Name = "PictureBox11"
-        Me.PictureBox11.Size = New System.Drawing.Size(517, 492)
+        Me.PictureBox11.Size = New System.Drawing.Size(388, 400)
         Me.PictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox11.TabIndex = 16
         Me.PictureBox11.TabStop = False
@@ -366,10 +361,10 @@ Partial Class LoginForm
         Me.ShowPassBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ShowPassBtn.Font = New System.Drawing.Font("Lucida Fax", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ShowPassBtn.ForeColor = System.Drawing.Color.Black
-        Me.ShowPassBtn.Location = New System.Drawing.Point(971, 474)
+        Me.ShowPassBtn.Location = New System.Drawing.Point(724, 385)
         Me.ShowPassBtn.Margin = New System.Windows.Forms.Padding(0)
         Me.ShowPassBtn.Name = "ShowPassBtn"
-        Me.ShowPassBtn.Size = New System.Drawing.Size(32, 33)
+        Me.ShowPassBtn.Size = New System.Drawing.Size(24, 27)
         Me.ShowPassBtn.TabIndex = 16
         Me.ShowPassBtn.Text = "👁"
         Me.ShowPassBtn.UseVisualStyleBackColor = False
@@ -388,9 +383,8 @@ Partial Class LoginForm
         Me.FPasswordPanel.Controls.Add(Me.Label9)
         Me.FPasswordPanel.Controls.Add(Me.Label10)
         Me.FPasswordPanel.Location = New System.Drawing.Point(0, 0)
-        Me.FPasswordPanel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.FPasswordPanel.Name = "FPasswordPanel"
-        Me.FPasswordPanel.Size = New System.Drawing.Size(1108, 766)
+        Me.FPasswordPanel.Size = New System.Drawing.Size(831, 622)
         Me.FPasswordPanel.TabIndex = 16
         Me.FPasswordPanel.Visible = False
         '
@@ -405,10 +399,9 @@ Partial Class LoginForm
         Me.Panel2.Controls.Add(Me.Label14)
         Me.Panel2.Controls.Add(Me.Label16)
         Me.Panel2.Controls.Add(Me.PictureBox8)
-        Me.Panel2.Location = New System.Drawing.Point(592, -1)
-        Me.Panel2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Panel2.Location = New System.Drawing.Point(444, -1)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(515, 770)
+        Me.Panel2.Size = New System.Drawing.Size(386, 626)
         Me.Panel2.TabIndex = 32
         '
         'Label5
@@ -417,8 +410,7 @@ Partial Class LoginForm
         Me.Label5.BackColor = System.Drawing.Color.Black
         Me.Label5.Font = New System.Drawing.Font("Lucida Fax", 13.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.White
-        Me.Label5.Location = New System.Drawing.Point(159, 76)
-        Me.Label5.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label5.Location = New System.Drawing.Point(119, 62)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(227, 84)
         Me.Label5.TabIndex = 33
@@ -429,10 +421,9 @@ Partial Class LoginForm
         'PictureBox5
         '
         Me.PictureBox5.Image = Global.posinvcs.My.Resources.Resources.LOGO_MSHOP
-        Me.PictureBox5.Location = New System.Drawing.Point(44, 78)
-        Me.PictureBox5.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PictureBox5.Location = New System.Drawing.Point(33, 63)
         Me.PictureBox5.Name = "PictureBox5"
-        Me.PictureBox5.Size = New System.Drawing.Size(111, 102)
+        Me.PictureBox5.Size = New System.Drawing.Size(83, 83)
         Me.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox5.TabIndex = 16
         Me.PictureBox5.TabStop = False
@@ -440,10 +431,9 @@ Partial Class LoginForm
         'PictureBox6
         '
         Me.PictureBox6.Image = Global.posinvcs.My.Resources.Resources.logoschool
-        Me.PictureBox6.Location = New System.Drawing.Point(47, 709)
-        Me.PictureBox6.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PictureBox6.Location = New System.Drawing.Point(35, 576)
         Me.PictureBox6.Name = "PictureBox6"
-        Me.PictureBox6.Size = New System.Drawing.Size(53, 49)
+        Me.PictureBox6.Size = New System.Drawing.Size(40, 40)
         Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox6.TabIndex = 32
         Me.PictureBox6.TabStop = False
@@ -457,10 +447,10 @@ Partial Class LoginForm
         Me.Backbtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Backbtn.Font = New System.Drawing.Font("Lucida Fax", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Backbtn.ForeColor = System.Drawing.Color.White
-        Me.Backbtn.Location = New System.Drawing.Point(463, 2)
+        Me.Backbtn.Location = New System.Drawing.Point(347, 2)
         Me.Backbtn.Margin = New System.Windows.Forms.Padding(1)
         Me.Backbtn.Name = "Backbtn"
-        Me.Backbtn.Size = New System.Drawing.Size(51, 46)
+        Me.Backbtn.Size = New System.Drawing.Size(38, 37)
         Me.Backbtn.TabIndex = 15
         Me.Backbtn.Text = "↩"
         Me.Backbtn.UseVisualStyleBackColor = False
@@ -472,8 +462,7 @@ Partial Class LoginForm
         Me.Label11.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label11.Font = New System.Drawing.Font("Lucida Fax", 10.0!)
         Me.Label11.ForeColor = System.Drawing.Color.White
-        Me.Label11.Location = New System.Drawing.Point(104, 715)
-        Me.Label11.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label11.Location = New System.Drawing.Point(78, 581)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(265, 32)
         Me.Label11.TabIndex = 31
@@ -485,8 +474,7 @@ Partial Class LoginForm
         Me.Label14.BackColor = System.Drawing.Color.Black
         Me.Label14.Font = New System.Drawing.Font("Lucida Fax", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label14.ForeColor = System.Drawing.Color.White
-        Me.Label14.Location = New System.Drawing.Point(37, 161)
-        Me.Label14.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label14.Location = New System.Drawing.Point(28, 131)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(329, 38)
         Me.Label14.TabIndex = 21
@@ -498,8 +486,7 @@ Partial Class LoginForm
         Me.Label16.BackColor = System.Drawing.Color.Black
         Me.Label16.Font = New System.Drawing.Font("Lucida Fax", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label16.ForeColor = System.Drawing.Color.White
-        Me.Label16.Location = New System.Drawing.Point(37, 39)
-        Me.Label16.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label16.Location = New System.Drawing.Point(28, 32)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(329, 38)
         Me.Label16.TabIndex = 20
@@ -508,10 +495,9 @@ Partial Class LoginForm
         'PictureBox8
         '
         Me.PictureBox8.Image = Global.posinvcs.My.Resources.Resources.bg21
-        Me.PictureBox8.Location = New System.Drawing.Point(-3, 208)
-        Me.PictureBox8.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PictureBox8.Location = New System.Drawing.Point(-2, 169)
         Me.PictureBox8.Name = "PictureBox8"
-        Me.PictureBox8.Size = New System.Drawing.Size(517, 492)
+        Me.PictureBox8.Size = New System.Drawing.Size(388, 400)
         Me.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox8.TabIndex = 16
         Me.PictureBox8.TabStop = False
@@ -522,8 +508,7 @@ Partial Class LoginForm
         Me.Label6.BackColor = System.Drawing.Color.White
         Me.Label6.Font = New System.Drawing.Font("Lucida Fax", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.Black
-        Me.Label6.Location = New System.Drawing.Point(100, 528)
-        Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label6.Location = New System.Drawing.Point(75, 429)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(94, 25)
         Me.Label6.TabIndex = 17
@@ -535,19 +520,17 @@ Partial Class LoginForm
         Me.SSQcb.Font = New System.Drawing.Font("Lucida Fax", 16.0!)
         Me.SSQcb.FormattingEnabled = True
         Me.SSQcb.Items.AddRange(New Object() {"What is your mother’s maiden name?", "What is your pet name?", "In what city were you born?", "What is your favoite color?", "What was your first school?"})
-        Me.SSQcb.Location = New System.Drawing.Point(107, 464)
-        Me.SSQcb.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.SSQcb.Location = New System.Drawing.Point(80, 377)
         Me.SSQcb.Name = "SSQcb"
-        Me.SSQcb.Size = New System.Drawing.Size(377, 32)
+        Me.SSQcb.Size = New System.Drawing.Size(284, 32)
         Me.SSQcb.TabIndex = 16
         '
         'PictureBox4
         '
         Me.PictureBox4.Image = Global.posinvcs.My.Resources.Resources.profile
-        Me.PictureBox4.Location = New System.Drawing.Point(216, 71)
-        Me.PictureBox4.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PictureBox4.Location = New System.Drawing.Point(162, 58)
         Me.PictureBox4.Name = "PictureBox4"
-        Me.PictureBox4.Size = New System.Drawing.Size(160, 148)
+        Me.PictureBox4.Size = New System.Drawing.Size(120, 120)
         Me.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox4.TabIndex = 2
         Me.PictureBox4.TabStop = False
@@ -557,10 +540,9 @@ Partial Class LoginForm
         Me.UNFPasstb.BackColor = System.Drawing.Color.Gainsboro
         Me.UNFPasstb.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.UNFPasstb.Font = New System.Drawing.Font("Lucida Fax", 16.0!)
-        Me.UNFPasstb.Location = New System.Drawing.Point(107, 366)
-        Me.UNFPasstb.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.UNFPasstb.Location = New System.Drawing.Point(80, 297)
         Me.UNFPasstb.Name = "UNFPasstb"
-        Me.UNFPasstb.Size = New System.Drawing.Size(377, 33)
+        Me.UNFPasstb.Size = New System.Drawing.Size(284, 33)
         Me.UNFPasstb.TabIndex = 3
         '
         'Answertb
@@ -568,10 +550,9 @@ Partial Class LoginForm
         Me.Answertb.BackColor = System.Drawing.Color.Gainsboro
         Me.Answertb.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.Answertb.Font = New System.Drawing.Font("Lucida Fax", 16.0!)
-        Me.Answertb.Location = New System.Drawing.Point(107, 562)
-        Me.Answertb.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Answertb.Location = New System.Drawing.Point(80, 457)
         Me.Answertb.Name = "Answertb"
-        Me.Answertb.Size = New System.Drawing.Size(377, 33)
+        Me.Answertb.Size = New System.Drawing.Size(284, 33)
         Me.Answertb.TabIndex = 4
         '
         'Label8
@@ -580,8 +561,7 @@ Partial Class LoginForm
         Me.Label8.BackColor = System.Drawing.Color.White
         Me.Label8.Font = New System.Drawing.Font("Lucida Fax", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.Black
-        Me.Label8.Location = New System.Drawing.Point(100, 430)
-        Me.Label8.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label8.Location = New System.Drawing.Point(75, 349)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(278, 25)
         Me.Label8.TabIndex = 8
@@ -594,10 +574,9 @@ Partial Class LoginForm
         Me.Continuebtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Continuebtn.Font = New System.Drawing.Font("Lucida Fax", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Continuebtn.ForeColor = System.Drawing.Color.White
-        Me.Continuebtn.Location = New System.Drawing.Point(107, 617)
-        Me.Continuebtn.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Continuebtn.Location = New System.Drawing.Point(80, 501)
         Me.Continuebtn.Name = "Continuebtn"
-        Me.Continuebtn.Size = New System.Drawing.Size(379, 48)
+        Me.Continuebtn.Size = New System.Drawing.Size(284, 39)
         Me.Continuebtn.TabIndex = 5
         Me.Continuebtn.Text = "Continue"
         Me.Continuebtn.UseVisualStyleBackColor = False
@@ -608,8 +587,7 @@ Partial Class LoginForm
         Me.Label9.BackColor = System.Drawing.Color.White
         Me.Label9.Font = New System.Drawing.Font("Lucida Fax", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.ForeColor = System.Drawing.Color.Black
-        Me.Label9.Location = New System.Drawing.Point(100, 331)
-        Me.Label9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label9.Location = New System.Drawing.Point(75, 269)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(121, 25)
         Me.Label9.TabIndex = 7
@@ -621,8 +599,7 @@ Partial Class LoginForm
         Me.Label10.BackColor = System.Drawing.Color.White
         Me.Label10.Font = New System.Drawing.Font("Lucida Fax", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.ForeColor = System.Drawing.Color.Black
-        Me.Label10.Location = New System.Drawing.Point(105, 240)
-        Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label10.Location = New System.Drawing.Point(79, 195)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(287, 32)
         Me.Label10.TabIndex = 6
@@ -642,9 +619,8 @@ Partial Class LoginForm
         Me.RPasswordPanel.Controls.Add(Me.Label17)
         Me.RPasswordPanel.Controls.Add(Me.Label18)
         Me.RPasswordPanel.Location = New System.Drawing.Point(0, 0)
-        Me.RPasswordPanel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RPasswordPanel.Name = "RPasswordPanel"
-        Me.RPasswordPanel.Size = New System.Drawing.Size(1108, 766)
+        Me.RPasswordPanel.Size = New System.Drawing.Size(831, 622)
         Me.RPasswordPanel.TabIndex = 22
         Me.RPasswordPanel.Visible = False
         '
@@ -659,10 +635,9 @@ Partial Class LoginForm
         Me.Panel4.Controls.Add(Me.Label25)
         Me.Panel4.Controls.Add(Me.Label26)
         Me.Panel4.Controls.Add(Me.PictureBox14)
-        Me.Panel4.Location = New System.Drawing.Point(592, -2)
-        Me.Panel4.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Panel4.Location = New System.Drawing.Point(444, -2)
         Me.Panel4.Name = "Panel4"
-        Me.Panel4.Size = New System.Drawing.Size(515, 770)
+        Me.Panel4.Size = New System.Drawing.Size(386, 626)
         Me.Panel4.TabIndex = 32
         '
         'Backbtn2
@@ -674,10 +649,10 @@ Partial Class LoginForm
         Me.Backbtn2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Backbtn2.Font = New System.Drawing.Font("Lucida Fax", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Backbtn2.ForeColor = System.Drawing.Color.White
-        Me.Backbtn2.Location = New System.Drawing.Point(455, 0)
+        Me.Backbtn2.Location = New System.Drawing.Point(341, 0)
         Me.Backbtn2.Margin = New System.Windows.Forms.Padding(1)
         Me.Backbtn2.Name = "Backbtn2"
-        Me.Backbtn2.Size = New System.Drawing.Size(60, 49)
+        Me.Backbtn2.Size = New System.Drawing.Size(45, 40)
         Me.Backbtn2.TabIndex = 33
         Me.Backbtn2.Text = "↩"
         Me.Backbtn2.UseVisualStyleBackColor = False
@@ -688,8 +663,7 @@ Partial Class LoginForm
         Me.Label13.BackColor = System.Drawing.Color.Black
         Me.Label13.Font = New System.Drawing.Font("Lucida Fax", 13.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.ForeColor = System.Drawing.Color.White
-        Me.Label13.Location = New System.Drawing.Point(159, 76)
-        Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label13.Location = New System.Drawing.Point(119, 62)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(227, 84)
         Me.Label13.TabIndex = 33
@@ -700,10 +674,9 @@ Partial Class LoginForm
         'PictureBox12
         '
         Me.PictureBox12.Image = Global.posinvcs.My.Resources.Resources.LOGO_MSHOP
-        Me.PictureBox12.Location = New System.Drawing.Point(44, 78)
-        Me.PictureBox12.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PictureBox12.Location = New System.Drawing.Point(33, 63)
         Me.PictureBox12.Name = "PictureBox12"
-        Me.PictureBox12.Size = New System.Drawing.Size(111, 102)
+        Me.PictureBox12.Size = New System.Drawing.Size(83, 83)
         Me.PictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox12.TabIndex = 16
         Me.PictureBox12.TabStop = False
@@ -711,10 +684,9 @@ Partial Class LoginForm
         'PictureBox13
         '
         Me.PictureBox13.Image = Global.posinvcs.My.Resources.Resources.logoschool
-        Me.PictureBox13.Location = New System.Drawing.Point(48, 713)
-        Me.PictureBox13.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PictureBox13.Location = New System.Drawing.Point(36, 579)
         Me.PictureBox13.Name = "PictureBox13"
-        Me.PictureBox13.Size = New System.Drawing.Size(53, 49)
+        Me.PictureBox13.Size = New System.Drawing.Size(40, 40)
         Me.PictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox13.TabIndex = 32
         Me.PictureBox13.TabStop = False
@@ -726,8 +698,7 @@ Partial Class LoginForm
         Me.Label23.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label23.Font = New System.Drawing.Font("Lucida Fax", 10.0!)
         Me.Label23.ForeColor = System.Drawing.Color.White
-        Me.Label23.Location = New System.Drawing.Point(105, 718)
-        Me.Label23.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label23.Location = New System.Drawing.Point(79, 583)
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(265, 32)
         Me.Label23.TabIndex = 31
@@ -739,8 +710,7 @@ Partial Class LoginForm
         Me.Label25.BackColor = System.Drawing.Color.Black
         Me.Label25.Font = New System.Drawing.Font("Lucida Fax", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label25.ForeColor = System.Drawing.Color.White
-        Me.Label25.Location = New System.Drawing.Point(37, 159)
-        Me.Label25.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label25.Location = New System.Drawing.Point(28, 129)
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(329, 38)
         Me.Label25.TabIndex = 21
@@ -752,8 +722,7 @@ Partial Class LoginForm
         Me.Label26.BackColor = System.Drawing.Color.Black
         Me.Label26.Font = New System.Drawing.Font("Lucida Fax", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label26.ForeColor = System.Drawing.Color.White
-        Me.Label26.Location = New System.Drawing.Point(37, 39)
-        Me.Label26.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label26.Location = New System.Drawing.Point(28, 32)
         Me.Label26.Name = "Label26"
         Me.Label26.Size = New System.Drawing.Size(329, 38)
         Me.Label26.TabIndex = 20
@@ -762,10 +731,9 @@ Partial Class LoginForm
         'PictureBox14
         '
         Me.PictureBox14.Image = Global.posinvcs.My.Resources.Resources.bg21
-        Me.PictureBox14.Location = New System.Drawing.Point(-3, 213)
-        Me.PictureBox14.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PictureBox14.Location = New System.Drawing.Point(-2, 173)
         Me.PictureBox14.Name = "PictureBox14"
-        Me.PictureBox14.Size = New System.Drawing.Size(517, 492)
+        Me.PictureBox14.Size = New System.Drawing.Size(388, 400)
         Me.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox14.TabIndex = 16
         Me.PictureBox14.TabStop = False
@@ -777,10 +745,10 @@ Partial Class LoginForm
         Me.ShowNewPassBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ShowNewPassBtn.Font = New System.Drawing.Font("Lucida Fax", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ShowNewPassBtn.ForeColor = System.Drawing.Color.Black
-        Me.ShowNewPassBtn.Location = New System.Drawing.Point(451, 375)
+        Me.ShowNewPassBtn.Location = New System.Drawing.Point(338, 305)
         Me.ShowNewPassBtn.Margin = New System.Windows.Forms.Padding(0)
         Me.ShowNewPassBtn.Name = "ShowNewPassBtn"
-        Me.ShowNewPassBtn.Size = New System.Drawing.Size(32, 33)
+        Me.ShowNewPassBtn.Size = New System.Drawing.Size(24, 27)
         Me.ShowNewPassBtn.TabIndex = 29
         Me.ShowNewPassBtn.Text = "👁"
         Me.ShowNewPassBtn.UseVisualStyleBackColor = False
@@ -792,10 +760,10 @@ Partial Class LoginForm
         Me.ShowConfirmPassBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ShowConfirmPassBtn.Font = New System.Drawing.Font("Lucida Fax", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ShowConfirmPassBtn.ForeColor = System.Drawing.Color.Black
-        Me.ShowConfirmPassBtn.Location = New System.Drawing.Point(452, 473)
+        Me.ShowConfirmPassBtn.Location = New System.Drawing.Point(339, 384)
         Me.ShowConfirmPassBtn.Margin = New System.Windows.Forms.Padding(0)
         Me.ShowConfirmPassBtn.Name = "ShowConfirmPassBtn"
-        Me.ShowConfirmPassBtn.Size = New System.Drawing.Size(32, 33)
+        Me.ShowConfirmPassBtn.Size = New System.Drawing.Size(24, 27)
         Me.ShowConfirmPassBtn.TabIndex = 28
         Me.ShowConfirmPassBtn.Text = "👁"
         Me.ShowConfirmPassBtn.UseVisualStyleBackColor = False
@@ -806,8 +774,7 @@ Partial Class LoginForm
         Me.Label15.BackColor = System.Drawing.Color.White
         Me.Label15.Font = New System.Drawing.Font("Lucida Fax", 16.0!)
         Me.Label15.ForeColor = System.Drawing.Color.Black
-        Me.Label15.Location = New System.Drawing.Point(117, 433)
-        Me.Label15.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label15.Location = New System.Drawing.Point(88, 352)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(216, 25)
         Me.Label15.TabIndex = 27
@@ -816,10 +783,9 @@ Partial Class LoginForm
         'PictureBox7
         '
         Me.PictureBox7.Image = Global.posinvcs.My.Resources.Resources.profile
-        Me.PictureBox7.Location = New System.Drawing.Point(217, 71)
-        Me.PictureBox7.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PictureBox7.Location = New System.Drawing.Point(163, 58)
         Me.PictureBox7.Name = "PictureBox7"
-        Me.PictureBox7.Size = New System.Drawing.Size(160, 148)
+        Me.PictureBox7.Size = New System.Drawing.Size(120, 120)
         Me.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox7.TabIndex = 18
         Me.PictureBox7.TabStop = False
@@ -829,10 +795,9 @@ Partial Class LoginForm
         Me.NewPassTB.BackColor = System.Drawing.Color.Gainsboro
         Me.NewPassTB.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.NewPassTB.Font = New System.Drawing.Font("Lucida Fax", 16.0!)
-        Me.NewPassTB.Location = New System.Drawing.Point(108, 370)
-        Me.NewPassTB.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NewPassTB.Location = New System.Drawing.Point(81, 301)
         Me.NewPassTB.Name = "NewPassTB"
-        Me.NewPassTB.Size = New System.Drawing.Size(377, 33)
+        Me.NewPassTB.Size = New System.Drawing.Size(284, 33)
         Me.NewPassTB.TabIndex = 19
         '
         'ConfirmPasswordTB
@@ -840,10 +805,9 @@ Partial Class LoginForm
         Me.ConfirmPasswordTB.BackColor = System.Drawing.Color.Gainsboro
         Me.ConfirmPasswordTB.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.ConfirmPasswordTB.Font = New System.Drawing.Font("Lucida Fax", 16.0!)
-        Me.ConfirmPasswordTB.Location = New System.Drawing.Point(108, 468)
-        Me.ConfirmPasswordTB.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ConfirmPasswordTB.Location = New System.Drawing.Point(81, 380)
         Me.ConfirmPasswordTB.Name = "ConfirmPasswordTB"
-        Me.ConfirmPasswordTB.Size = New System.Drawing.Size(377, 33)
+        Me.ConfirmPasswordTB.Size = New System.Drawing.Size(284, 33)
         Me.ConfirmPasswordTB.TabIndex = 20
         '
         'SaveBtn
@@ -853,10 +817,9 @@ Partial Class LoginForm
         Me.SaveBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.SaveBtn.Font = New System.Drawing.Font("Lucida Fax", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SaveBtn.ForeColor = System.Drawing.Color.White
-        Me.SaveBtn.Location = New System.Drawing.Point(108, 522)
-        Me.SaveBtn.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.SaveBtn.Location = New System.Drawing.Point(81, 424)
         Me.SaveBtn.Name = "SaveBtn"
-        Me.SaveBtn.Size = New System.Drawing.Size(379, 48)
+        Me.SaveBtn.Size = New System.Drawing.Size(284, 39)
         Me.SaveBtn.TabIndex = 21
         Me.SaveBtn.Text = "Save"
         Me.SaveBtn.UseVisualStyleBackColor = False
@@ -867,8 +830,7 @@ Partial Class LoginForm
         Me.Label17.BackColor = System.Drawing.Color.White
         Me.Label17.Font = New System.Drawing.Font("Lucida Fax", 16.0!)
         Me.Label17.ForeColor = System.Drawing.Color.Black
-        Me.Label17.Location = New System.Drawing.Point(117, 336)
-        Me.Label17.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label17.Location = New System.Drawing.Point(88, 273)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(237, 25)
         Me.Label17.TabIndex = 23
@@ -880,38 +842,22 @@ Partial Class LoginForm
         Me.Label18.BackColor = System.Drawing.Color.White
         Me.Label18.Font = New System.Drawing.Font("Lucida Fax", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label18.ForeColor = System.Drawing.Color.Black
-        Me.Label18.Location = New System.Drawing.Point(127, 239)
-        Me.Label18.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label18.Location = New System.Drawing.Point(95, 194)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(257, 32)
         Me.Label18.TabIndex = 22
         Me.Label18.Text = "RESET PASSWORD"
         '
-        'lblLockCountdown
-        '
-        Me.lblLockCountdown.AutoSize = True
-        Me.lblLockCountdown.BackColor = System.Drawing.Color.White
-        Me.lblLockCountdown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblLockCountdown.Font = New System.Drawing.Font("Lucida Fax", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblLockCountdown.ForeColor = System.Drawing.Color.Red
-        Me.lblLockCountdown.Location = New System.Drawing.Point(649, 286)
-        Me.lblLockCountdown.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.lblLockCountdown.Name = "lblLockCountdown"
-        Me.lblLockCountdown.Size = New System.Drawing.Size(2, 18)
-        Me.lblLockCountdown.TabIndex = 32
-        Me.lblLockCountdown.Visible = False
-        '
         'LoginForm
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1105, 766)
+        Me.ClientSize = New System.Drawing.Size(829, 622)
         Me.Controls.Add(Me.LoginPanel)
         Me.Controls.Add(Me.FPasswordPanel)
         Me.Controls.Add(Me.RPasswordPanel)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "LoginForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "LoginForm"

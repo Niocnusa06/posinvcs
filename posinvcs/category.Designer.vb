@@ -32,7 +32,7 @@ Partial Class category
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtcategory = New System.Windows.Forms.TextBox()
         Me.btnupdate = New Guna.UI2.WinForms.Guna2Button()
-        Me.Guna2Button1 = New Guna.UI2.WinForms.Guna2Button()
+        Me.cleartxtbtn = New Guna.UI2.WinForms.Guna2Button()
         Me.searchtb = New Guna.UI2.WinForms.Guna2TextBox()
         Me.btnadd = New Guna.UI2.WinForms.Guna2Button()
         CType(Me.dgvcategory, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -141,30 +141,30 @@ Partial Class category
         Me.btnupdate.Text = "UPDATE CATEGORY"
         Me.btnupdate.TextOffset = New System.Drawing.Point(15, 0)
         '
-        'Guna2Button1
+        'cleartxtbtn
         '
-        Me.Guna2Button1.BorderColor = System.Drawing.Color.Salmon
-        Me.Guna2Button1.BorderRadius = 7
-        Me.Guna2Button1.BorderThickness = 1
-        Me.Guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray
-        Me.Guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
-        Me.Guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.Guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
-        Me.Guna2Button1.FillColor = System.Drawing.Color.Salmon
-        Me.Guna2Button1.Font = New System.Drawing.Font("Segoe UI", 13.0!, System.Drawing.FontStyle.Bold)
-        Me.Guna2Button1.ForeColor = System.Drawing.Color.Black
-        Me.Guna2Button1.HoverState.FillColor = System.Drawing.Color.SteelBlue
-        Me.Guna2Button1.Image = Global.posinvcs.My.Resources.Resources.cancel_button
-        Me.Guna2Button1.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.Guna2Button1.ImageOffset = New System.Drawing.Point(10, 0)
-        Me.Guna2Button1.ImageSize = New System.Drawing.Size(18, 18)
-        Me.Guna2Button1.Location = New System.Drawing.Point(1075, 141)
-        Me.Guna2Button1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.Guna2Button1.Name = "Guna2Button1"
-        Me.Guna2Button1.Size = New System.Drawing.Size(237, 44)
-        Me.Guna2Button1.TabIndex = 32
-        Me.Guna2Button1.Text = "CLEAR TEXT"
-        Me.Guna2Button1.TextOffset = New System.Drawing.Point(10, 0)
+        Me.cleartxtbtn.BorderColor = System.Drawing.Color.Salmon
+        Me.cleartxtbtn.BorderRadius = 7
+        Me.cleartxtbtn.BorderThickness = 1
+        Me.cleartxtbtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.cleartxtbtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.cleartxtbtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.cleartxtbtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.cleartxtbtn.FillColor = System.Drawing.Color.Salmon
+        Me.cleartxtbtn.Font = New System.Drawing.Font("Segoe UI", 13.0!, System.Drawing.FontStyle.Bold)
+        Me.cleartxtbtn.ForeColor = System.Drawing.Color.Black
+        Me.cleartxtbtn.HoverState.FillColor = System.Drawing.Color.SteelBlue
+        Me.cleartxtbtn.Image = Global.posinvcs.My.Resources.Resources.cancel_button
+        Me.cleartxtbtn.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.cleartxtbtn.ImageOffset = New System.Drawing.Point(10, 0)
+        Me.cleartxtbtn.ImageSize = New System.Drawing.Size(18, 18)
+        Me.cleartxtbtn.Location = New System.Drawing.Point(1075, 141)
+        Me.cleartxtbtn.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.cleartxtbtn.Name = "cleartxtbtn"
+        Me.cleartxtbtn.Size = New System.Drawing.Size(237, 44)
+        Me.cleartxtbtn.TabIndex = 32
+        Me.cleartxtbtn.Text = "CLEAR TEXT"
+        Me.cleartxtbtn.TextOffset = New System.Drawing.Point(10, 0)
         '
         'searchtb
         '
@@ -221,7 +221,7 @@ Partial Class category
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1593, 986)
         Me.Controls.Add(Me.btnupdate)
-        Me.Controls.Add(Me.Guna2Button1)
+        Me.Controls.Add(Me.cleartxtbtn)
         Me.Controls.Add(Me.txtcategory)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.searchtb)
@@ -243,6 +243,6 @@ Partial Class category
     Friend WithEvents searchtb As Guna.UI2.WinForms.Guna2TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents txtcategory As TextBox
-    Friend WithEvents Guna2Button1 As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents cleartxtbtn As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents btnupdate As Guna.UI2.WinForms.Guna2Button
 End Class

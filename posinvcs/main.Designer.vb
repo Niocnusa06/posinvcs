@@ -47,12 +47,23 @@ Partial Class main
         Me.Guna2Elipse5 = New Guna.UI2.WinForms.Guna2Elipse(Me.components)
         Me.Guna2Elipse3 = New Guna.UI2.WinForms.Guna2Elipse(Me.components)
         Me.panelMain = New Guna.UI2.WinForms.Guna2Panel()
+        Me.alertlg = New System.Windows.Forms.Panel()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Label21 = New System.Windows.Forms.Label()
         Me.DropD_Inve = New System.Windows.Forms.Panel()
         Me.Btn_Inve_ProdL = New Guna.UI2.WinForms.Guna2Button()
         Me.Btn_dmg = New Guna.UI2.WinForms.Guna2Button()
         Me.Guna2Panel2.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
+        Me.panelMain.SuspendLayout()
+        Me.alertlg.SuspendLayout()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel2.SuspendLayout()
         Me.DropD_Inve.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -398,12 +409,102 @@ Partial Class main
         'panelMain
         '
         Me.panelMain.BackColor = System.Drawing.Color.FromArgb(CType(CType(237, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(247, Byte), Integer))
+        Me.panelMain.Controls.Add(Me.alertlg)
         Me.panelMain.FillColor = System.Drawing.SystemColors.ButtonFace
         Me.panelMain.Location = New System.Drawing.Point(322, 33)
         Me.panelMain.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.panelMain.Name = "panelMain"
         Me.panelMain.Size = New System.Drawing.Size(1593, 986)
         Me.panelMain.TabIndex = 2
+        '
+        'alertlg
+        '
+        Me.alertlg.BackColor = System.Drawing.Color.White
+        Me.alertlg.Controls.Add(Me.Button1)
+        Me.alertlg.Controls.Add(Me.PictureBox2)
+        Me.alertlg.Controls.Add(Me.Button2)
+        Me.alertlg.Controls.Add(Me.Label23)
+        Me.alertlg.Controls.Add(Me.Panel2)
+        Me.alertlg.Location = New System.Drawing.Point(590, 371)
+        Me.alertlg.Name = "alertlg"
+        Me.alertlg.Size = New System.Drawing.Size(412, 244)
+        Me.alertlg.TabIndex = 56
+        Me.alertlg.Visible = False
+        '
+        'Button1
+        '
+        Me.Button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PowderBlue
+        Me.Button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SkyBlue
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.Font = New System.Drawing.Font("Lucida Sans", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.Color.Black
+        Me.Button1.Location = New System.Drawing.Point(224, 187)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(141, 28)
+        Me.Button1.TabIndex = 54
+        Me.Button1.Text = "NO"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.Image = Global.posinvcs.My.Resources.Resources.icons8_warning
+        Me.PictureBox2.Location = New System.Drawing.Point(169, 60)
+        Me.PictureBox2.Margin = New System.Windows.Forms.Padding(2)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(68, 73)
+        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox2.TabIndex = 53
+        Me.PictureBox2.TabStop = False
+        '
+        'Button2
+        '
+        Me.Button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PowderBlue
+        Me.Button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SkyBlue
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("Lucida Sans", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.ForeColor = System.Drawing.Color.Black
+        Me.Button2.Location = New System.Drawing.Point(48, 187)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(141, 28)
+        Me.Button2.TabIndex = 52
+        Me.Button2.Text = "YES"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Font = New System.Drawing.Font("Lucida Fax", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label23.ForeColor = System.Drawing.Color.Black
+        Me.Label23.Location = New System.Drawing.Point(44, 145)
+        Me.Label23.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(336, 24)
+        Me.Label23.TabIndex = 51
+        Me.Label23.Text = "Are you sure you want to exit?"
+        Me.Label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Panel2
+        '
+        Me.Panel2.BackColor = System.Drawing.Color.Black
+        Me.Panel2.Controls.Add(Me.Label21)
+        Me.Panel2.Location = New System.Drawing.Point(0, 0)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(412, 42)
+        Me.Panel2.TabIndex = 49
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Font = New System.Drawing.Font("Lucida Fax", 13.0!)
+        Me.Label21.ForeColor = System.Drawing.Color.White
+        Me.Label21.Location = New System.Drawing.Point(16, 11)
+        Me.Label21.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(72, 21)
+        Me.Label21.TabIndex = 54
+        Me.Label21.Text = "Logout"
         '
         'DropD_Inve
         '
@@ -479,6 +580,12 @@ Partial Class main
         Me.Guna2Panel2.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
+        Me.panelMain.ResumeLayout(False)
+        Me.alertlg.ResumeLayout(False)
+        Me.alertlg.PerformLayout()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
         Me.DropD_Inve.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -511,4 +618,11 @@ Partial Class main
     Friend WithEvents sihp As Guna.UI2.WinForms.Guna2CustomGradientPanel
     Friend WithEvents catgp As Guna.UI2.WinForms.Guna2CustomGradientPanel
     Friend WithEvents minimizebtn As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents alertlg As Panel
+    Friend WithEvents PictureBox2 As PictureBox
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Label23 As Label
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Label21 As Label
+    Friend WithEvents Button1 As Button
 End Class

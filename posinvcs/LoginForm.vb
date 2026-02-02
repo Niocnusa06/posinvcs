@@ -59,8 +59,10 @@ Public Class LoginForm
                         failedAttempts = 0
                         lockStage = 0
 
+                        Dim accountType = reader("account_type").ToString.ToLower()
 
-                        Dim accountType = reader("account_type").ToString.ToLower
+
+                        Form1.LoggedInUsername = username
 
 
                         usernametb.Text = ""
@@ -68,16 +70,17 @@ Public Class LoginForm
 
                         If accountType = "admin" Then
                             MessageBox.Show("Welcome, Admin!", "Login Successful", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                            main.Show()
+                            Dim frm As New main()
+                            frm.Show()
+
                             Me.Hide()
-                            main.Focus()
 
                         ElseIf accountType = "cashier" Then
                             MessageBox.Show("Welcome, Cashier!", "Login Successful", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             Form1.Show()
                             Me.Hide()
-                            Form1.Focus()
                         End If
+
                     Else
                         failedAttempts += 1
 
@@ -128,6 +131,8 @@ Public Class LoginForm
 
                     reader.Close()
                 End Using
+
+
             End Using
         Catch ex As Exception
             MessageBox.Show("Connection error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -484,4 +489,6 @@ Public Class LoginForm
     Private Sub lblLockCountdown_Click(sender As Object, e As EventArgs) Handles lblLockCountdown.Click
 
     End Sub
+
+
 End Class

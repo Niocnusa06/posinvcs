@@ -97,7 +97,7 @@ Public Class backuprestore
 
     End Sub
 
-    Private Sub AutoBackupDatabase()
+    Public Sub AutoBackupDatabase()
         Try
             Dim mysqlBin As String = "D:\xampp\mysql\bin\"
             Dim backupDir As String = Path.Combine(Application.StartupPath, "autobackup")
@@ -122,9 +122,10 @@ Public Class backuprestore
             End Using
 
         Catch
-
+            ' Silent auto-backup
         End Try
     End Sub
+
 
 
     ' ================= BUTTON EVENTS =================
@@ -144,4 +145,7 @@ Public Class backuprestore
         RestoreDatabase()
     End Sub
 
+    Private Sub RestoreLabel_Click(sender As Object, e As EventArgs) Handles RestoreLabel.Click
+
+    End Sub
 End Class

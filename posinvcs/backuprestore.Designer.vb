@@ -29,7 +29,6 @@ Partial Class backuprestore
         Me.Label1 = New System.Windows.Forms.Label()
         Me.restorePicBox = New System.Windows.Forms.PictureBox()
         Me.backupPicBox = New System.Windows.Forms.PictureBox()
-        Me.backupLabel = New System.Windows.Forms.Label()
         Me.RestoreLabel = New System.Windows.Forms.Label()
         CType(Me.restorePicBox, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.backupPicBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -112,16 +111,6 @@ Partial Class backuprestore
         Me.backupPicBox.TabIndex = 4
         Me.backupPicBox.TabStop = False
         '
-        'backupLabel
-        '
-        Me.backupLabel.AutoSize = True
-        Me.backupLabel.Font = New System.Drawing.Font("Segoe UI Semibold", 16.0!, System.Drawing.FontStyle.Bold)
-        Me.backupLabel.Location = New System.Drawing.Point(45, 847)
-        Me.backupLabel.Name = "backupLabel"
-        Me.backupLabel.Size = New System.Drawing.Size(28, 30)
-        Me.backupLabel.TabIndex = 6
-        Me.backupLabel.Text = "..."
-        '
         'RestoreLabel
         '
         Me.RestoreLabel.AutoSize = True
@@ -139,7 +128,6 @@ Partial Class backuprestore
         Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1593, 986)
         Me.Controls.Add(Me.RestoreLabel)
-        Me.Controls.Add(Me.backupLabel)
         Me.Controls.Add(Me.restorePicBox)
         Me.Controls.Add(Me.backupPicBox)
         Me.Controls.Add(Me.Label1)
@@ -161,6 +149,5 @@ Partial Class backuprestore
     Friend WithEvents Label1 As Label
     Friend WithEvents restorePicBox As PictureBox
     Friend WithEvents backupPicBox As PictureBox
-    Friend WithEvents backupLabel As Label
     Friend WithEvents RestoreLabel As Label
 End Class

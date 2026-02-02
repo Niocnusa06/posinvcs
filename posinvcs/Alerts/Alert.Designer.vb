@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class AlertExit
+Partial Class Alertfields
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -38,9 +38,10 @@ Partial Class AlertExit
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button2.Font = New System.Drawing.Font("Lucida Sans", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button2.ForeColor = System.Drawing.Color.Black
-        Me.Button2.Location = New System.Drawing.Point(12, 210)
+        Me.Button2.Location = New System.Drawing.Point(9, 171)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(2)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(459, 34)
+        Me.Button2.Size = New System.Drawing.Size(344, 28)
         Me.Button2.TabIndex = 31
         Me.Button2.Text = "OK"
         Me.Button2.UseVisualStyleBackColor = True
@@ -50,9 +51,10 @@ Partial Class AlertExit
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Lucida Fax", 11.0!)
         Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(90, 159)
+        Me.Label1.Location = New System.Drawing.Point(68, 129)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(308, 22)
+        Me.Label1.Size = New System.Drawing.Size(240, 17)
         Me.Label1.TabIndex = 30
         Me.Label1.Text = "Are you sure you want to exit?"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -60,9 +62,10 @@ Partial Class AlertExit
         'PictureBox1
         '
         Me.PictureBox1.Image = Global.posinvcs.My.Resources.Resources.icons8_warning
-        Me.PictureBox1.Location = New System.Drawing.Point(204, 69)
+        Me.PictureBox1.Location = New System.Drawing.Point(153, 56)
+        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(68, 68)
+        Me.PictureBox1.Size = New System.Drawing.Size(51, 55)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox1.TabIndex = 29
         Me.PictureBox1.TabStop = False
@@ -72,8 +75,9 @@ Partial Class AlertExit
         Me.Panel1.BackColor = System.Drawing.Color.Black
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Location = New System.Drawing.Point(-1, 0)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(484, 45)
+        Me.Panel1.Size = New System.Drawing.Size(363, 37)
         Me.Panel1.TabIndex = 28
         '
         'Label2
@@ -81,24 +85,26 @@ Partial Class AlertExit
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Lucida Fax", 13.0!)
         Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(12, 12)
+        Me.Label2.Location = New System.Drawing.Point(9, 10)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(68, 31)
+        Me.Label2.Size = New System.Drawing.Size(43, 21)
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "Exit"
         '
-        'AlertExit
+        'Alertfields
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(483, 255)
+        Me.ClientSize = New System.Drawing.Size(362, 207)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.Panel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.Name = "AlertExit"
+        Me.Margin = New System.Windows.Forms.Padding(2)
+        Me.Name = "Alertfields"
         Me.Text = "AlertExit"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)

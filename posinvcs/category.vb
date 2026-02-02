@@ -1,54 +1,50 @@
 ﻿Imports MySql.Data.MySqlClient
 Imports Org.BouncyCastle.Crypto.Engines
 Public Class category
+    Private categoryTable As DataTable
+
 
     Private Sub frmCategory_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadCategories()
     End Sub
 
     Private Sub LoadCategories()
-
         Try
             Using conn = DBConnection.GetConnection()
                 conn.Open()
                 Dim query As String = "SELECT id, category_name FROM categories ORDER BY category_name"
                 Dim da As New MySqlDataAdapter(query, conn)
-                Dim dt As New DataTable()
-                da.Fill(dt)
-                dgvcategory.DataSource = dt
+                categoryTable = New DataTable()
+                da.Fill(categoryTable)
             End Using
 
+            dgvcategory.DataSource = categoryTable
             dgvcategory.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
 
-            ' ================== ADD EDIT & DELETE ICON COLUMNS ==================
+            ' ===== ADD ICON COLUMNS ONLY ONCE =====
             If Not dgvcategory.Columns.Contains("Edit") Then
                 Dim editCol As New DataGridViewImageColumn()
-                editCol.HeaderText = ""
                 editCol.Name = "Edit"
-                editCol.ImageLayout = DataGridViewImageCellLayout.Zoom
                 editCol.Image = My.Resources.edit
-
+                editCol.ImageLayout = DataGridViewImageCellLayout.Zoom
                 editCol.Width = 35
                 dgvcategory.Columns.Add(editCol)
             End If
 
             If Not dgvcategory.Columns.Contains("Delete") Then
                 Dim delCol As New DataGridViewImageColumn()
-                delCol.HeaderText = ""
                 delCol.Name = "Delete"
-                delCol.ImageLayout = DataGridViewImageCellLayout.Zoom
                 delCol.Image = My.Resources.delete
-
+                delCol.ImageLayout = DataGridViewImageCellLayout.Zoom
                 delCol.Width = 35
                 dgvcategory.Columns.Add(delCol)
             End If
 
-
         Catch ex As Exception
             MessageBox.Show("Error loading categories: " & ex.Message)
         End Try
-
     End Sub
+
 
     ' ========== ADD CATEGORY ==========
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnadd.Click
@@ -67,7 +63,7 @@ Public Class category
                 End Using
             End Using
 
-            AlertFormMngr.ShowAlert(New AlertCategoryAddSuccess(), me)
+            AlertFormMngr.ShowAlert(New AlertCategoryAddSuccess(), Me)
 
             LoadCategories()
             txtcategory.Clear()
@@ -86,12 +82,7 @@ Public Class category
         End Try
     End Sub
 
-    ' ========== WHEN ROW IS CLICKED ==========
-    Private Sub dgvCategory_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvcategory.CellClick
-        If e.RowIndex >= 0 Then
-            txtcategory.Text = dgvcategory.Rows(e.RowIndex).Cells(1).Value.ToString()
-        End If
-    End Sub
+
 
     ' ========== UPDATE CATEGORY ==========
     Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnupdate.Click
@@ -172,7 +163,35 @@ Public Class category
         End Try
     End Sub
 
-    Private Sub btnadd_Click_1(sender As Object, e As EventArgs) Handles btnadd.Click
 
+    Private Sub searchtb_TextChanged(sender As Object, e As EventArgs) Handles searchtb.TextChanged
+        ApplyQuickFilter()
+    End Sub
+
+
+    Private Sub ApplyQuickFilter()
+        If categoryTable Is Nothing Then Exit Sub
+
+        Dim dv As DataView = categoryTable.DefaultView
+        Dim s As String = searchtb.Text.Trim().Replace("'", "''")
+
+        If s = "" Then
+            dv.RowFilter = ""
+        Else
+            dv.RowFilter = $"Convert(id, 'System.String') LIKE '%{s}%' OR category_name LIKE '%{s}%'"
+        End If
+    End Sub
+
+    Private Sub ClearCategoryForm()
+        txtcategory.Clear()
+        txtcategory.Tag = Nothing
+
+        btnadd.Enabled = True
+        btnupdate.Enabled = False
+        txtcategory.Focus()
+    End Sub
+
+    Private Sub cleartxtbtn_Click(sender As Object, e As EventArgs) Handles cleartxtbtn.Click
+        ClearCategoryForm()
     End Sub
 End Class

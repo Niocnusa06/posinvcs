@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{22E9CB11-E757-44DC-A80B-63BB89F72EEF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>posinvcs.Form1</StartupObject>
+    <StartupObject>posinvcs.main</StartupObject>
     <RootNamespace>posinvcs</RootNamespace>
     <AssemblyName>posinvcs</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -217,10 +217,10 @@
     <Compile Include="Alerts\AlertCategoryUpdateSuccess.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Alerts\AlertExit.Designer.vb">
-      <DependentUpon>AlertExit.vb</DependentUpon>
+    <Compile Include="Alerts\Alert.Designer.vb">
+      <DependentUpon>Alert.vb</DependentUpon>
     </Compile>
-    <Compile Include="Alerts\AlertExit.vb">
+    <Compile Include="Alerts\Alert.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Alerts\AlertForgotPassEmpty.Designer.vb">
@@ -448,8 +448,8 @@
     <EmbeddedResource Include="Alerts\AlertCategoryUpdateSuccess.resx">
       <DependentUpon>AlertCategoryUpdateSuccess.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Alerts\AlertExit.resx">
-      <DependentUpon>AlertExit.vb</DependentUpon>
+    <EmbeddedResource Include="Alerts\Alert.resx">
+      <DependentUpon>Alert.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Alerts\AlertForgotPassEmpty.resx">
       <DependentUpon>AlertForgotPassEmpty.vb</DependentUpon>
@@ -761,6 +761,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\pdf.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logologout.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logout1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

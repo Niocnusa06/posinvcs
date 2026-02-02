@@ -22,8 +22,9 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.SKUBarcodee = New Guna.UI2.WinForms.Guna2TextBox()
         Me.ItemName = New Guna.UI2.WinForms.Guna2TextBox()
         Me.Qty = New Guna.UI2.WinForms.Guna2TextBox()
@@ -41,9 +42,7 @@ Partial Class Form1
         Me.SubmitItemButton = New Guna.UI2.WinForms.Guna2Button()
         Me.ReceiptNumber = New Guna.UI2.WinForms.Guna2TextBox()
         Me.PrintDialog1 = New System.Windows.Forms.PrintDialog()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Guna2HtmlLabel8 = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.Guna2ControlBox2 = New Guna.UI2.WinForms.Guna2ControlBox()
         Me.Hold = New Guna.UI2.WinForms.Guna2Button()
@@ -53,12 +52,18 @@ Partial Class Form1
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
         Me.ListPanel = New Guna.UI2.WinForms.Guna2Panel()
         Me.PrintDocument2 = New System.Drawing.Printing.PrintDocument()
-        Me.Guna2ImageButton1 = New Guna.UI2.WinForms.Guna2ImageButton()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.lblDate = New Guna.UI2.WinForms.Guna2HtmlLabel()
+        Me.lblTime = New Guna.UI2.WinForms.Guna2HtmlLabel()
+        Me.tmrClock = New System.Windows.Forms.Timer(Me.components)
+        Me.PictureBox3 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Panel1.SuspendLayout()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.HoldPanel.SuspendLayout()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SKUBarcodee
@@ -352,22 +357,10 @@ Partial Class Form1
         '
         Me.PrintDialog1.UseEXDialog = True
         '
-        'PictureBox1
-        '
-        Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox1.Image = Global.posinvcs.My.Resources.Resources._556908340_680084718110318_4498664925219955537_n
-        Me.PictureBox1.Location = New System.Drawing.Point(237, 59)
-        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(295, 98)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox1.TabIndex = 19
-        Me.PictureBox1.TabStop = False
-        '
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.Black
-        Me.Panel1.Controls.Add(Me.Guna2ImageButton1)
+        Me.Panel1.Controls.Add(Me.PictureBox3)
         Me.Panel1.Controls.Add(Me.PictureBox2)
         Me.Panel1.Controls.Add(Me.Guna2HtmlLabel8)
         Me.Panel1.Controls.Add(Me.Guna2ControlBox2)
@@ -377,17 +370,6 @@ Partial Class Form1
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1904, 48)
         Me.Panel1.TabIndex = 20
-        '
-        'PictureBox2
-        '
-        Me.PictureBox2.Image = Global.posinvcs.My.Resources.Resources._3671090
-        Me.PictureBox2.Location = New System.Drawing.Point(12, 2)
-        Me.PictureBox2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(48, 41)
-        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox2.TabIndex = 22
-        Me.PictureBox2.TabStop = False
         '
         'Guna2HtmlLabel8
         '
@@ -406,11 +388,12 @@ Partial Class Form1
         Me.Guna2ControlBox2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Guna2ControlBox2.ControlBoxType = Guna.UI2.WinForms.Enums.ControlBoxType.MinimizeBox
         Me.Guna2ControlBox2.FillColor = System.Drawing.Color.Black
+        Me.Guna2ControlBox2.Font = New System.Drawing.Font("Impact", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Guna2ControlBox2.IconColor = System.Drawing.Color.White
-        Me.Guna2ControlBox2.Location = New System.Drawing.Point(1802, 4)
+        Me.Guna2ControlBox2.Location = New System.Drawing.Point(1790, 4)
         Me.Guna2ControlBox2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Guna2ControlBox2.Name = "Guna2ControlBox2"
-        Me.Guna2ControlBox2.Size = New System.Drawing.Size(41, 41)
+        Me.Guna2ControlBox2.Size = New System.Drawing.Size(52, 41)
         Me.Guna2ControlBox2.TabIndex = 1
         '
         'Hold
@@ -457,10 +440,10 @@ Partial Class Form1
         Me.HoldPanel.BackColor = System.Drawing.Color.WhiteSmoke
         Me.HoldPanel.Controls.Add(Me.ReturnTransaction)
         Me.HoldPanel.Controls.Add(Me.DataGridView2)
-        Me.HoldPanel.Location = New System.Drawing.Point(12, 59)
+        Me.HoldPanel.Location = New System.Drawing.Point(901, 59)
         Me.HoldPanel.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.HoldPanel.Name = "HoldPanel"
-        Me.HoldPanel.Size = New System.Drawing.Size(1883, 943)
+        Me.HoldPanel.Size = New System.Drawing.Size(994, 943)
         Me.HoldPanel.TabIndex = 24
         '
         'ReturnTransaction
@@ -485,8 +468,8 @@ Partial Class Form1
         '
         'DataGridView2
         '
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.DataGridView2.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.DataGridView2.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
         Me.DataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView2.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.DataGridView2.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
@@ -495,14 +478,14 @@ Partial Class Form1
         Me.DataGridView2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView2.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView2.RowHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.DataGridView2.RowHeadersWidth = 51
         Me.DataGridView2.Size = New System.Drawing.Size(1804, 831)
         Me.DataGridView2.TabIndex = 1
@@ -522,19 +505,64 @@ Partial Class Form1
         'PrintDocument2
         '
         '
-        'Guna2ImageButton1
+        'lblDate
         '
-        Me.Guna2ImageButton1.CheckedState.ImageSize = New System.Drawing.Size(64, 64)
-        Me.Guna2ImageButton1.HoverState.ImageSize = New System.Drawing.Size(64, 64)
-        Me.Guna2ImageButton1.Image = Global.posinvcs.My.Resources.Resources.logo_removebg_preview__1_
-        Me.Guna2ImageButton1.ImageOffset = New System.Drawing.Point(0, 0)
-        Me.Guna2ImageButton1.ImageRotate = 0!
-        Me.Guna2ImageButton1.ImageSize = New System.Drawing.Size(35, 35)
-        Me.Guna2ImageButton1.Location = New System.Drawing.Point(1843, 5)
-        Me.Guna2ImageButton1.Name = "Guna2ImageButton1"
-        Me.Guna2ImageButton1.PressedState.ImageSize = New System.Drawing.Size(64, 64)
-        Me.Guna2ImageButton1.Size = New System.Drawing.Size(56, 41)
-        Me.Guna2ImageButton1.TabIndex = 23
+        Me.lblDate.BackColor = System.Drawing.Color.Transparent
+        Me.lblDate.Font = New System.Drawing.Font("Segoe UI", 17.0!, System.Drawing.FontStyle.Bold)
+        Me.lblDate.Location = New System.Drawing.Point(779, 927)
+        Me.lblDate.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.lblDate.Name = "lblDate"
+        Me.lblDate.Size = New System.Drawing.Size(53, 33)
+        Me.lblDate.TabIndex = 26
+        Me.lblDate.Text = "Date"
+        '
+        'lblTime
+        '
+        Me.lblTime.BackColor = System.Drawing.Color.Transparent
+        Me.lblTime.Font = New System.Drawing.Font("Segoe UI", 17.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTime.Location = New System.Drawing.Point(779, 959)
+        Me.lblTime.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.lblTime.Name = "lblTime"
+        Me.lblTime.Size = New System.Drawing.Size(56, 33)
+        Me.lblTime.TabIndex = 27
+        Me.lblTime.Text = "Time"
+        '
+        'tmrClock
+        '
+        Me.tmrClock.Interval = 1000
+        '
+        'PictureBox3
+        '
+        Me.PictureBox3.Image = Global.posinvcs.My.Resources.Resources.logout1
+        Me.PictureBox3.Location = New System.Drawing.Point(1842, 1)
+        Me.PictureBox3.Name = "PictureBox3"
+        Me.PictureBox3.Size = New System.Drawing.Size(54, 45)
+        Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox3.TabIndex = 23
+        Me.PictureBox3.TabStop = False
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.Image = Global.posinvcs.My.Resources.Resources._3671090
+        Me.PictureBox2.Location = New System.Drawing.Point(12, 2)
+        Me.PictureBox2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(48, 41)
+        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox2.TabIndex = 22
+        Me.PictureBox2.TabStop = False
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox1.Image = Global.posinvcs.My.Resources.Resources._556908340_680084718110318_4498664925219955537_n
+        Me.PictureBox1.Location = New System.Drawing.Point(237, 59)
+        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(295, 98)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox1.TabIndex = 19
+        Me.PictureBox1.TabStop = False
         '
         'Form1
         '
@@ -564,18 +592,21 @@ Partial Class Form1
         Me.Controls.Add(Me.SKUBarcodee)
         Me.Controls.Add(Me.Guna2HtmlLabel4)
         Me.Controls.Add(Me.ListPanel)
+        Me.Controls.Add(Me.lblDate)
+        Me.Controls.Add(Me.lblTime)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Name = "Form1"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Form1"
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.HoldPanel.ResumeLayout(False)
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -610,5 +641,8 @@ Partial Class Form1
     Friend WithEvents ReturnTransaction As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents ListPanel As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents PrintDocument2 As Printing.PrintDocument
-    Friend WithEvents Guna2ImageButton1 As Guna.UI2.WinForms.Guna2ImageButton
+    Friend WithEvents lblDate As Guna.UI2.WinForms.Guna2HtmlLabel
+    Friend WithEvents lblTime As Guna.UI2.WinForms.Guna2HtmlLabel
+    Friend WithEvents tmrClock As Timer
+    Friend WithEvents PictureBox3 As PictureBox
 End Class

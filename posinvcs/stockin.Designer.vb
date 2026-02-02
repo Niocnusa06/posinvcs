@@ -74,44 +74,44 @@ Partial Class stockin
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Franklin Gothic Medium", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(32, 130)
+        Me.Label1.Font = New System.Drawing.Font("Franklin Gothic Medium", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(32, 142)
         Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(108, 21)
+        Me.Label1.Size = New System.Drawing.Size(141, 26)
         Me.Label1.TabIndex = 7
         Me.Label1.Text = "Product Name"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Franklin Gothic Medium", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Franklin Gothic Medium", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(32, 65)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(39, 21)
+        Me.Label2.Size = New System.Drawing.Size(49, 26)
         Me.Label2.TabIndex = 8
         Me.Label2.Text = "SKU"
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Franklin Gothic Medium", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(32, 260)
+        Me.Label4.Font = New System.Drawing.Font("Franklin Gothic Medium", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(32, 296)
         Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(44, 21)
+        Me.Label4.Size = New System.Drawing.Size(58, 26)
         Me.Label4.TabIndex = 9
         Me.Label4.Text = "Price"
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Franklin Gothic Medium", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(32, 325)
+        Me.Label5.Font = New System.Drawing.Font("Franklin Gothic Medium", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(32, 371)
         Me.Label5.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(122, 21)
+        Me.Label5.Size = New System.Drawing.Size(158, 26)
         Me.Label5.TabIndex = 10
         Me.Label5.Text = "Current Quantity"
         '
@@ -130,13 +130,13 @@ Partial Class stockin
         Me.lblSKU.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lblSKU.Font = New System.Drawing.Font("Segoe UI Semibold", 14.25!, System.Drawing.FontStyle.Bold)
         Me.lblSKU.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.lblSKU.Location = New System.Drawing.Point(34, 88)
+        Me.lblSKU.Location = New System.Drawing.Point(33, 88)
         Me.lblSKU.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.lblSKU.Name = "lblSKU"
         Me.lblSKU.PlaceholderText = ""
         Me.lblSKU.ReadOnly = True
         Me.lblSKU.SelectedText = ""
-        Me.lblSKU.Size = New System.Drawing.Size(306, 36)
+        Me.lblSKU.Size = New System.Drawing.Size(391, 36)
         Me.lblSKU.TabIndex = 12
         '
         'lblItemName
@@ -154,13 +154,13 @@ Partial Class stockin
         Me.lblItemName.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lblItemName.Font = New System.Drawing.Font("Segoe UI Semibold", 14.25!, System.Drawing.FontStyle.Bold)
         Me.lblItemName.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.lblItemName.Location = New System.Drawing.Point(34, 153)
+        Me.lblItemName.Location = New System.Drawing.Point(33, 165)
         Me.lblItemName.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.lblItemName.Name = "lblItemName"
         Me.lblItemName.PlaceholderText = ""
         Me.lblItemName.ReadOnly = True
         Me.lblItemName.SelectedText = ""
-        Me.lblItemName.Size = New System.Drawing.Size(306, 36)
+        Me.lblItemName.Size = New System.Drawing.Size(391, 36)
         Me.lblItemName.TabIndex = 13
         '
         'lblPrice
@@ -178,13 +178,13 @@ Partial Class stockin
         Me.lblPrice.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lblPrice.Font = New System.Drawing.Font("Segoe UI Semibold", 14.25!, System.Drawing.FontStyle.Bold)
         Me.lblPrice.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.lblPrice.Location = New System.Drawing.Point(34, 283)
+        Me.lblPrice.Location = New System.Drawing.Point(33, 319)
         Me.lblPrice.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.lblPrice.Name = "lblPrice"
         Me.lblPrice.PlaceholderText = ""
         Me.lblPrice.ReadOnly = True
         Me.lblPrice.SelectedText = ""
-        Me.lblPrice.Size = New System.Drawing.Size(306, 36)
+        Me.lblPrice.Size = New System.Drawing.Size(391, 36)
         Me.lblPrice.TabIndex = 14
         '
         'lblCurrentQty
@@ -202,13 +202,13 @@ Partial Class stockin
         Me.lblCurrentQty.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lblCurrentQty.Font = New System.Drawing.Font("Segoe UI Semibold", 14.25!, System.Drawing.FontStyle.Bold)
         Me.lblCurrentQty.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.lblCurrentQty.Location = New System.Drawing.Point(34, 348)
+        Me.lblCurrentQty.Location = New System.Drawing.Point(33, 394)
         Me.lblCurrentQty.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.lblCurrentQty.Name = "lblCurrentQty"
         Me.lblCurrentQty.PlaceholderText = ""
         Me.lblCurrentQty.ReadOnly = True
         Me.lblCurrentQty.SelectedText = ""
-        Me.lblCurrentQty.Size = New System.Drawing.Size(306, 36)
+        Me.lblCurrentQty.Size = New System.Drawing.Size(391, 36)
         Me.lblCurrentQty.TabIndex = 15
         '
         'btnSaveStockIn
@@ -227,10 +227,10 @@ Partial Class stockin
         Me.btnSaveStockIn.FillColor2 = System.Drawing.Color.SkyBlue
         Me.btnSaveStockIn.Font = New System.Drawing.Font("Franklin Gothic Book", 12.0!, System.Drawing.FontStyle.Bold)
         Me.btnSaveStockIn.ForeColor = System.Drawing.Color.Black
-        Me.btnSaveStockIn.Location = New System.Drawing.Point(34, 463)
+        Me.btnSaveStockIn.Location = New System.Drawing.Point(33, 541)
         Me.btnSaveStockIn.Margin = New System.Windows.Forms.Padding(2)
         Me.btnSaveStockIn.Name = "btnSaveStockIn"
-        Me.btnSaveStockIn.Size = New System.Drawing.Size(306, 38)
+        Me.btnSaveStockIn.Size = New System.Drawing.Size(391, 38)
         Me.btnSaveStockIn.TabIndex = 16
         Me.btnSaveStockIn.Text = "ADD NEW STOCK"
         '
@@ -254,23 +254,23 @@ Partial Class stockin
         Me.lblCategory.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lblCategory.Font = New System.Drawing.Font("Segoe UI Semibold", 14.25!, System.Drawing.FontStyle.Bold)
         Me.lblCategory.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.lblCategory.Location = New System.Drawing.Point(34, 218)
+        Me.lblCategory.Location = New System.Drawing.Point(33, 243)
         Me.lblCategory.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.lblCategory.Name = "lblCategory"
         Me.lblCategory.PlaceholderText = ""
         Me.lblCategory.ReadOnly = True
         Me.lblCategory.SelectedText = ""
-        Me.lblCategory.Size = New System.Drawing.Size(306, 36)
+        Me.lblCategory.Size = New System.Drawing.Size(391, 36)
         Me.lblCategory.TabIndex = 20
         '
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Franklin Gothic Medium", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(32, 195)
+        Me.Label7.Font = New System.Drawing.Font("Franklin Gothic Medium", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Location = New System.Drawing.Point(32, 220)
         Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(69, 21)
+        Me.Label7.Size = New System.Drawing.Size(91, 26)
         Me.Label7.TabIndex = 19
         Me.Label7.Text = "Category"
         '
@@ -289,22 +289,22 @@ Partial Class stockin
         Me.txtAddQty.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.txtAddQty.Font = New System.Drawing.Font("Segoe UI Semibold", 14.25!, System.Drawing.FontStyle.Bold)
         Me.txtAddQty.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.txtAddQty.Location = New System.Drawing.Point(34, 413)
+        Me.txtAddQty.Location = New System.Drawing.Point(33, 482)
         Me.txtAddQty.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.txtAddQty.Name = "txtAddQty"
         Me.txtAddQty.PlaceholderText = ""
         Me.txtAddQty.SelectedText = ""
-        Me.txtAddQty.Size = New System.Drawing.Size(306, 36)
+        Me.txtAddQty.Size = New System.Drawing.Size(391, 36)
         Me.txtAddQty.TabIndex = 22
         '
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Franklin Gothic Medium", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(32, 390)
+        Me.Label8.Font = New System.Drawing.Font("Franklin Gothic Medium", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(32, 443)
         Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(100, 21)
+        Me.Label8.Size = New System.Drawing.Size(127, 26)
         Me.Label8.TabIndex = 21
         Me.Label8.Text = "Add Quantity"
         '
@@ -316,7 +316,7 @@ Partial Class stockin
         Me.Guna2Panel1.Location = New System.Drawing.Point(-1, -1)
         Me.Guna2Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Guna2Panel1.Name = "Guna2Panel1"
-        Me.Guna2Panel1.Size = New System.Drawing.Size(779, 41)
+        Me.Guna2Panel1.Size = New System.Drawing.Size(1005, 41)
         Me.Guna2Panel1.TabIndex = 23
         '
         'btn_back
@@ -327,7 +327,7 @@ Partial Class stockin
         Me.btn_back.ImageOffset = New System.Drawing.Point(0, 0)
         Me.btn_back.ImageRotate = 0!
         Me.btn_back.ImageSize = New System.Drawing.Size(100, 100)
-        Me.btn_back.Location = New System.Drawing.Point(670, 3)
+        Me.btn_back.Location = New System.Drawing.Point(886, 2)
         Me.btn_back.Margin = New System.Windows.Forms.Padding(2)
         Me.btn_back.Name = "btn_back"
         Me.btn_back.PressedState.ImageSize = New System.Drawing.Size(64, 64)
@@ -361,7 +361,7 @@ Partial Class stockin
         Me.dgvStockHistory.DefaultCellStyle = DataGridViewCellStyle3
         Me.dgvStockHistory.EnableHeadersVisualStyles = False
         Me.dgvStockHistory.GridColor = System.Drawing.Color.LightGray
-        Me.dgvStockHistory.Location = New System.Drawing.Point(367, 67)
+        Me.dgvStockHistory.Location = New System.Drawing.Point(443, 67)
         Me.dgvStockHistory.Name = "dgvStockHistory"
         Me.dgvStockHistory.ReadOnly = True
         DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -377,7 +377,7 @@ Partial Class stockin
         Me.dgvStockHistory.RowsDefaultCellStyle = DataGridViewCellStyle5
         Me.dgvStockHistory.RowTemplate.Height = 40
         Me.dgvStockHistory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvStockHistory.Size = New System.Drawing.Size(387, 434)
+        Me.dgvStockHistory.Size = New System.Drawing.Size(547, 512)
         Me.dgvStockHistory.TabIndex = 24
         '
         'stockinalert
@@ -386,7 +386,7 @@ Partial Class stockin
         Me.stockinalert.Controls.Add(Me.Button2)
         Me.stockinalert.Controls.Add(Me.Label6)
         Me.stockinalert.Controls.Add(Me.PictureBox1)
-        Me.stockinalert.Location = New System.Drawing.Point(206, 153)
+        Me.stockinalert.Location = New System.Drawing.Point(372, 170)
         Me.stockinalert.Name = "stockinalert"
         Me.stockinalert.Size = New System.Drawing.Size(381, 231)
         Me.stockinalert.TabIndex = 25
@@ -456,7 +456,7 @@ Partial Class stockin
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.ClientSize = New System.Drawing.Size(779, 525)
+        Me.ClientSize = New System.Drawing.Size(1002, 605)
         Me.Controls.Add(Me.stockinalert)
         Me.Controls.Add(Me.dgvStockHistory)
         Me.Controls.Add(Me.Guna2Panel1)

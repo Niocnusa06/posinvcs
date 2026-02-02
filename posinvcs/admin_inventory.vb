@@ -155,9 +155,35 @@ Public Class inv
 
         Return combined
     End Function
+    Private Function AllFieldsFilled() As Boolean
+
+        If String.IsNullOrWhiteSpace(SKU.Text) OrElse
+       String.IsNullOrWhiteSpace(item_name.Text) OrElse
+       String.IsNullOrWhiteSpace(cmbcategory.Text) OrElse
+       String.IsNullOrWhiteSpace(price.Text) OrElse
+       String.IsNullOrWhiteSpace(qty.Text) OrElse
+         barcode.Image Is Nothing Then
+            MessageBox.Show("Please generate or select a barcode image first.",
+                    "Barcode Missing",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning)
+
+            MessageBox.Show(
+            "Please fill up all fields before adding a new item.",
+            "Missing Information",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Warning
+        )
+
+            Return False
+        End If
+
+        Return True
+    End Function
+
 
     Private Sub SaveItem()
-
+        If Not AllFieldsFilled() Then Exit Sub
         If ItemNameExists(item_name.Text) Then
             MessageBox.Show("Item name already exists!", "Duplicate Item",
                      MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -177,12 +203,28 @@ Public Class inv
                 Dim ms As New IO.MemoryStream()
                 barcode.Image.Save(ms, Imaging.ImageFormat.Png)
                 Dim barcodeBytes As Byte() = ms.ToArray()
+                Dim itemPrice As Decimal
+                Dim itemQty As Integer
+
+                If Not Decimal.TryParse(price.Text, itemPrice) Then
+                    MessageBox.Show("Please enter a valid price.", "Invalid Input",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    Exit Sub
+                End If
+
+                If Not Integer.TryParse(qty.Text, itemQty) Then
+                    MessageBox.Show("Please enter a valid quantity.", "Invalid Input",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    Exit Sub
+                End If
+
+
 
                 cmd.Parameters.AddWithValue("@SKU", SKU.Text)
                 cmd.Parameters.AddWithValue("@item_name", item_name.Text)
                 cmd.Parameters.AddWithValue("@catg", cmbcategory.Text)
-                cmd.Parameters.AddWithValue("@price", Decimal.Parse(price.Text))
-                cmd.Parameters.AddWithValue("@qty", Integer.Parse(qty.Text))
+                cmd.Parameters.AddWithValue("@price", itemPrice)
+                cmd.Parameters.AddWithValue("@qty", itemQty)
                 cmd.Parameters.AddWithValue("@barcode", barcodeBytes)
 
                 cmd.ExecuteNonQuery()
@@ -417,6 +459,9 @@ Public Class inv
             cmbcategory.Text = selectedRow.Cells("catg").Value.ToString()
             price.Text = selectedRow.Cells("price").Value.ToString()
             qty.Text = selectedRow.Cells("qty").Value.ToString()
+            qty.ReadOnly = True
+            qty.BackColor = Color.LightGray
+
 
             barcode.Image = GenerateBarcodeWithText(SKU.Text, item_name.Text)
 
@@ -453,27 +498,26 @@ Public Class inv
 
     End Sub
 
-
     Private Sub btnSaveChanges_Click(sender As Object, e As EventArgs) Handles btnSaveChanges.Click
         If Not isEditing Then Exit Sub
 
         Try
             Using conn As MySqlConnection = DBConnection.GetConnection()
                 conn.Open()
+
                 Dim cmd As New MySqlCommand("
-                    UPDATE products 
-                    SET item_name=@item_name, catg=@catg, price=@price, qty=@qty 
-                    WHERE SKU=@SKU", conn)
+                UPDATE products 
+                SET item_name=@item_name, catg=@catg, price=@price
+                WHERE SKU=@SKU", conn)
 
                 cmd.Parameters.AddWithValue("@SKU", SKU.Text)
                 cmd.Parameters.AddWithValue("@item_name", item_name.Text)
                 cmd.Parameters.AddWithValue("@catg", cmbcategory.Text)
                 cmd.Parameters.AddWithValue("@price", Decimal.Parse(price.Text))
-                cmd.Parameters.AddWithValue("@qty", Integer.Parse(qty.Text))
+
                 cmd.ExecuteNonQuery()
 
                 AlertFormMngr.ShowAlert(New AlertInventoryUpdateItem(), Me)
-
             End Using
 
             LoadInventory()
@@ -495,9 +539,6 @@ Public Class inv
         LoadInventory()
         SKU.Text = GenerateNextSKU()
         barcode.Image = GenerateBarcodeWithText(SKU.Text, item_name.Text)
-
-
-
     End Sub
 
     Private Sub Guna2Button2_Click(sender As Object, e As EventArgs) Handles Guna2Button2.Click
@@ -1041,12 +1082,20 @@ Public Class inv
         If inventoryView Is Nothing Then Exit Sub
 
         Dim limit As Integer
-
         If Not Integer.TryParse(cmbShowEntries.Text, limit) Then
             limit = 10
         End If
 
         Dim filteredTable As DataTable = inventoryView.ToTable()
+
+        ' ===== NO DATA FOUND (SEARCH RESULT EMPTY) =====
+        If filteredTable.Rows.Count = 0 Then
+            datagridview1.DataSource = Nothing
+            lblentries.Text = "No data named like that"
+            currentPage = 1
+            totalPages = 1
+            Exit Sub
+        End If
 
         Dim total As Integer = filteredTable.Rows.Count
         totalPages = Math.Ceiling(total / limit)
@@ -1056,18 +1105,26 @@ Public Class inv
 
         currentPage = page
 
-        Dim startIndex As Integer = (page - 1) * limit
+        Dim startIndex As Integer = (currentPage - 1) * limit
 
-        pagedTable = filteredTable.AsEnumerable().
-        Skip(startIndex).
-        Take(limit).
-        CopyToDataTable()
+        Dim query = filteredTable.AsEnumerable().
+                Skip(startIndex).
+                Take(limit)
+
+        ' ===== SAFETY CHECK =====
+        If query.Any() Then
+            pagedTable = query.CopyToDataTable()
+        Else
+            pagedTable = filteredTable.Clone()
+        End If
 
         datagridview1.DataSource = pagedTable
         FixColumnOrder()
 
-        lblentries.Text = $"Showing page {currentPage} of {totalPages} ({pagedTable.Rows.Count} entries)"
+        lblentries.Text =
+        $"Showing page {currentPage} of {totalPages} ({pagedTable.Rows.Count} entries)"
     End Sub
+
     Private Sub FixColumnOrder()
         If datagridview1.Columns.Count = 0 Then Exit Sub
 

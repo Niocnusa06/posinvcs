@@ -14,6 +14,8 @@ Public Class main
         salesp.Hide()
         brp.Hide()
         usersp.Hide()
+        Dim br As New backuprestore()
+        br.AutoBackupDatabase()
     End Sub
 
 
@@ -82,21 +84,20 @@ Public Class main
     End Sub
 
     Private Sub Guna2Button1_Click(sender As Object, e As EventArgs) Handles exitbtn.Click
-        Dim result As DialogResult = MessageBox.Show(
-            "Are you sure you want to exit?",
-            "Exit Confirmation",
-             MessageBoxButtons.YesNo,
-             MessageBoxIcon.Question
-        )
-
-
-        If result = DialogResult.Yes Then
-            Application.Exit()
-        End If
+        alertlg.Parent = Me
+        alertlg.Left = (Me.Width - alertlg.Width) \ 2
+        alertlg.Top = (Me.Height - alertlg.Height) \ 2
+        alertlg.BringToFront()
+        alertlg.Visible = True
+        LockBackground(True)
     End Sub
 
-    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
-
+    Private Sub LockBackground(lock As Boolean)
+        For Each ctrl As Control In Me.Controls
+            If ctrl IsNot alertlg Then
+                ctrl.Enabled = Not lock
+            End If
+        Next
     End Sub
 
 
@@ -229,5 +230,14 @@ Public Class main
             Me.Hide()
             LoginForm.Show()
         End If
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        alertlg.Visible = False
+        LockBackground(False)
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Application.Exit()
     End Sub
 End Class
