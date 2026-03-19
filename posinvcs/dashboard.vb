@@ -99,7 +99,7 @@ Public Class _1dashboard
             Using conn As MySqlConnection = DBConnection.GetConnection()
                 conn.Open()
                 Dim query As String = "SELECT SKU AS 'SKU', item_name AS 'Item Name', qty AS 'Quantity', catg AS 'Category' 
-                                       FROM products WHERE qty <= 10 ORDER BY qty ASC"
+                                       FROM products WHERE qty <= treshold ORDER BY qty ASC"
                 Dim adapter As New MySqlDataAdapter(query, conn)
                 Dim table As New DataTable()
                 adapter.Fill(table)
@@ -115,7 +115,7 @@ Public Class _1dashboard
 
     Private Sub LoadTodaySalesChart()
         Try
-            Using conn As New MySqlConnection("server=localhost;port=3307;user id=root;password=;database=posinv;")
+            Using conn As New MySqlConnection("server=localhost;user id=root;password=;database=posinv;")
                 conn.Open()
 
                 Dim query = "
@@ -384,6 +384,14 @@ Public Class _1dashboard
     End Sub
 
     Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
+
+    End Sub
+
+    Private Sub chartBestCategory_Click(sender As Object, e As EventArgs) Handles chartBestCategory.Click
+
+    End Sub
+
+    Private Sub Guna2Panel2_Paint(sender As Object, e As PaintEventArgs) Handles Guna2Panel2.Paint
 
     End Sub
 End Class
