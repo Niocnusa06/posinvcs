@@ -32,7 +32,7 @@ Public Class Form1
 
         Me.KeyPreview = True
 
-        conn = New MySqlConnection("server=localhost;port=3307;user=root;password=;database=posinv")
+        conn = New MySqlConnection("server=localhost;user=root;password=;database=posinv")
 
         ' Initialize order table
         orderList.Columns.Add("SKU")
@@ -154,11 +154,10 @@ Public Class Form1
 
     '==================== UPDATE LISTPANEL =============================
     Private Sub UpdateListPanel()
-
+        ' --- Clear and reset panel ---
         ListPanel.SuspendLayout()
         ListPanel.Controls.Clear()
         orderLabels.Clear()
-
         ListPanel.AutoScroll = True
         ListPanel.HorizontalScroll.Enabled = False
         ListPanel.HorizontalScroll.Visible = False
@@ -169,9 +168,8 @@ Public Class Form1
         Dim headerHeight As Integer = 32
         Dim rowHeight As Integer = 52
 
-        ' ===== DYNAMIC COLUMN WIDTHS =====
+        ' ===== Dynamic column widths =====
         Dim totalWidth As Integer = ListPanel.ClientSize.Width - 20
-
         Dim colItem As Integer = totalWidth * 0.4
         Dim colQty As Integer = totalWidth * 0.2
         Dim colPrice As Integer = totalWidth * 0.15
@@ -184,7 +182,7 @@ Public Class Form1
         Dim xSub = xPrice + colPrice
         Dim xAct = xSub + colSub
 
-        ' ===== HEADER =====
+        ' ===== Header =====
         Dim headerPanel As New Panel With {
         .Dock = DockStyle.Top,
         .Height = headerHeight,
@@ -201,119 +199,91 @@ Public Class Form1
 
         Dim yPos As Integer = headerHeight + 4
 
-        ' ===== ROWS =====
+        ' ===== Rows =====
         For Each row As DataRow In orderList.Rows
-
             Dim sku = row("SKU").ToString()
 
             Dim itemPanel As New Panel With {
             .Width = totalWidth,
             .Height = rowHeight,
             .Location = New Point(8, yPos),
-            .BackColor = Color.FromArgb(243, 244, 246),
+            .BackColor = If(orderList.Rows.IndexOf(row) = selectedIndex,
+                            Color.FromArgb(191, 219, 254),
+                            Color.FromArgb(243, 244, 246)),
             .Tag = sku
         }
-            If orderList.Rows.IndexOf(row) = selectedIndex Then
-                itemPanel.BackColor = Color.FromArgb(191, 219, 254) ' light blue
-            Else
-                itemPanel.BackColor = Color.FromArgb(243, 244, 246)
-            End If
 
-
+            ' Separator
             Dim separator As New Panel With {
-     .Dock = DockStyle.Bottom,
-     .Height = 1,
-     .BackColor = Color.FromArgb(229, 231, 235)
- }
-
+            .Dock = DockStyle.Bottom,
+            .Height = 1,
+            .BackColor = Color.FromArgb(229, 231, 235)
+        }
             itemPanel.Controls.Add(separator)
             separator.BringToFront()
 
-
-
             ' Item Name
-            itemPanel.Controls.Add(CreateLabel(
-            row("Item Name").ToString(), xItem + 6, colItem - 12,
-            rowFont, ContentAlignment.MiddleLeft))
+            itemPanel.Controls.Add(CreateLabel(row("Item Name").ToString(), xItem + 6, colItem - 12, rowFont, ContentAlignment.MiddleLeft))
 
-            ' Qty
-            ' ===== QTY DISPLAY =====
-            ' ===== QTY CONTAINER =====
+            ' Qty Panel with plus/minus buttons
             Dim qtyPanel As New Panel With {
-    .Size = New Size(colQty - 16, 36),
-    .Location = New Point(xQty + 8, 8),
-    .BackColor = Color.Transparent
-}
+            .Size = New Size(colQty - 16, 36),
+            .Location = New Point(xQty + 8, 8),
+            .BackColor = Color.Transparent
+        }
 
-            ' PLUS BUTTON (LEFT)
             Dim plusBtn As New Button With {
-    .Size = New Size(32, 32),
-    .Location = New Point(0, 2),
-    .Tag = sku,
-    .FlatStyle = FlatStyle.Flat,
-    .BackColor = Color.FromArgb(34, 197, 94),
-    .ForeColor = Color.White,
-    .Font = New Font("Segoe MDL2 Assets", 14),
-    .Text = ChrW(&HE109),
-    .Cursor = Cursors.Hand
-}
+            .Size = New Size(32, 32),
+            .Location = New Point(0, 2),
+            .Tag = sku,
+            .FlatStyle = FlatStyle.Flat,
+            .BackColor = Color.FromArgb(34, 197, 94),
+            .ForeColor = Color.White,
+            .Font = New Font("Segoe MDL2 Assets", 14),
+            .Text = ChrW(&HE109),
+            .Cursor = Cursors.Hand
+        }
             plusBtn.FlatAppearance.BorderSize = 0
             AddHandler plusBtn.Click, AddressOf PlusBtn_Click
 
-            ' QTY LABEL (PERFECTLY CENTERED)
             Dim qtyLbl As New Label With {
-    .Size = New Size(40, 32),
-    .Location = New Point((qtyPanel.Width - 40) \ 2, 2),
-    .Text = row("Qty").ToString(),
-    .Font = New Font("Segoe UI", 10, FontStyle.Bold),
-    .TextAlign = ContentAlignment.MiddleCenter,
-    .BackColor = Color.White,
-    .ForeColor = Color.Black,
-    .BorderStyle = BorderStyle.FixedSingle,
-    .AutoSize = False
-}
+            .Size = New Size(40, 32),
+            .Location = New Point((qtyPanel.Width - 40) \ 2, 2),
+            .Text = row("Qty").ToString(),
+            .Font = New Font("Segoe UI", 10, FontStyle.Bold),
+            .TextAlign = ContentAlignment.MiddleCenter,
+            .BackColor = Color.White,
+            .ForeColor = Color.Black,
+            .BorderStyle = BorderStyle.FixedSingle,
+            .AutoSize = False
+        }
 
-            ' MINUS BUTTON (RIGHT)
             Dim minusBtn As New Button With {
-    .Size = New Size(32, 32),
-    .Location = New Point(qtyPanel.Width - 32, 2),
-    .Tag = sku,
-    .FlatStyle = FlatStyle.Flat,
-    .BackColor = Color.FromArgb(239, 68, 68),
-    .ForeColor = Color.White,
-    .Font = New Font("Segoe MDL2 Assets", 14),
-    .Text = ChrW(&HE108),
-    .Cursor = Cursors.Hand
-}
+            .Size = New Size(32, 32),
+            .Location = New Point(qtyPanel.Width - 32, 2),
+            .Tag = sku,
+            .FlatStyle = FlatStyle.Flat,
+            .BackColor = Color.FromArgb(239, 68, 68),
+            .ForeColor = Color.White,
+            .Font = New Font("Segoe MDL2 Assets", 14),
+            .Text = ChrW(&HE108),
+            .Cursor = Cursors.Hand
+        }
             minusBtn.FlatAppearance.BorderSize = 0
             AddHandler minusBtn.Click, AddressOf MinusBtn_Click
 
-            ' ADD CONTROLS
             qtyPanel.Controls.Add(plusBtn)
             qtyPanel.Controls.Add(qtyLbl)
             qtyPanel.Controls.Add(minusBtn)
-
             itemPanel.Controls.Add(qtyPanel)
-
-
-
-            ' Ensure buttons are visible
             plusBtn.BringToFront()
             minusBtn.BringToFront()
 
+            ' Price & Subtotal
+            itemPanel.Controls.Add(CreateLabel("₱ " & CDec(row("Price")).ToString("N2"), xPrice, colPrice, rowFont, ContentAlignment.MiddleRight))
+            itemPanel.Controls.Add(CreateLabel("₱ " & CDec(row("Subtotal")).ToString("N2"), xSub, colSub, rowFont, ContentAlignment.MiddleRight))
 
-
-            ' Price
-            itemPanel.Controls.Add(CreateLabel(
-            "₱ " & CDec(row("Price")).ToString("N2"),
-            xPrice, colPrice, rowFont, ContentAlignment.MiddleRight))
-
-            ' Subtotal
-            itemPanel.Controls.Add(CreateLabel(
-            "₱ " & CDec(row("Subtotal")).ToString("N2"),
-            xSub, colSub, rowFont, ContentAlignment.MiddleRight))
-
-            ' Delete
+            ' Delete button
             Dim delBtn As New Button With {
             .Size = New Size(36, 36),
             .Location = New Point(xAct + (colAct - 36) \ 2, 8),
@@ -323,12 +293,9 @@ Public Class Form1
             .ImageAlign = ContentAlignment.MiddleCenter,
             .Cursor = Cursors.Hand
         }
-
-
             delBtn.FlatAppearance.BorderSize = 0
             AddHandler delBtn.Click, AddressOf DeleteBtn_Click
             itemPanel.Controls.Add(delBtn)
-
 
             ListPanel.Controls.Add(itemPanel)
             orderLabels.Add(sku, itemPanel)
@@ -336,8 +303,38 @@ Public Class Form1
             yPos += rowHeight + 2
         Next
 
+        ' ===== VAT / TOTAL FOOTER =====
+        Dim vatRate As Decimal = 0.12D
+        Dim totalValue As Decimal = 0D
+        Dim discountValue As Decimal = 0D
+
+        If DiscountTextBox.Text <> "" Then Decimal.TryParse(DiscountTextBox.Text.Trim(), discountValue)
+
+        For Each row As DataRow In orderList.Rows
+            totalValue += CDec(row("Subtotal"))
+        Next
+
+        Dim vatAmount As Decimal = Decimal.Round(totalValue * vatRate / (1 + vatRate), 2)
+        Dim basePrice As Decimal = Decimal.Round(totalValue - vatAmount, 2)
+        Dim totalWithDiscount As Decimal = totalValue - discountValue
+
+        ' --- Update Total TextBox ---
+        Total.Text = "₱ " & totalWithDiscount.ToString("0.00")
+
+        Dim vatPanel As New Panel With {
+        .Width = totalWidth,
+        .Height = 70,
+        .Location = New Point(3, 662),
+        .BackColor = Color.FromArgb(224, 242, 254)
+    }
+
+        vatPanel.Controls.Add(CreateLabel("VAT Sales: ₱" & basePrice.ToString("N2"), 8, totalWidth, rowFont, ContentAlignment.MiddleLeft))
+        vatPanel.Controls.Add(CreateLabel("VAT (12%): ₱" & vatAmount.ToString("N2"), 8, totalWidth, rowFont, ContentAlignment.MiddleLeft))
+        vatPanel.Controls.Add(CreateLabel("TOTAL: ₱" & totalWithDiscount.ToString("N2"), 8, totalWidth, New Font("Segoe UI", 10, FontStyle.Bold), ContentAlignment.MiddleLeft))
+
+        ListPanel.Controls.Add(vatPanel)
+
         ListPanel.ResumeLayout()
-        UpdateTotal()
     End Sub
     Private Function CreateLabel(text As String, x As Integer, w As Integer,
                              f As Font, align As ContentAlignment) As Label
