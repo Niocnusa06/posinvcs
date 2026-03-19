@@ -23,8 +23,8 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.SKUBarcodee = New Guna.UI2.WinForms.Guna2TextBox()
         Me.ItemName = New Guna.UI2.WinForms.Guna2TextBox()
         Me.Qty = New Guna.UI2.WinForms.Guna2TextBox()
@@ -43,6 +43,8 @@ Partial Class Form1
         Me.ReceiptNumber = New Guna.UI2.WinForms.Guna2TextBox()
         Me.PrintDialog1 = New System.Windows.Forms.PrintDialog()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.PictureBox3 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Guna2HtmlLabel8 = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.Guna2ControlBox2 = New Guna.UI2.WinForms.Guna2ControlBox()
         Me.Hold = New Guna.UI2.WinForms.Guna2Button()
@@ -55,14 +57,23 @@ Partial Class Form1
         Me.lblDate = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.lblTime = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.tmrClock = New System.Windows.Forms.Timer(Me.components)
-        Me.PictureBox3 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.Guna2HtmlLabel7 = New Guna.UI2.WinForms.Guna2HtmlLabel()
+        Me.CashIn = New Guna.UI2.WinForms.Guna2Panel()
+        Me.Cash = New Guna.UI2.WinForms.Guna2TextBox()
+        Me.Cancel = New Guna.UI2.WinForms.Guna2Button()
+        Me.Okaay = New Guna.UI2.WinForms.Guna2Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Guna2Panel2 = New Guna.UI2.WinForms.Guna2Panel()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.DiscountTextBox = New Guna.UI2.WinForms.Guna2TextBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Panel1.SuspendLayout()
-        Me.HoldPanel.SuspendLayout()
-        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.HoldPanel.SuspendLayout()
+        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.CashIn.SuspendLayout()
+        Me.Guna2Panel2.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -102,7 +113,7 @@ Partial Class Form1
         Me.ItemName.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ItemName.Font = New System.Drawing.Font("Microsoft Sans Serif", 16.0!)
         Me.ItemName.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.ItemName.Location = New System.Drawing.Point(31, 352)
+        Me.ItemName.Location = New System.Drawing.Point(31, 334)
         Me.ItemName.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
         Me.ItemName.Name = "ItemName"
         Me.ItemName.PlaceholderText = ""
@@ -124,7 +135,7 @@ Partial Class Form1
         Me.Qty.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.Qty.Font = New System.Drawing.Font("Microsoft Sans Serif", 16.0!)
         Me.Qty.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.Qty.Location = New System.Drawing.Point(31, 487)
+        Me.Qty.Location = New System.Drawing.Point(31, 452)
         Me.Qty.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
         Me.Qty.Name = "Qty"
         Me.Qty.PlaceholderText = ""
@@ -146,7 +157,7 @@ Partial Class Form1
         Me.Price.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.Price.Font = New System.Drawing.Font("Microsoft Sans Serif", 16.0!)
         Me.Price.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.Price.Location = New System.Drawing.Point(421, 487)
+        Me.Price.Location = New System.Drawing.Point(421, 452)
         Me.Price.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
         Me.Price.Name = "Price"
         Me.Price.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -170,7 +181,7 @@ Partial Class Form1
         Me.SubTotal.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.SubTotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SubTotal.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.SubTotal.Location = New System.Drawing.Point(31, 622)
+        Me.SubTotal.Location = New System.Drawing.Point(31, 570)
         Me.SubTotal.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
         Me.SubTotal.Name = "SubTotal"
         Me.SubTotal.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -217,10 +228,10 @@ Partial Class Form1
         Me.PrintButton.FillColor = System.Drawing.Color.SkyBlue
         Me.PrintButton.Font = New System.Drawing.Font("Segoe UI", 17.0!, System.Drawing.FontStyle.Bold)
         Me.PrintButton.ForeColor = System.Drawing.Color.DarkBlue
-        Me.PrintButton.Location = New System.Drawing.Point(31, 785)
+        Me.PrintButton.Location = New System.Drawing.Point(31, 797)
         Me.PrintButton.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.PrintButton.Name = "PrintButton"
-        Me.PrintButton.Size = New System.Drawing.Size(339, 88)
+        Me.PrintButton.Size = New System.Drawing.Size(339, 76)
         Me.PrintButton.TabIndex = 7
         Me.PrintButton.Text = "PRINT RECEIPT"
         '
@@ -239,7 +250,7 @@ Partial Class Form1
         '
         Me.Guna2HtmlLabel2.BackColor = System.Drawing.Color.Transparent
         Me.Guna2HtmlLabel2.Font = New System.Drawing.Font("Segoe UI", 17.0!, System.Drawing.FontStyle.Bold)
-        Me.Guna2HtmlLabel2.Location = New System.Drawing.Point(31, 306)
+        Me.Guna2HtmlLabel2.Location = New System.Drawing.Point(31, 288)
         Me.Guna2HtmlLabel2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Guna2HtmlLabel2.Name = "Guna2HtmlLabel2"
         Me.Guna2HtmlLabel2.Size = New System.Drawing.Size(121, 33)
@@ -250,7 +261,7 @@ Partial Class Form1
         '
         Me.Guna2HtmlLabel3.BackColor = System.Drawing.Color.Transparent
         Me.Guna2HtmlLabel3.Font = New System.Drawing.Font("Segoe UI", 17.0!, System.Drawing.FontStyle.Bold)
-        Me.Guna2HtmlLabel3.Location = New System.Drawing.Point(31, 447)
+        Me.Guna2HtmlLabel3.Location = New System.Drawing.Point(31, 412)
         Me.Guna2HtmlLabel3.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Guna2HtmlLabel3.Name = "Guna2HtmlLabel3"
         Me.Guna2HtmlLabel3.Size = New System.Drawing.Size(41, 33)
@@ -261,7 +272,7 @@ Partial Class Form1
         '
         Me.Guna2HtmlLabel4.BackColor = System.Drawing.Color.Transparent
         Me.Guna2HtmlLabel4.Font = New System.Drawing.Font("Segoe UI", 17.0!, System.Drawing.FontStyle.Bold)
-        Me.Guna2HtmlLabel4.Location = New System.Drawing.Point(421, 447)
+        Me.Guna2HtmlLabel4.Location = New System.Drawing.Point(421, 412)
         Me.Guna2HtmlLabel4.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Guna2HtmlLabel4.Name = "Guna2HtmlLabel4"
         Me.Guna2HtmlLabel4.Size = New System.Drawing.Size(111, 33)
@@ -272,7 +283,7 @@ Partial Class Form1
         '
         Me.Guna2HtmlLabel5.BackColor = System.Drawing.Color.Transparent
         Me.Guna2HtmlLabel5.Font = New System.Drawing.Font("Segoe UI", 17.0!, System.Drawing.FontStyle.Bold)
-        Me.Guna2HtmlLabel5.Location = New System.Drawing.Point(31, 582)
+        Me.Guna2HtmlLabel5.Location = New System.Drawing.Point(31, 530)
         Me.Guna2HtmlLabel5.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Guna2HtmlLabel5.Name = "Guna2HtmlLabel5"
         Me.Guna2HtmlLabel5.Size = New System.Drawing.Size(95, 33)
@@ -302,12 +313,12 @@ Partial Class Form1
         Me.ClearButton.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.ClearButton.Font = New System.Drawing.Font("Segoe UI", 17.0!, System.Drawing.FontStyle.Bold)
         Me.ClearButton.ForeColor = System.Drawing.Color.DarkRed
-        Me.ClearButton.Location = New System.Drawing.Point(31, 895)
+        Me.ClearButton.Location = New System.Drawing.Point(31, 907)
         Me.ClearButton.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ClearButton.Name = "ClearButton"
-        Me.ClearButton.Size = New System.Drawing.Size(339, 88)
+        Me.ClearButton.Size = New System.Drawing.Size(339, 76)
         Me.ClearButton.TabIndex = 16
-        Me.ClearButton.Text = "CLEAR FORM"
+        Me.ClearButton.Text = "CLEAR ORDER LIST"
         '
         'SubmitItemButton
         '
@@ -321,10 +332,10 @@ Partial Class Form1
         Me.SubmitItemButton.FillColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.SubmitItemButton.Font = New System.Drawing.Font("Segoe UI", 17.0!, System.Drawing.FontStyle.Bold)
         Me.SubmitItemButton.ForeColor = System.Drawing.Color.DarkGreen
-        Me.SubmitItemButton.Location = New System.Drawing.Point(405, 785)
+        Me.SubmitItemButton.Location = New System.Drawing.Point(405, 797)
         Me.SubmitItemButton.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.SubmitItemButton.Name = "SubmitItemButton"
-        Me.SubmitItemButton.Size = New System.Drawing.Size(339, 88)
+        Me.SubmitItemButton.Size = New System.Drawing.Size(339, 76)
         Me.SubmitItemButton.TabIndex = 17
         Me.SubmitItemButton.Text = "SUBMIT"
         '
@@ -371,6 +382,27 @@ Partial Class Form1
         Me.Panel1.Size = New System.Drawing.Size(1904, 48)
         Me.Panel1.TabIndex = 20
         '
+        'PictureBox3
+        '
+        Me.PictureBox3.Image = Global.posinvcs.My.Resources.Resources.logout1
+        Me.PictureBox3.Location = New System.Drawing.Point(1842, 1)
+        Me.PictureBox3.Name = "PictureBox3"
+        Me.PictureBox3.Size = New System.Drawing.Size(54, 45)
+        Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox3.TabIndex = 23
+        Me.PictureBox3.TabStop = False
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.Image = Global.posinvcs.My.Resources.Resources._3671090
+        Me.PictureBox2.Location = New System.Drawing.Point(12, 2)
+        Me.PictureBox2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(48, 41)
+        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox2.TabIndex = 22
+        Me.PictureBox2.TabStop = False
+        '
         'Guna2HtmlLabel8
         '
         Me.Guna2HtmlLabel8.BackColor = System.Drawing.Color.Transparent
@@ -409,10 +441,10 @@ Partial Class Form1
         Me.Hold.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.Hold.Font = New System.Drawing.Font("Segoe UI", 17.0!, System.Drawing.FontStyle.Bold)
         Me.Hold.ForeColor = System.Drawing.Color.Olive
-        Me.Hold.Location = New System.Drawing.Point(405, 895)
+        Me.Hold.Location = New System.Drawing.Point(405, 907)
         Me.Hold.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Hold.Name = "Hold"
-        Me.Hold.Size = New System.Drawing.Size(339, 88)
+        Me.Hold.Size = New System.Drawing.Size(339, 76)
         Me.Hold.TabIndex = 22
         Me.Hold.Text = "HOLD"
         '
@@ -440,10 +472,10 @@ Partial Class Form1
         Me.HoldPanel.BackColor = System.Drawing.Color.WhiteSmoke
         Me.HoldPanel.Controls.Add(Me.ReturnTransaction)
         Me.HoldPanel.Controls.Add(Me.DataGridView2)
-        Me.HoldPanel.Location = New System.Drawing.Point(901, 59)
+        Me.HoldPanel.Location = New System.Drawing.Point(1155, 59)
         Me.HoldPanel.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.HoldPanel.Name = "HoldPanel"
-        Me.HoldPanel.Size = New System.Drawing.Size(994, 943)
+        Me.HoldPanel.Size = New System.Drawing.Size(749, 946)
         Me.HoldPanel.TabIndex = 24
         '
         'ReturnTransaction
@@ -468,8 +500,8 @@ Partial Class Form1
         '
         'DataGridView2
         '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.DataGridView2.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.DataGridView2.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView2.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.DataGridView2.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
@@ -478,14 +510,14 @@ Partial Class Form1
         Me.DataGridView2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView2.RowHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView2.RowHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.DataGridView2.RowHeadersWidth = 51
         Me.DataGridView2.Size = New System.Drawing.Size(1804, 831)
         Me.DataGridView2.TabIndex = 1
@@ -531,26 +563,140 @@ Partial Class Form1
         '
         Me.tmrClock.Interval = 1000
         '
-        'PictureBox3
+        'Guna2HtmlLabel7
         '
-        Me.PictureBox3.Image = Global.posinvcs.My.Resources.Resources.logout1
-        Me.PictureBox3.Location = New System.Drawing.Point(1842, 1)
-        Me.PictureBox3.Name = "PictureBox3"
-        Me.PictureBox3.Size = New System.Drawing.Size(54, 45)
-        Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox3.TabIndex = 23
-        Me.PictureBox3.TabStop = False
+        Me.Guna2HtmlLabel7.BackColor = System.Drawing.Color.Transparent
+        Me.Guna2HtmlLabel7.Font = New System.Drawing.Font("Segoe UI", 17.0!, System.Drawing.FontStyle.Bold)
+        Me.Guna2HtmlLabel7.Location = New System.Drawing.Point(31, 648)
+        Me.Guna2HtmlLabel7.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.Guna2HtmlLabel7.Name = "Guna2HtmlLabel7"
+        Me.Guna2HtmlLabel7.Size = New System.Drawing.Size(99, 33)
+        Me.Guna2HtmlLabel7.TabIndex = 29
+        Me.Guna2HtmlLabel7.Text = "Discount"
         '
-        'PictureBox2
+        'CashIn
         '
-        Me.PictureBox2.Image = Global.posinvcs.My.Resources.Resources._3671090
-        Me.PictureBox2.Location = New System.Drawing.Point(12, 2)
-        Me.PictureBox2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(48, 41)
-        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox2.TabIndex = 22
-        Me.PictureBox2.TabStop = False
+        Me.CashIn.Controls.Add(Me.Cash)
+        Me.CashIn.Controls.Add(Me.Cancel)
+        Me.CashIn.Controls.Add(Me.Okaay)
+        Me.CashIn.Controls.Add(Me.Label2)
+        Me.CashIn.Controls.Add(Me.Guna2Panel2)
+        Me.CashIn.Location = New System.Drawing.Point(620, 389)
+        Me.CashIn.Name = "CashIn"
+        Me.CashIn.Size = New System.Drawing.Size(614, 303)
+        Me.CashIn.TabIndex = 30
+        Me.CashIn.Visible = False
+        '
+        'Cash
+        '
+        Me.Cash.BorderColor = System.Drawing.Color.DimGray
+        Me.Cash.BorderRadius = 6
+        Me.Cash.BorderThickness = 2
+        Me.Cash.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me.Cash.DefaultText = ""
+        Me.Cash.DisabledState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer))
+        Me.Cash.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer))
+        Me.Cash.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
+        Me.Cash.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
+        Me.Cash.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Cash.Font = New System.Drawing.Font("Microsoft Sans Serif", 16.0!)
+        Me.Cash.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Cash.Location = New System.Drawing.Point(21, 234)
+        Me.Cash.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
+        Me.Cash.Name = "Cash"
+        Me.Cash.PlaceholderText = ""
+        Me.Cash.SelectedText = ""
+        Me.Cash.Size = New System.Drawing.Size(553, 58)
+        Me.Cash.TabIndex = 34
+        '
+        'Cancel
+        '
+        Me.Cancel.BorderColor = System.Drawing.Color.Red
+        Me.Cancel.BorderRadius = 6
+        Me.Cancel.BorderThickness = 3
+        Me.Cancel.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.Cancel.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.Cancel.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.Cancel.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.Cancel.FillColor = System.Drawing.Color.Salmon
+        Me.Cancel.Font = New System.Drawing.Font("Segoe UI", 17.0!, System.Drawing.FontStyle.Bold)
+        Me.Cancel.ForeColor = System.Drawing.Color.SeaShell
+        Me.Cancel.Location = New System.Drawing.Point(454, 141)
+        Me.Cancel.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.Cancel.Name = "Cancel"
+        Me.Cancel.Size = New System.Drawing.Size(120, 46)
+        Me.Cancel.TabIndex = 33
+        Me.Cancel.Text = "CANCEL"
+        '
+        'Okaay
+        '
+        Me.Okaay.BorderColor = System.Drawing.Color.SkyBlue
+        Me.Okaay.BorderRadius = 6
+        Me.Okaay.BorderThickness = 3
+        Me.Okaay.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.Okaay.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.Okaay.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.Okaay.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.Okaay.FillColor = System.Drawing.Color.LightYellow
+        Me.Okaay.Font = New System.Drawing.Font("Segoe UI", 17.0!, System.Drawing.FontStyle.Bold)
+        Me.Okaay.ForeColor = System.Drawing.Color.DarkBlue
+        Me.Okaay.Location = New System.Drawing.Point(455, 75)
+        Me.Okaay.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.Okaay.Name = "Okaay"
+        Me.Okaay.Size = New System.Drawing.Size(119, 46)
+        Me.Okaay.TabIndex = 31
+        Me.Okaay.Text = "OK"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Segoe UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(14, 109)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(280, 37)
+        Me.Label2.TabIndex = 1
+        Me.Label2.Text = "Enter Cash Received:"
+        '
+        'Guna2Panel2
+        '
+        Me.Guna2Panel2.BackColor = System.Drawing.Color.CornflowerBlue
+        Me.Guna2Panel2.Controls.Add(Me.Label1)
+        Me.Guna2Panel2.Location = New System.Drawing.Point(0, 1)
+        Me.Guna2Panel2.Name = "Guna2Panel2"
+        Me.Guna2Panel2.Size = New System.Drawing.Size(614, 55)
+        Me.Guna2Panel2.TabIndex = 32
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Segoe UI Black", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(15, 10)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(180, 32)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "Cash Payment"
+        '
+        'DiscountTextBox
+        '
+        Me.DiscountTextBox.BorderColor = System.Drawing.Color.DimGray
+        Me.DiscountTextBox.BorderRadius = 6
+        Me.DiscountTextBox.BorderThickness = 2
+        Me.DiscountTextBox.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me.DiscountTextBox.DefaultText = ""
+        Me.DiscountTextBox.DisabledState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer))
+        Me.DiscountTextBox.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer))
+        Me.DiscountTextBox.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
+        Me.DiscountTextBox.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
+        Me.DiscountTextBox.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DiscountTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 16.0!)
+        Me.DiscountTextBox.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DiscountTextBox.Location = New System.Drawing.Point(31, 700)
+        Me.DiscountTextBox.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
+        Me.DiscountTextBox.Name = "DiscountTextBox"
+        Me.DiscountTextBox.PlaceholderText = ""
+        Me.DiscountTextBox.SelectedText = ""
+        Me.DiscountTextBox.Size = New System.Drawing.Size(713, 58)
+        Me.DiscountTextBox.TabIndex = 31
         '
         'PictureBox1
         '
@@ -571,6 +717,9 @@ Partial Class Form1
         Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1904, 1016)
         Me.Controls.Add(Me.HoldPanel)
+        Me.Controls.Add(Me.DiscountTextBox)
+        Me.Controls.Add(Me.CashIn)
+        Me.Controls.Add(Me.Guna2HtmlLabel7)
         Me.Controls.Add(Me.ViewHold)
         Me.Controls.Add(Me.Hold)
         Me.Controls.Add(Me.Panel1)
@@ -602,10 +751,14 @@ Partial Class Form1
         Me.Text = "Form1"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        Me.HoldPanel.ResumeLayout(False)
-        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.HoldPanel.ResumeLayout(False)
+        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.CashIn.ResumeLayout(False)
+        Me.CashIn.PerformLayout()
+        Me.Guna2Panel2.ResumeLayout(False)
+        Me.Guna2Panel2.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -645,4 +798,13 @@ Partial Class Form1
     Friend WithEvents lblTime As Guna.UI2.WinForms.Guna2HtmlLabel
     Friend WithEvents tmrClock As Timer
     Friend WithEvents PictureBox3 As PictureBox
+    Friend WithEvents Guna2HtmlLabel7 As Guna.UI2.WinForms.Guna2HtmlLabel
+    Friend WithEvents CashIn As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents Cancel As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents Okaay As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Guna2Panel2 As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents Label1 As Label
+    Friend WithEvents DiscountTextBox As Guna.UI2.WinForms.Guna2TextBox
+    Friend WithEvents Cash As Guna.UI2.WinForms.Guna2TextBox
 End Class

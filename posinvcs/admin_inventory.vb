@@ -27,7 +27,8 @@ Public Class inv
     Private dvInventory As DataView
     Private pdfRows As DataTable
     Private currentRowIndex As Integer = 0
-
+    Dim isEditMode As Boolean = False
+    Dim selectedItemID As Integer = 0
     Public Sub RefreshInventory()
         LoadInventory()
         ApplySearchFilter()
@@ -155,6 +156,11 @@ Public Class inv
 
         Return combined
     End Function
+    Private Function IsValidItemName(name As String) As Boolean
+        Dim pattern As String = "^[a-zA-Z0-9\s\-]+$"
+        Return System.Text.RegularExpressions.Regex.IsMatch(name, pattern)
+    End Function
+
     Private Function AllFieldsFilled() As Boolean
 
         If String.IsNullOrWhiteSpace(SKU.Text) OrElse
@@ -163,8 +169,8 @@ Public Class inv
        String.IsNullOrWhiteSpace(price.Text) OrElse
        String.IsNullOrWhiteSpace(qty.Text) OrElse
          barcode.Image Is Nothing Then
-            MessageBox.Show("Please generate or select a barcode image first.",
-                    "Barcode Missing",
+            MessageBox.Show("Please fill up all the fields before adding new item.",
+                    "Missing info",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning)
 
@@ -184,6 +190,15 @@ Public Class inv
 
     Private Sub SaveItem()
         If Not AllFieldsFilled() Then Exit Sub
+        If Not IsValidItemName(item_name.Text) Then
+            MessageBox.Show("Item name cannot contain special symbols. Only letters and numbers are allowed.",
+                    "Invalid Item Name",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning)
+            item_name.Focus()
+            Exit Sub
+        End If
+
         If ItemNameExists(item_name.Text) Then
             MessageBox.Show("Item name already exists!", "Duplicate Item",
                      MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -370,7 +385,13 @@ Public Class inv
 
 
     Private Sub btnSaveDamage_Click(sender As Object, e As EventArgs) Handles btnSaveDamage.Click
-        '
+
+        If cmbUnitType.SelectedIndex = -1 Then
+            MessageBox.Show("Please select a unit type.", "Missing Unit", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+
         If damage_qty.Text = "" Or Not IsNumeric(damage_qty.Text) Then
             MessageBox.Show("Please enter a valid number for damaged quantity.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
@@ -395,6 +416,15 @@ Public Class inv
                 Using cmd As New MySqlCommand(updateQuery, conn)
                     cmd.Parameters.AddWithValue("@newQty", newQty)
                     cmd.Parameters.AddWithValue("@sku", SKU_dmg.Text)
+                    If Not IsValidItemName(item_name.Text) Then
+                        MessageBox.Show("Item name cannot contain special symbols. Only letters and numbers are allowed.",
+                    "Invalid Item Name",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning)
+                        item_name.Focus()
+                        Exit Sub
+                    End If
+
                     cmd.ExecuteNonQuery()
                 End Using
 
@@ -411,7 +441,7 @@ Public Class inv
                     cmd.Parameters.AddWithValue("@category", lblcategory.Text)
                     cmd.Parameters.AddWithValue("@price", Val(price_dmg.Text))
                     cmd.Parameters.AddWithValue("@damage_qty", damagedQty)
-                    cmd.Parameters.AddWithValue("@unit_type", cmbUnitType.Text)
+                    cmd.Parameters.AddWithValue("@unit_type", cmbUnitType.SelectedItem.ToString())
                     cmd.Parameters.AddWithValue("@remarks", remarks_dmg.Text)
                     cmd.ExecuteNonQuery()
                 End Using
@@ -543,19 +573,28 @@ Public Class inv
 
     Private Sub Guna2Button2_Click(sender As Object, e As EventArgs) Handles Guna2Button2.Click
         newitem.Visible = False
+        isEditing = False
+        Label2.Visible = True
+        edit.Visible = False
+        ClearTextboxes()
     End Sub
 
 
     Private Sub additembtn_Click(sender As Object, e As EventArgs) Handles additembtn.Click
         newitem.BringToFront()
         newitem.Visible = True
-        isEditing = False
-        ClearTextboxes()
-        SKU.Text = GenerateNextSKU()
-        barcode.Image = GenerateBarcodeWithText(SKU.Text, item_name.Text)
 
+        isEditing = False
         btnAdd.Visible = True
         btnSaveChanges.Visible = False
+
+        Label2.Visible = True   ' <-- or label for "New Item"
+        edit.Visible = False     ' <-- hide edit label
+
+        ClearTextboxes()
+
+        SKU.Text = GenerateNextSKU()
+        barcode.Image = GenerateBarcodeWithText(SKU.Text, item_name.Text)
     End Sub
 
     Private Sub ClearTextboxes()
@@ -640,11 +679,74 @@ Public Class inv
         End If
     End Sub
 
+    Private Sub SetBarcodePrinter()
+        For Each printer As String In Printing.PrinterSettings.InstalledPrinters
+            ' Change this condition to match your NON-thermal printer
+            If printer.ToLower().Contains("hp") _
+           Or printer.ToLower().Contains("epson") _
+           Or printer.ToLower().Contains("canon") Then
 
+                printDocBarcode.PrinterSettings.PrinterName = printer
+                Exit For
+            End If
+        Next
+    End Sub
 
     Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles printbtn.Click
-        totalToPrint = Integer.Parse(qty.Text)
-        printedCount = 0
+
+        Try
+            totalToPrint = Integer.Parse(qty.Text)
+            printedCount = 0
+
+            ' Create safe filename
+            Dim safeItemName As String = String.Concat(item_name.Text.Split(IO.Path.GetInvalidFileNameChars()))
+            Dim fileName As String = $"{SKU.Text}-{safeItemName}.pdf"
+
+            Dim downloadsPath As String = IO.Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+            "Downloads"
+        )
+
+            Dim fullPath As String = IO.Path.Combine(downloadsPath, fileName)
+
+            ' Set printer to Microsoft Print to PDF
+            Dim ps As New Printing.PrinterSettings()
+            ps.PrinterName = "Microsoft Print to PDF"
+            ps.PrintToFile = True
+            ps.PrintFileName = fullPath
+
+            printDocBarcode.PrinterSettings = ps
+
+            ' Print directly
+            printDocBarcode.Print()
+
+            ' ✅ SUCCESS MESSAGE
+            MessageBox.Show(
+            "Barcode successfully exported to:" & Environment.NewLine & Environment.NewLine & fullPath,
+            "Export Successful",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Information
+        )
+
+        Catch ex As Exception
+            MessageBox.Show(
+            "Failed to export barcode." & Environment.NewLine & ex.Message,
+            "Export Error",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Error
+        )
+        End Try
+
+    End Sub
+
+    Private Sub ShowPrintPreview()
+        Dim dlg As New PrintDialog()
+        dlg.Document = printDocBarcode
+        dlg.AllowSomePages = False
+
+        If dlg.ShowDialog() <> DialogResult.OK Then Exit Sub
+
+        printDocBarcode.PrinterSettings = dlg.PrinterSettings
 
         Dim preview As New PrintPreviewDialog()
         preview.Document = printDocBarcode
@@ -652,17 +754,16 @@ Public Class inv
         preview.ShowDialog()
     End Sub
 
-    Private Sub ShowPrintPreview()
-        Dim preview As New PrintPreviewDialog()
-        preview.Document = printDocBarcode
-        preview.Width = 900
-        preview.Height = 700
-        preview.ShowDialog()
-    End Sub
+
     Private Function CloneBarcodeImage(src As Bitmap) As Bitmap
         Return New Bitmap(src)
     End Function
     Private Sub printDocBarcode_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles printDocBarcode.PrintPage
+        Dim ps As New Printing.PaperSize("A4", 827, 1169)
+        e.PageSettings.PaperSize = ps
+        e.PageSettings.Margins = New Printing.Margins(20, 20, 20, 20)
+
+
         Dim barcodesPerPage As Integer = 14
         Dim col As Integer = 2
         Dim barcodeWidth As Integer = 300
@@ -1157,4 +1258,11 @@ Public Class inv
         alertpdfinv.Visible = False
         LockBackground(False)
     End Sub
+
+    Private Function GetDownloadsFolder() As String
+        Return IO.Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+            "Downloads"
+        )
+    End Function
 End Class

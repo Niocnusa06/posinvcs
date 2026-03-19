@@ -22,7 +22,7 @@ Partial Class LoginForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LoginForm))
         Me.usernametb = New System.Windows.Forms.TextBox()
         Me.passwordtb = New System.Windows.Forms.TextBox()
         Me.loginbtn = New System.Windows.Forms.Button()
@@ -36,26 +36,19 @@ Partial Class LoginForm
         Me.lblLockCountdown = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label24 = New System.Windows.Forms.Label()
-        Me.PictureBox3 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Label22 = New System.Windows.Forms.Label()
-        Me.PictureBox11 = New System.Windows.Forms.PictureBox()
         Me.ShowPassBtn = New System.Windows.Forms.Button()
         Me.FPasswordPanel = New System.Windows.Forms.Panel()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.PictureBox5 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.Backbtn = New System.Windows.Forms.Button()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
-        Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.SSQcb = New System.Windows.Forms.ComboBox()
-        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.UNFPasstb = New System.Windows.Forms.TextBox()
         Me.Answertb = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -66,50 +59,48 @@ Partial Class LoginForm
         Me.Panel4 = New System.Windows.Forms.Panel()
         Me.Backbtn2 = New System.Windows.Forms.Button()
         Me.Label13 = New System.Windows.Forms.Label()
-        Me.PictureBox12 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox13 = New System.Windows.Forms.PictureBox()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.Label26 = New System.Windows.Forms.Label()
-        Me.PictureBox14 = New System.Windows.Forms.PictureBox()
         Me.ShowNewPassBtn = New System.Windows.Forms.Button()
         Me.ShowConfirmPassBtn = New System.Windows.Forms.Button()
         Me.Label15 = New System.Windows.Forms.Label()
-        Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.NewPassTB = New System.Windows.Forms.TextBox()
         Me.ConfirmPasswordTB = New System.Windows.Forms.TextBox()
         Me.SaveBtn = New System.Windows.Forms.Button()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PictureBox3 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox11 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox5 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox6 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox8 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox12 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox13 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox14 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.LoginPanel.SuspendLayout()
         Me.Panel1.SuspendLayout()
+        Me.FPasswordPanel.SuspendLayout()
+        Me.Panel2.SuspendLayout()
+        Me.RPasswordPanel.SuspendLayout()
+        Me.Panel4.SuspendLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.FPasswordPanel.SuspendLayout()
-        Me.Panel2.SuspendLayout()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RPasswordPanel.SuspendLayout()
-        Me.Panel4.SuspendLayout()
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'PictureBox2
-        '
-        Me.PictureBox2.Image = Global.posinvcs.My.Resources.Resources.profile
-        Me.PictureBox2.Location = New System.Drawing.Point(550, 58)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(120, 120)
-        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox2.TabIndex = 2
-        Me.PictureBox2.TabStop = False
         '
         'usernametb
         '
@@ -287,26 +278,6 @@ Partial Class LoginForm
     ""
         Me.Label24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'PictureBox3
-        '
-        Me.PictureBox3.Image = Global.posinvcs.My.Resources.Resources.LOGO_MSHOP
-        Me.PictureBox3.Location = New System.Drawing.Point(33, 63)
-        Me.PictureBox3.Name = "PictureBox3"
-        Me.PictureBox3.Size = New System.Drawing.Size(83, 83)
-        Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox3.TabIndex = 16
-        Me.PictureBox3.TabStop = False
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Image = Global.posinvcs.My.Resources.Resources.logoschool
-        Me.PictureBox1.Location = New System.Drawing.Point(35, 580)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(40, 40)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox1.TabIndex = 32
-        Me.PictureBox1.TabStop = False
-        '
         'Label1
         '
         Me.Label1.AutoSize = True
@@ -324,49 +295,39 @@ Partial Class LoginForm
         '
         Me.Label12.AutoSize = True
         Me.Label12.BackColor = System.Drawing.Color.Black
-        Me.Label12.Font = New System.Drawing.Font("Lucida Fax", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Font = New System.Drawing.Font("Lucida Fax", 23.0!, System.Drawing.FontStyle.Bold)
         Me.Label12.ForeColor = System.Drawing.Color.White
-        Me.Label12.Location = New System.Drawing.Point(29, 129)
+        Me.Label12.Location = New System.Drawing.Point(27, 133)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(329, 38)
+        Me.Label12.Size = New System.Drawing.Size(211, 35)
         Me.Label12.TabIndex = 21
-        Me.Label12.Text = "────────────────────────"
+        Me.Label12.Text = "──────────────"
         '
         'Label22
         '
         Me.Label22.AutoSize = True
         Me.Label22.BackColor = System.Drawing.Color.Black
-        Me.Label22.Font = New System.Drawing.Font("Lucida Fax", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label22.Font = New System.Drawing.Font("Lucida Fax", 23.0!, System.Drawing.FontStyle.Bold)
         Me.Label22.ForeColor = System.Drawing.Color.White
-        Me.Label22.Location = New System.Drawing.Point(28, 32)
+        Me.Label22.Location = New System.Drawing.Point(26, 35)
         Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(329, 38)
+        Me.Label22.Size = New System.Drawing.Size(211, 35)
         Me.Label22.TabIndex = 20
-        Me.Label22.Text = "────────────────────────"
-        '
-        'PictureBox11
-        '
-        Me.PictureBox11.Image = Global.posinvcs.My.Resources.Resources.bg21
-        Me.PictureBox11.Location = New System.Drawing.Point(-2, 174)
-        Me.PictureBox11.Name = "PictureBox11"
-        Me.PictureBox11.Size = New System.Drawing.Size(388, 400)
-        Me.PictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox11.TabIndex = 16
-        Me.PictureBox11.TabStop = False
+        Me.Label22.Text = "──────────────"
         '
         'ShowPassBtn
         '
         Me.ShowPassBtn.BackColor = System.Drawing.Color.Gainsboro
         Me.ShowPassBtn.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro
         Me.ShowPassBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ShowPassBtn.Font = New System.Drawing.Font("Lucida Fax", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ShowPassBtn.Font = New System.Drawing.Font("Lucida Fax", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ShowPassBtn.ForeColor = System.Drawing.Color.Black
-        Me.ShowPassBtn.Location = New System.Drawing.Point(724, 385)
+        Me.ShowPassBtn.Location = New System.Drawing.Point(694, 384)
         Me.ShowPassBtn.Margin = New System.Windows.Forms.Padding(0)
         Me.ShowPassBtn.Name = "ShowPassBtn"
-        Me.ShowPassBtn.Size = New System.Drawing.Size(24, 27)
+        Me.ShowPassBtn.Size = New System.Drawing.Size(57, 27)
         Me.ShowPassBtn.TabIndex = 16
-        Me.ShowPassBtn.Text = "👁"
+        Me.ShowPassBtn.Text = "show"
         Me.ShowPassBtn.UseVisualStyleBackColor = False
         '
         'FPasswordPanel
@@ -417,26 +378,6 @@ Partial Class LoginForm
         Me.Label5.Text = "M A R I A  A T H E N A" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "P O I N T - O F - S A L E" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "I N V E N T O R Y" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "S Y S T E M" &
     ""
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'PictureBox5
-        '
-        Me.PictureBox5.Image = Global.posinvcs.My.Resources.Resources.LOGO_MSHOP
-        Me.PictureBox5.Location = New System.Drawing.Point(33, 63)
-        Me.PictureBox5.Name = "PictureBox5"
-        Me.PictureBox5.Size = New System.Drawing.Size(83, 83)
-        Me.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox5.TabIndex = 16
-        Me.PictureBox5.TabStop = False
-        '
-        'PictureBox6
-        '
-        Me.PictureBox6.Image = Global.posinvcs.My.Resources.Resources.logoschool
-        Me.PictureBox6.Location = New System.Drawing.Point(35, 576)
-        Me.PictureBox6.Name = "PictureBox6"
-        Me.PictureBox6.Size = New System.Drawing.Size(40, 40)
-        Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox6.TabIndex = 32
-        Me.PictureBox6.TabStop = False
         '
         'Backbtn
         '
@@ -492,16 +433,6 @@ Partial Class LoginForm
         Me.Label16.TabIndex = 20
         Me.Label16.Text = "────────────────────────"
         '
-        'PictureBox8
-        '
-        Me.PictureBox8.Image = Global.posinvcs.My.Resources.Resources.bg21
-        Me.PictureBox8.Location = New System.Drawing.Point(-2, 169)
-        Me.PictureBox8.Name = "PictureBox8"
-        Me.PictureBox8.Size = New System.Drawing.Size(388, 400)
-        Me.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox8.TabIndex = 16
-        Me.PictureBox8.TabStop = False
-        '
         'Label6
         '
         Me.Label6.AutoSize = True
@@ -524,16 +455,6 @@ Partial Class LoginForm
         Me.SSQcb.Name = "SSQcb"
         Me.SSQcb.Size = New System.Drawing.Size(284, 32)
         Me.SSQcb.TabIndex = 16
-        '
-        'PictureBox4
-        '
-        Me.PictureBox4.Image = Global.posinvcs.My.Resources.Resources.profile
-        Me.PictureBox4.Location = New System.Drawing.Point(162, 58)
-        Me.PictureBox4.Name = "PictureBox4"
-        Me.PictureBox4.Size = New System.Drawing.Size(120, 120)
-        Me.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox4.TabIndex = 2
-        Me.PictureBox4.TabStop = False
         '
         'UNFPasstb
         '
@@ -671,26 +592,6 @@ Partial Class LoginForm
     ""
         Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'PictureBox12
-        '
-        Me.PictureBox12.Image = Global.posinvcs.My.Resources.Resources.LOGO_MSHOP
-        Me.PictureBox12.Location = New System.Drawing.Point(33, 63)
-        Me.PictureBox12.Name = "PictureBox12"
-        Me.PictureBox12.Size = New System.Drawing.Size(83, 83)
-        Me.PictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox12.TabIndex = 16
-        Me.PictureBox12.TabStop = False
-        '
-        'PictureBox13
-        '
-        Me.PictureBox13.Image = Global.posinvcs.My.Resources.Resources.logoschool
-        Me.PictureBox13.Location = New System.Drawing.Point(36, 579)
-        Me.PictureBox13.Name = "PictureBox13"
-        Me.PictureBox13.Size = New System.Drawing.Size(40, 40)
-        Me.PictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox13.TabIndex = 32
-        Me.PictureBox13.TabStop = False
-        '
         'Label23
         '
         Me.Label23.AutoSize = True
@@ -727,16 +628,6 @@ Partial Class LoginForm
         Me.Label26.Size = New System.Drawing.Size(329, 38)
         Me.Label26.TabIndex = 20
         Me.Label26.Text = "────────────────────────"
-        '
-        'PictureBox14
-        '
-        Me.PictureBox14.Image = Global.posinvcs.My.Resources.Resources.bg21
-        Me.PictureBox14.Location = New System.Drawing.Point(-2, 173)
-        Me.PictureBox14.Name = "PictureBox14"
-        Me.PictureBox14.Size = New System.Drawing.Size(388, 400)
-        Me.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox14.TabIndex = 16
-        Me.PictureBox14.TabStop = False
         '
         'ShowNewPassBtn
         '
@@ -779,16 +670,6 @@ Partial Class LoginForm
         Me.Label15.Size = New System.Drawing.Size(216, 25)
         Me.Label15.TabIndex = 27
         Me.Label15.Text = "Confirm Password"
-        '
-        'PictureBox7
-        '
-        Me.PictureBox7.Image = Global.posinvcs.My.Resources.Resources.profile
-        Me.PictureBox7.Location = New System.Drawing.Point(163, 58)
-        Me.PictureBox7.Name = "PictureBox7"
-        Me.PictureBox7.Size = New System.Drawing.Size(120, 120)
-        Me.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox7.TabIndex = 18
-        Me.PictureBox7.TabStop = False
         '
         'NewPassTB
         '
@@ -848,6 +729,126 @@ Partial Class LoginForm
         Me.Label18.TabIndex = 22
         Me.Label18.Text = "RESET PASSWORD"
         '
+        'PictureBox3
+        '
+        Me.PictureBox3.Image = Global.posinvcs.My.Resources.Resources.LOGO_MSHOP
+        Me.PictureBox3.Location = New System.Drawing.Point(33, 63)
+        Me.PictureBox3.Name = "PictureBox3"
+        Me.PictureBox3.Size = New System.Drawing.Size(83, 83)
+        Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox3.TabIndex = 16
+        Me.PictureBox3.TabStop = False
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Image = Global.posinvcs.My.Resources.Resources.logoschool
+        Me.PictureBox1.Location = New System.Drawing.Point(35, 580)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(40, 40)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox1.TabIndex = 32
+        Me.PictureBox1.TabStop = False
+        '
+        'PictureBox11
+        '
+        Me.PictureBox11.Image = Global.posinvcs.My.Resources.Resources.bg21
+        Me.PictureBox11.Location = New System.Drawing.Point(-2, 174)
+        Me.PictureBox11.Name = "PictureBox11"
+        Me.PictureBox11.Size = New System.Drawing.Size(388, 400)
+        Me.PictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox11.TabIndex = 16
+        Me.PictureBox11.TabStop = False
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.Image = Global.posinvcs.My.Resources.Resources.profile
+        Me.PictureBox2.Location = New System.Drawing.Point(550, 58)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(120, 120)
+        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox2.TabIndex = 2
+        Me.PictureBox2.TabStop = False
+        '
+        'PictureBox5
+        '
+        Me.PictureBox5.Image = Global.posinvcs.My.Resources.Resources.LOGO_MSHOP
+        Me.PictureBox5.Location = New System.Drawing.Point(33, 63)
+        Me.PictureBox5.Name = "PictureBox5"
+        Me.PictureBox5.Size = New System.Drawing.Size(83, 83)
+        Me.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox5.TabIndex = 16
+        Me.PictureBox5.TabStop = False
+        '
+        'PictureBox6
+        '
+        Me.PictureBox6.Image = Global.posinvcs.My.Resources.Resources.logoschool
+        Me.PictureBox6.Location = New System.Drawing.Point(35, 576)
+        Me.PictureBox6.Name = "PictureBox6"
+        Me.PictureBox6.Size = New System.Drawing.Size(40, 40)
+        Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox6.TabIndex = 32
+        Me.PictureBox6.TabStop = False
+        '
+        'PictureBox8
+        '
+        Me.PictureBox8.Image = Global.posinvcs.My.Resources.Resources.bg21
+        Me.PictureBox8.Location = New System.Drawing.Point(-2, 169)
+        Me.PictureBox8.Name = "PictureBox8"
+        Me.PictureBox8.Size = New System.Drawing.Size(388, 400)
+        Me.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox8.TabIndex = 16
+        Me.PictureBox8.TabStop = False
+        '
+        'PictureBox4
+        '
+        Me.PictureBox4.Image = Global.posinvcs.My.Resources.Resources.profile
+        Me.PictureBox4.Location = New System.Drawing.Point(162, 58)
+        Me.PictureBox4.Name = "PictureBox4"
+        Me.PictureBox4.Size = New System.Drawing.Size(120, 120)
+        Me.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox4.TabIndex = 2
+        Me.PictureBox4.TabStop = False
+        '
+        'PictureBox12
+        '
+        Me.PictureBox12.Image = Global.posinvcs.My.Resources.Resources.LOGO_MSHOP
+        Me.PictureBox12.Location = New System.Drawing.Point(33, 63)
+        Me.PictureBox12.Name = "PictureBox12"
+        Me.PictureBox12.Size = New System.Drawing.Size(83, 83)
+        Me.PictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox12.TabIndex = 16
+        Me.PictureBox12.TabStop = False
+        '
+        'PictureBox13
+        '
+        Me.PictureBox13.Image = Global.posinvcs.My.Resources.Resources.logoschool
+        Me.PictureBox13.Location = New System.Drawing.Point(36, 579)
+        Me.PictureBox13.Name = "PictureBox13"
+        Me.PictureBox13.Size = New System.Drawing.Size(40, 40)
+        Me.PictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox13.TabIndex = 32
+        Me.PictureBox13.TabStop = False
+        '
+        'PictureBox14
+        '
+        Me.PictureBox14.Image = Global.posinvcs.My.Resources.Resources.bg21
+        Me.PictureBox14.Location = New System.Drawing.Point(-2, 173)
+        Me.PictureBox14.Name = "PictureBox14"
+        Me.PictureBox14.Size = New System.Drawing.Size(388, 400)
+        Me.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox14.TabIndex = 16
+        Me.PictureBox14.TabStop = False
+        '
+        'PictureBox7
+        '
+        Me.PictureBox7.Image = Global.posinvcs.My.Resources.Resources.profile
+        Me.PictureBox7.Location = New System.Drawing.Point(163, 58)
+        Me.PictureBox7.Name = "PictureBox7"
+        Me.PictureBox7.Size = New System.Drawing.Size(120, 120)
+        Me.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox7.TabIndex = 18
+        Me.PictureBox7.TabStop = False
+        '
         'LoginForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -858,29 +859,30 @@ Partial Class LoginForm
         Me.Controls.Add(Me.FPasswordPanel)
         Me.Controls.Add(Me.RPasswordPanel)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "LoginForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "LoginForm"
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.LoginPanel.ResumeLayout(False)
         Me.LoginPanel.PerformLayout()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FPasswordPanel.ResumeLayout(False)
         Me.FPasswordPanel.PerformLayout()
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
-        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RPasswordPanel.ResumeLayout(False)
         Me.RPasswordPanel.PerformLayout()
         Me.Panel4.ResumeLayout(False)
         Me.Panel4.PerformLayout()
+        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).EndInit()
@@ -919,7 +921,6 @@ Partial Class LoginForm
     Friend WithEvents SaveBtn As Button
     Friend WithEvents Label17 As Label
     Friend WithEvents Label18 As Label
-    Friend WithEvents ShowPassBtn As Button
     Friend WithEvents ShowNewPassBtn As Button
     Friend WithEvents ShowConfirmPassBtn As Button
     Friend WithEvents Panel1 As Panel
@@ -948,4 +949,5 @@ Partial Class LoginForm
     Friend WithEvents PictureBox8 As PictureBox
     Friend WithEvents Backbtn2 As Button
     Friend WithEvents lblLockCountdown As Label
+    Friend WithEvents ShowPassBtn As Button
 End Class

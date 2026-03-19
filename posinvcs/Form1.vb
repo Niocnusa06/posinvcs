@@ -2,6 +2,11 @@
 Imports MySql.Data.MySqlClient
 
 Public Class Form1
+
+
+    Private selectedIndex As Integer = -1
+
+
     Public LoggedInUsername As String
     ' --- MySQL connection ---
     Private conn As MySqlConnection
@@ -24,6 +29,9 @@ Public Class Form1
     ' --- PrintDocument (declare WithEvents manually) ---
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Me.KeyPreview = True
+
         conn = New MySqlConnection("server=localhost;port=3307;user=root;password=;database=posinv")
 
         ' Initialize order table
@@ -51,6 +59,8 @@ Public Class Form1
         UpdateTime()
         tmrClock.Start()
     End Sub
+
+
 
     '==================== RECEIPT NUMBER GENERATOR ====================
     Private Sub GenerateReceiptNumber()
@@ -203,6 +213,12 @@ Public Class Form1
             .BackColor = Color.FromArgb(243, 244, 246),
             .Tag = sku
         }
+            If orderList.Rows.IndexOf(row) = selectedIndex Then
+                itemPanel.BackColor = Color.FromArgb(191, 219, 254) ' light blue
+            Else
+                itemPanel.BackColor = Color.FromArgb(243, 244, 246)
+            End If
+
 
             Dim separator As New Panel With {
      .Dock = DockStyle.Bottom,
@@ -386,13 +402,45 @@ Public Class Form1
         Dim btn As Button = CType(sender, Button)
         Dim sku As String = btn.Tag.ToString()
 
-        For Each row As DataRow In orderList.Rows
-            If row("SKU").ToString() = sku Then
-                row("Qty") = CInt(row("Qty")) + 1
-                row("Subtotal") = CDec(row("Qty")) * CDec(row("Price"))
-                Exit For
-            End If
-        Next
+        Try
+            If conn.State = ConnectionState.Closed Then conn.Open()
+
+            ' Get available stock
+            Dim stockCmd As New MySqlCommand(
+            "SELECT qty FROM products WHERE SKU=@sku", conn)
+            stockCmd.Parameters.AddWithValue("@sku", sku)
+
+            Dim stockQty As Integer = Convert.ToInt32(stockCmd.ExecuteScalar())
+
+            For Each row As DataRow In orderList.Rows
+                If row("SKU").ToString() = sku Then
+
+                    Dim currentQty As Integer = CInt(row("Qty"))
+
+
+                    If currentQty >= stockQty Then
+                        MessageBox.Show(
+                        "⚠️ Cannot add more items." & vbCrLf &
+                        "Available stock: " & stockQty,
+                        "Insufficient Stock",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    )
+                        Exit Sub
+                    End If
+
+
+                    row("Qty") = currentQty + 1
+                    row("Subtotal") = CDec(row("Qty")) * CDec(row("Price"))
+                    Exit For
+                End If
+            Next
+
+        Catch ex As Exception
+            MessageBox.Show("Error checking stock: " & ex.Message)
+        Finally
+            If conn.State = ConnectionState.Open Then conn.Close()
+        End Try
 
         UpdateListPanel()
     End Sub
@@ -452,12 +500,18 @@ Public Class Form1
 
     '==================== UPDATE TOTAL ================================
     Private Sub UpdateTotal()
-        Dim totalValue As Decimal = 0D
-        For Each row As DataRow In orderList.Rows
-            totalValue += CDec(row("Subtotal"))
-        Next
-        Total.Text = "₱ " & totalValue.ToString("0.00")
+        Dim subtotal As Decimal = orderList.AsEnumerable().Sum(Function(r) CDec(r("Subtotal")))
+
+        Dim discount As Decimal = 0D
+        Decimal.TryParse(DiscountTextBox.Text, discount)
+
+        If discount > subtotal Then discount = subtotal
+
+        Dim finalTotal As Decimal = subtotal - discount
+
+        Total.Text = "₱ " & finalTotal.ToString("0.00")
     End Sub
+
 
     '==================== SCAN ITEM ENTER KEY ==========================
     Private Sub SKUBarcodee_KeyDown(sender As Object, e As KeyEventArgs) Handles SKUBarcodee.KeyDown
@@ -474,7 +528,7 @@ Public Class Form1
     End Sub
     Private Function BuildReceiptText(cashPaid As Decimal, cashierName As String) As String
         Dim sb As New System.Text.StringBuilder()
-        Const W As Integer = 40
+        Const W As Integer = 29
 
         sb.AppendLine(CenterText("MARIA ATHENA MOTORCYCLE PARTS", W))
         sb.AppendLine(CenterText("& ACCESSORIES", W))
@@ -487,29 +541,36 @@ Public Class Form1
 
         sb.AppendLine(New String("-"c, W))
 
-        sb.AppendLine("ITEM        QTY   AMOUNT")
+        sb.AppendLine("ITEM           QTY     AMT")
         sb.AppendLine(New String("-"c, W))
 
         Dim totalValue As Decimal = 0D
 
         For Each row As DataRow In orderList.Rows
-            Dim name As String = Truncate(row("Item Name").ToString(), 10)
+            Dim name As String = Truncate(row("Item Name").ToString(), 11)
             Dim qty As Integer = CInt(row("Qty"))
             Dim subtotal As Decimal = CDec(row("Subtotal"))
 
-            sb.AppendLine(String.Format("{0,-18} {1,4} {2,14}", name, qty, subtotal.ToString("0.00")))
+            Dim leftPart As String = String.Format("{0,-11} {1,3}", name, qty)
+
+            sb.AppendLine(leftPart.PadRight(W - subtotal.ToString("0.00").Length) &
+                  subtotal.ToString("0.00"))
 
             totalValue += subtotal
         Next
 
+
         Dim vatAmount As Decimal = Decimal.Round(totalValue * 12D / 112D, 2)
         Dim basePrice As Decimal = Decimal.Round(totalValue - vatAmount, 2)
-        Dim change As Decimal = cashPaid - totalValue
+        Dim change As Decimal = cashPaid + DiscountTextBox.Text.Trim() - totalValue
+        Dim discount As Decimal = DiscountTextBox.Text.Trim()
 
         sb.AppendLine(New String("-"c, W))
-        sb.AppendLine(FormatLine("VAT Sales", basePrice, W))
-        sb.AppendLine(FormatLine("VAT (12%)", vatAmount, W))
+        sb.AppendLine(FormatLine("+ VAT Sales", basePrice, W))
+        sb.AppendLine(FormatLine("- VAT (12%)", vatAmount, W))
+        sb.AppendLine(New String("-"c, W))
         sb.AppendLine(FormatLine("TOTAL", totalValue, W))
+        sb.AppendLine(FormatLine("discount", discount, W))
         sb.AppendLine(FormatLine("Cash", cashPaid, W))
         sb.AppendLine(FormatLine("Change", change, W))
 
@@ -524,17 +585,24 @@ Public Class Form1
 
         Return sb.ToString()
     End Function
+
+    Private Function MoneyLine(leftText As String, amount As Decimal) As String
+        Const W As Integer = 29
+        Dim amt As String = amount.ToString("0.00")
+        Return leftText.PadRight(W - amt.Length) & amt
+    End Function
+
     Private Function CenterText(text As String, width As Integer) As String
         If text.Length >= width Then Return text
         Dim padding As Integer = (width - text.Length) \ 2
         Return New String(" "c, padding) & text
     End Function
-
     Private Function FormatLine(label As String, value As Decimal, width As Integer) As String
-        Dim amount As String = value.ToString("0.00") ' FORCE 2 DECIMALS
-        Return String.Format("{0,-20}{1,20}", label, amount)
-
+        Dim amount As String = value.ToString("0.00")
+        Return label.PadRight(width - amount.Length) & amount
     End Function
+
+
 
 
     Private Function Truncate(text As String, maxLen As Integer) As String
@@ -550,48 +618,26 @@ Public Class Form1
             Return
         End If
 
-        Dim cashPaid As Decimal
-        Dim input As String = InputBox("Enter cash received:", "Cash Payment")
+        Dim totalValue As Decimal =
+    orderList.AsEnumerable().Sum(Function(r) CDec(r("Subtotal")))
 
-        If Not Decimal.TryParse(input, cashPaid) Then
-            MessageBox.Show("Invalid cash amount!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Return
-        End If
-
-        Dim totalValue As Decimal = orderList.AsEnumerable().Sum(Function(r) CDec(r("Subtotal")))
-        If cashPaid < totalValue Then
-            MessageBox.Show("Cash is not enough! Total: ₱" & totalValue.ToString("0.00"), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Return
-        End If
-
-        Dim cashierName As String = DBConnection.GetCashierName(LoggedInUsername)
-        receiptText = BuildReceiptText(cashPaid, cashierName)
-
-
-
-
-        Dim preview As New PrintPreviewDialog With {.Document = PrintDocument2, .WindowState = FormWindowState.Normal}
-
-        PrintDocument2.Print()
-        SaveTransaction(1)
-        orderList.Clear()
-        UpdateListPanel()
-        Total.Clear()
-        GenerateReceiptNumber()
+        Cash.Clear()
+        CashIn.Visible = True
+        Cash.Focus()
     End Sub
 
 
     Private Sub PrintDocument2_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument2.PrintPage
 
-        Dim baseFont As New Font("Consolas", 9.0F, FontStyle.Regular)
+        Dim baseFont As New Font("Consolas", 8.0F, FontStyle.Regular)
 
 
 
         Dim lines() As String = receiptText.Split({vbCrLf, vbLf}, StringSplitOptions.None)
 
 
-        Dim leftMargin As Single = 5
-        Dim topMargin As Single = 5
+        Dim leftMargin As Single = 2
+        Dim topMargin As Single = 2
         Dim y As Single = topMargin
 
         For Each line As String In lines
@@ -607,17 +653,31 @@ Public Class Form1
         If orderList.Rows.Count = 0 Then Return
         Try
             If conn.State = ConnectionState.Closed Then conn.Open()
-            Dim query As String = "INSERT INTO sales_transactions (receipt_number, total) VALUES (@receipt_number, @total); SELECT LAST_INSERT_ID();"
+            Dim query As String = "
+INSERT INTO sales_transactions 
+(receipt_number, total, discount) 
+VALUES (@receipt_number, @total, @discount); 
+SELECT LAST_INSERT_ID();"
             cmd = New MySqlCommand(query, conn)
+            Dim subtotal As Decimal = orderList.AsEnumerable().Sum(Function(r) CDec(r("Subtotal")))
+
+            Dim discount As Decimal = 0D
+            Decimal.TryParse(DiscountTextBox.Text, discount)
+
+            If discount > subtotal Then discount = subtotal
+
+            Dim totalValue As Decimal = subtotal - discount
+
             cmd.Parameters.AddWithValue("@receipt_number", currentReceiptNumber)
-            cmd.Parameters.AddWithValue("@total", CDec(orderList.AsEnumerable().Sum(Function(r) CDec(r("Subtotal")))))
+            cmd.Parameters.AddWithValue("@total", totalValue)
+            cmd.Parameters.AddWithValue("@discount", discount)
             Dim transactionId As Integer = Convert.ToInt32(cmd.ExecuteScalar())
 
             For Each row As DataRow In orderList.Rows
                 Dim sku As String = row("SKU").ToString()
                 Dim qtySold As Integer = CInt(row("Qty"))
                 Dim price As Decimal = CDec(row("Price"))
-                Dim subtotal As Decimal = CDec(row("Subtotal"))
+                Dim itemSubtotal As Decimal = CDec(row("Subtotal"))
 
                 cmd = New MySqlCommand("INSERT INTO sales_details (transaction_id, item_id, quantity, item_price, subtotal) " &
                                        "VALUES (@tid, (SELECT id FROM products WHERE SKU=@sku LIMIT 1), @qty, @price, @subtotal)", conn)
@@ -625,7 +685,7 @@ Public Class Form1
                 cmd.Parameters.AddWithValue("@sku", sku)
                 cmd.Parameters.AddWithValue("@qty", qtySold)
                 cmd.Parameters.AddWithValue("@price", price)
-                cmd.Parameters.AddWithValue("@subtotal", subtotal)
+                cmd.Parameters.AddWithValue("@subtotal", itemSubtotal)
                 cmd.ExecuteNonQuery()
 
                 cmd = New MySqlCommand("UPDATE products SET qty = qty - @qtySold WHERE SKU=@sku", conn)
@@ -689,6 +749,16 @@ Public Class Form1
 
     Private Sub ReturnTransaction_Click(sender As Object, e As EventArgs) Handles ReturnTransaction.Click
         If DataGridView2.SelectedRows.Count = 0 Then
+            HoldPanel.Visible = False
+            Return
+        End If
+
+
+        Dim selectedRow As DataGridViewRow = DataGridView2.SelectedRows(0)
+
+
+        If selectedRow.IsNewRow OrElse
+        selectedRow.Cells("receipt_number").Value Is Nothing Then
             HoldPanel.Visible = False
             Return
         End If
@@ -803,23 +873,9 @@ Public Class Form1
 
         Return name
     End Function
-    Private Sub Form1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
-        ' Only redirect letters & numbers (barcode chars)
-        If Char.IsLetterOrDigit(e.KeyChar) Then
 
-            ' If scanner is used while focus is elsewhere
-            If Not SKUBarcodee.Focused Then
-                SKUBarcodee.Focus()
-            End If
 
-            ' Manually write the character
-            SKUBarcodee.Text &= e.KeyChar
-            SKUBarcodee.SelectionStart = SKUBarcodee.Text.Length
 
-            ' STOP it from going to the wrong control
-            e.Handled = True
-        End If
-    End Sub
 
     Private Sub Guna2CirclePictureBox1_Click(sender As Object, e As EventArgs)
     End Sub
@@ -836,5 +892,413 @@ Public Class Form1
             Me.Hide()
             LoginForm.Show()
         End If
+    End Sub
+
+    Private Sub ShowItemNameBySKU()
+        ' Clear if empty
+        If SKUBarcodee.Text.Trim() = "" Then
+            ItemName.Text = ""
+            Return
+        End If
+
+        Try
+            If conn.State = ConnectionState.Closed Then conn.Open()
+
+            Dim query As String = "SELECT item_name FROM products WHERE SKU=@sku LIMIT 1"
+            cmd = New MySqlCommand(query, conn)
+            cmd.Parameters.AddWithValue("@sku", SKUBarcodee.Text.Trim())
+
+            Dim result As Object = cmd.ExecuteScalar()
+
+            If result IsNot Nothing Then
+                ItemName.Text = result.ToString()
+            Else
+                ItemName.Text = "Item not found"
+            End If
+
+        Catch ex As Exception
+            ItemName.Text = ""
+        Finally
+            If conn.State = ConnectionState.Open Then conn.Close()
+        End Try
+    End Sub
+
+
+
+
+
+
+    Private Sub UpdatePriceFromSKU()
+        ' Clear price if SKU is empty
+        If SKUBarcodee.Text.Trim() = "" Then
+            Price.Text = ""
+            Return
+        End If
+
+        Try
+            If conn.State = ConnectionState.Closed Then conn.Open()
+
+            Dim cmd As New MySqlCommand(
+            "SELECT price FROM products WHERE SKU=@sku LIMIT 1", conn)
+
+            cmd.Parameters.AddWithValue("@sku", SKUBarcodee.Text.Trim())
+
+            Dim result = cmd.ExecuteScalar()
+
+            If result IsNot Nothing Then
+                Price.Text = "₱ " & CDec(result).ToString("0.00")
+            Else
+                Price.Text = ""
+            End If
+
+        Catch
+            Price.Text = ""
+        Finally
+            If conn.State = ConnectionState.Open Then conn.Close()
+        End Try
+    End Sub
+
+
+
+
+
+
+    Private Sub UpdateSubTotal()
+        If Price.Text = "" Then
+            SubTotal.Text = ""
+            Exit Sub
+        End If
+
+        Dim priceValue = Val(Price.Text.Replace("₱", ""))
+
+        ' If Qty is empty, subtotal = price
+        If Qty.Text.Trim() = "" Then
+            SubTotal.Text = "₱ " & priceValue.ToString("0.00")
+        Else
+            SubTotal.Text = "₱ " & (priceValue * Val(Qty.Text)).ToString("0.00")
+        End If
+    End Sub
+
+
+
+    Private Sub Qty_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Qty.KeyPress
+        ' Allow only numbers and Backspace
+        If Not Char.IsDigit(e.KeyChar) AndAlso e.KeyChar <> ChrW(Keys.Back) Then
+            e.Handled = True
+        End If
+    End Sub
+
+
+    Private Sub Qty_TextChanged(sender As Object, e As EventArgs) Handles Qty.TextChanged
+        UpdateSubTotal()
+    End Sub
+
+    Private Sub Price_TextChanged(sender As Object, e As EventArgs) Handles Price.TextChanged
+        UpdateSubTotal()
+    End Sub
+
+
+
+    Private Sub SKUBarcodee_TextChanged(sender As Object, e As EventArgs) Handles SKUBarcodee.TextChanged
+        ShowItemNameBySKU()
+        UpdatePriceFromSKU()
+    End Sub
+
+
+    Private Sub Form1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
+
+
+        If Me.ActiveControl Is Qty OrElse Me.ActiveControl Is Cash OrElse Me.ActiveControl Is DiscountTextBox Then
+            Exit Sub
+        End If
+
+        If TypeOf Me.ActiveControl Is TextBox Then Exit Sub
+
+        Select Case Char.ToUpper(e.KeyChar)
+
+            Case "H"c, "C"c, "V"c, "Q"c, "D"c
+                e.Handled = True
+                Return
+
+        End Select
+
+
+        If Char.IsLetterOrDigit(e.KeyChar) Then
+            SKUBarcodee.Focus()
+            SKUBarcodee.AppendText(e.KeyChar)
+            e.Handled = True
+        End If
+
+    End Sub
+    Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+
+        If TypeOf Me.ActiveControl Is TextBox Then Exit Sub
+        ' Do NOT hijack keys while typing Qty
+        If Me.ActiveControl Is Qty Then Exit Sub
+
+        Select Case e.KeyCode
+
+        ' ===== ENTER → PRINT =====
+            Case Keys.Enter
+
+                ' If typing in SKU, let scanner handle it
+                If Me.ActiveControl Is SKUBarcodee Then Exit Select
+
+                ' If cash panel visible, don't trigger print
+                If CashIn.Visible Then Exit Select
+
+                ' Print only if there are items
+                If orderList.Rows.Count > 0 Then
+                    PrintButton.PerformClick()
+                End If
+
+        ' ===== S → SUBMIT ITEM =====
+            Case Keys.Q
+                SubmitItemButton.PerformClick()
+
+            Case Keys.V
+                ViewHold.PerformClick()
+
+
+        ' ===== H → HOLD =====
+            Case Keys.H
+                Hold.PerformClick()
+
+
+        ' ===== C → CLEAR =====
+            Case Keys.C
+                ClearButton.PerformClick()
+
+
+        ' ===== MOVE SELECTION UP =====
+            Case Keys.Up
+                If orderList.Rows.Count = 0 Then Exit Select
+
+                If selectedIndex > 0 Then
+                    selectedIndex -= 1
+                Else
+                    selectedIndex = 0
+                End If
+
+                UpdateSelectedSKU()
+                UpdateListPanel()
+
+
+        ' ===== MOVE SELECTION DOWN =====
+            Case Keys.Down
+                If orderList.Rows.Count = 0 Then Exit Select
+
+                If selectedIndex < orderList.Rows.Count - 1 Then
+                    selectedIndex += 1
+                End If
+
+                UpdateSelectedSKU()
+                UpdateListPanel()
+
+
+        ' ===== INCREASE QTY =====
+            Case Keys.Left
+                If selectedIndex >= 0 Then
+                    IncreaseQtyByIndex()
+                    UpdateListPanel()
+                End If
+
+
+        ' ===== DECREASE QTY =====
+            Case Keys.Right
+                If selectedIndex >= 0 Then
+                    DecreaseQtyByIndex()
+                    UpdateListPanel()
+                End If
+
+
+        ' ===== DELETE ITEM =====
+            Case Keys.D
+                If selectedIndex >= 0 Then
+                    DeleteByIndex()
+                    UpdateListPanel()
+                End If
+
+
+                ' ===== F1 → DISCOUNT =====
+            Case Keys.F1
+                DiscountTextBox.Focus()
+                DiscountTextBox.SelectAll()
+
+        End Select
+
+    End Sub
+
+    Private Sub IncreaseQtyByIndex()
+        If selectedIndex < 0 Then Exit Sub
+
+        Dim row = orderList.Rows(selectedIndex)
+        row("Qty") = CInt(row("Qty")) + 1
+        row("Subtotal") = CDec(row("Qty")) * CDec(row("Price"))
+    End Sub
+    Private Sub DecreaseQtyByIndex()
+        If selectedIndex < 0 Then Exit Sub
+
+        Dim row = orderList.Rows(selectedIndex)
+        Dim newQty = CInt(row("Qty")) - 1
+
+        If newQty <= 0 Then
+            orderList.Rows.RemoveAt(selectedIndex)
+            selectedIndex = Math.Max(0, selectedIndex - 1)
+        Else
+            row("Qty") = newQty
+            row("Subtotal") = CDec(newQty) * CDec(row("Price"))
+        End If
+    End Sub
+    Private Sub DeleteByIndex()
+        If selectedIndex < 0 Then Exit Sub
+
+        orderList.Rows.RemoveAt(selectedIndex)
+        selectedIndex = Math.Max(0, selectedIndex - 1)
+    End Sub
+
+    Private Sub UpdateSelectedSKU()
+        If selectedIndex >= 0 AndAlso selectedIndex < orderList.Rows.Count Then
+            selectedOrderSKU = orderList.Rows(selectedIndex)("SKU").ToString()
+        Else
+            selectedOrderSKU = ""
+        End If
+    End Sub
+
+    Private Sub IncreaseQty(sku As String)
+        For Each row As DataRow In orderList.Rows
+            If row("SKU").ToString() = sku Then
+                row("Qty") = CInt(row("Qty")) + 1
+                row("Subtotal") = CDec(row("Qty")) * CDec(row("Price"))
+                Exit For
+            End If
+        Next
+        UpdateListPanel()
+    End Sub
+    Private Sub DecreaseQty(sku As String)
+        For Each row As DataRow In orderList.Rows
+            If row("SKU").ToString() = sku Then
+                Dim newQty As Integer = CInt(row("Qty")) - 1
+                If newQty <= 0 Then
+                    orderList.Rows.Remove(row)
+                Else
+                    row("Qty") = newQty
+                    row("Subtotal") = CDec(newQty) * CDec(row("Price"))
+                End If
+                Exit For
+            End If
+        Next
+        UpdateListPanel()
+    End Sub
+
+    Private Sub DeleteSelectedItem()
+        For Each row As DataRow In orderList.Rows
+            If row("SKU").ToString() = selectedOrderSKU Then
+                orderList.Rows.Remove(row)
+                Exit For
+            End If
+        Next
+
+        selectedOrderSKU = ""
+        UpdateListPanel()
+    End Sub
+
+    Private Sub DiscountTextBox_KeyPress(sender As Object, e As KeyPressEventArgs)
+
+        If Char.IsDigit(e.KeyChar) OrElse e.KeyChar = ChrW(Keys.Back) Then
+            Exit Sub
+        End If
+
+
+        If e.KeyChar = "."c AndAlso Not DiscountTextBox.Text.Contains(".") Then
+            Exit Sub
+        End If
+
+
+        e.Handled = True
+        MessageBox.Show("Discount must be a number only.", "Invalid Input",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning)
+    End Sub
+
+    Private Sub DiscountTextBox_KeyDown(sender As Object, e As KeyEventArgs)
+        If e.KeyCode = Keys.Enter OrElse e.KeyCode = Keys.Escape Then
+            SKUBarcodee.Focus()
+            e.Handled = True
+        End If
+    End Sub
+
+
+
+
+    Private Sub Okaay_Click(sender As Object, e As EventArgs) Handles Okaay.Click
+        Dim cashPaid As Decimal
+
+        If Not Decimal.TryParse(Cash.Text, cashPaid) Then
+            MessageBox.Show("Invalid cash amount!")
+            Cash.Focus()
+            Return
+        End If
+
+        ' AUTO total again (always correct)
+        Dim subtotal As Decimal =
+    orderList.AsEnumerable().Sum(Function(r) CDec(r("Subtotal")))
+
+        Dim discount As Decimal = 0D
+        Decimal.TryParse(DiscountTextBox.Text, discount)
+
+        If discount > subtotal Then discount = subtotal
+
+        Dim totalValue As Decimal = subtotal - discount
+
+        If cashPaid < totalValue Then
+            MessageBox.Show("Cash is not enough! Total: ₱ " &
+                            totalValue.ToString("0.00"))
+            Cash.Focus()
+            Return
+        End If
+
+        CashIn.Visible = False
+
+        receiptText = BuildReceiptText(cashPaid, LoggedInUsername)
+
+
+        PrintDocument2.Print()
+        SaveTransaction(1)
+
+        orderList.Clear()
+        UpdateListPanel()
+
+        GenerateReceiptNumber()
+    End Sub
+
+
+
+
+
+    Private Sub Cancel_Click(sender As Object, e As EventArgs) Handles Cancel.Click
+        CashIn.Visible = False
+        Cash.Clear()
+    End Sub
+
+    Private Sub Guna2TextBox1_TextChanged(sender As Object, e As EventArgs) Handles Cash.TextChanged
+
+    End Sub
+
+    Private Sub DiscountTextBox_TextChanged(sender As Object, e As EventArgs) _
+    Handles DiscountTextBox.TextChanged
+
+        If DiscountTextBox.Text = "" Then
+            UpdateTotal()
+            Exit Sub
+        End If
+
+        Dim discount As Decimal
+        If Not Decimal.TryParse(DiscountTextBox.Text, discount) Then
+            DiscountTextBox.Text = ""
+            UpdateTotal()
+            Exit Sub
+        End If
+
+        UpdateTotal()
     End Sub
 End Class

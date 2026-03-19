@@ -123,7 +123,7 @@ Public Class User
         End Try
     End Sub
 
-    ' ✏️ Update user
+
     Private Sub update_btn_Click(sender As Object, e As EventArgs) Handles update_btn.Click
         Dim username As String = usernametxtb.Text.Trim()
         If username = "" Then
@@ -131,7 +131,7 @@ Public Class User
             Exit Sub
         End If
 
-        ' First: check user exists
+
         Try
             Using conn As New MySqlConnection(connectionString)
                 conn.Open()
@@ -145,8 +145,12 @@ Public Class User
                     End If
                 End Using
 
-                ' Now prepare fields
+
                 Dim password As String = passwordtxtb.Text.Trim()
+                If password <> "" AndAlso Not IsStrongPassword(password) Then
+                    MessageBox.Show("Password must be at least 8 characters long and contain both letters and numbers.", "Weak Password", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    Return
+                End If
                 Dim question As String = squestioncombob.Text.Trim()
                 Dim answer As String = sanswertxtb.Text.Trim()
                 Dim accountType As String = accountcombob.Text.Trim()
@@ -161,7 +165,7 @@ Public Class User
                     answer = ""
                 End If
 
-                ' Prevent downgrading Admin -> Cashier
+
                 Dim typeQuery As String = "SELECT account_type FROM user WHERE username=@u"
                 Using typeCmd As New MySqlCommand(typeQuery, conn)
                     typeCmd.Parameters.AddWithValue("@u", username)
@@ -172,7 +176,7 @@ Public Class User
                     End If
                 End Using
 
-                ' Build update SQL (only include password if provided)
+
                 Dim updateSql As String = "UPDATE user SET account_type=@t, security_question=@q, security_answer=@a"
                 If password <> "" Then updateSql &= ", password=@p"
                 updateSql &= " WHERE username=@u"
@@ -196,7 +200,7 @@ Public Class User
                 End Using
             End Using
 
-            ' refresh and reset
+
             ClearInputs()
             LoadUsers()
             UpdateCountLabel()
@@ -206,7 +210,6 @@ Public Class User
         End Try
     End Sub
 
-    ' 🗑️ Delete user
     Private Sub delete_btn_Click(sender As Object, e As EventArgs) Handles delete_btn.Click
         If usernametxtb.Text.Trim = "" Then
             MessageBox.Show("Select a user first.", "Delete", MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -246,12 +249,12 @@ Public Class User
             MessageBox.Show("Error deleting user: " & ex.Message)
         End Try
     End Sub
-    ' 🧾 Count visible users
+
     Private Sub UpdateCountLabel()
         recordCountLbl.Text = "Showing " & UserDGV.Rows.GetRowCount(DataGridViewElementStates.Visible) & " user(s)"
     End Sub
 
-    ' 💾 Add user
+
     Private Sub add_btn_Click(sender As Object, e As EventArgs) Handles add_btn.Click
         Dim username As String = usernametxtb.Text.Trim()
         Dim password As String = passwordtxtb.Text.Trim()
@@ -261,6 +264,12 @@ Public Class User
 
         If username = "" Or password = "" Or accountType = "" Then
             MessageBox.Show("Please fill in username, password, and account type.", "Missing Info", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+
+        If Not IsStrongPassword(password) Then
+            MessageBox.Show("Password must be at least 8 characters long and contain both letters and numbers.", "Weak Password", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
 
@@ -313,5 +322,10 @@ Public Class User
         End Try
     End Sub
 
-
+    Private Function IsStrongPassword(password As String) As Boolean
+        If password.Length < 8 Then Return False
+        If Not System.Text.RegularExpressions.Regex.IsMatch(password, "[A-Za-z]") Then Return False
+        If Not System.Text.RegularExpressions.Regex.IsMatch(password, "[0-9]") Then Return False
+        Return True
+    End Function
 End Class

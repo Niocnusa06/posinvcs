@@ -155,8 +155,9 @@ Public Class category
             End Using
 
 
-            AlertFormMngr.ShowAlert(New AlertCategorySureDelete(), Me)
+            LoadCategories()
 
+            AlertFormMngr.ShowAlert(New AlertCategorySureDelete(), Me)
 
         Catch ex As Exception
             MessageBox.Show("Error deleting category: " & ex.Message)

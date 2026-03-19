@@ -219,6 +219,7 @@ Public Class main
     End Sub
 
     Private Sub logoutbtn_Click(sender As Object, e As EventArgs) Handles logoutbtn.Click
+
         Dim result As DialogResult = MessageBox.Show(
       "Are you sure you want to logout?",
       "Confirm Logout",
@@ -230,6 +231,9 @@ Public Class main
             Me.Hide()
             LoginForm.Show()
         End If
+
+        Dim br As New backuprestore()
+        br.AutoBackupDatabase()
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click

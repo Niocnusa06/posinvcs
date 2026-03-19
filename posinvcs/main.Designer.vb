@@ -23,6 +23,7 @@ Partial Class main
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(main))
         Me.Guna2Panel2 = New Guna.UI2.WinForms.Guna2Panel()
         Me.usersp = New Guna.UI2.WinForms.Guna2CustomGradientPanel()
         Me.brp = New Guna.UI2.WinForms.Guna2CustomGradientPanel()
@@ -573,6 +574,7 @@ Partial Class main
         Me.Controls.Add(Me.Guna2Panel2)
         Me.Controls.Add(Me.panelMain)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.Name = "main"

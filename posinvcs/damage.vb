@@ -75,11 +75,9 @@ Public Class damage
                     datagridview2.Columns.Add(dgvCol)
                 Next
 
-                ' ================= ADD ACTION COLUMN =================
                 EnsureReturnColumn()
 
-                ' ================= HIDE UNWANTED COLUMNS =================
-                Dim hiddenCols = {"id", "item_id", "unit_type"}
+                Dim hiddenCols = {"id", "item_id"}
 
                 For Each colName In hiddenCols
                     If datagridview2.Columns.Contains(colName) Then
@@ -94,6 +92,7 @@ Public Class damage
                             "category",
                             "price",
                             "damage_qty",
+                            "unit_type",
                             "remarks",
                             "date_reported",
                             "status",

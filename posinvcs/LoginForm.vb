@@ -72,13 +72,16 @@ Public Class LoginForm
                             MessageBox.Show("Welcome, Admin!", "Login Successful", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             Dim frm As New main()
                             frm.Show()
-
+                            SplashScreen1.Hide()
                             Me.Hide()
 
                         ElseIf accountType = "cashier" Then
                             MessageBox.Show("Welcome, Cashier!", "Login Successful", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             Form1.Show()
+                            SplashScreen1.Hide()
                             Me.Hide()
+
+
                         End If
 
                     Else
@@ -111,6 +114,7 @@ Public Class LoginForm
                                 LockLogin(180)
 
         ' Stage 3 → 1 failure = 5 minutes
+
                             Case 3
                                 lockStage = 4
                                 LockLogin(300)
@@ -253,15 +257,30 @@ Public Class LoginForm
 
     Private Sub ToggleVisibility(
     tb As TextBox,
-    btn As System.Windows.Forms.Button
+    ctrl As System.Windows.Forms.Control
 )
+
+        If tb Is Nothing OrElse ctrl Is Nothing Then
+            Return
+        End If
 
         If tb.UseSystemPasswordChar Then
             tb.UseSystemPasswordChar = False
-            btn.Text = "🙈"
+            Dim btn = TryCast(ctrl, System.Windows.Forms.Button)
+            If btn IsNot Nothing Then
+                btn.Text = "hide"
+            Else
+                ' Fallback for other control types (e.g. a generic Control named "btnshowhide")
+                ctrl.Text = "hide"
+            End If
         Else
             tb.UseSystemPasswordChar = True
-            btn.Text = "👁"
+            Dim btn = TryCast(ctrl, System.Windows.Forms.Button)
+            If btn IsNot Nothing Then
+                btn.Text = "show"
+            Else
+                ctrl.Text = "show"
+            End If
         End If
     End Sub
     '-------------------------------------------------------------------------
@@ -482,13 +501,7 @@ Public Class LoginForm
         failedAttempts = 0
     End Sub
 
-    Private Sub LoginPanel_Paint(sender As Object, e As PaintEventArgs) Handles LoginPanel.Paint
+    Private Sub ShowPassBtn_Click(sender As Object, e As EventArgs) Handles ShowPassBtn.Click
 
     End Sub
-
-    Private Sub lblLockCountdown_Click(sender As Object, e As EventArgs) Handles lblLockCountdown.Click
-
-    End Sub
-
-
 End Class

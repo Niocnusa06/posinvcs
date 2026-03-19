@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{22E9CB11-E757-44DC-A80B-63BB89F72EEF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>posinvcs.main</StartupObject>
+    <StartupObject>posinvcs.SplashScreen1</StartupObject>
     <RootNamespace>posinvcs</RootNamespace>
     <AssemblyName>posinvcs</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -63,6 +63,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
@@ -370,12 +373,7 @@
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LoadingScreen.Designer.vb">
-      <DependentUpon>LoadingScreen.vb</DependentUpon>
-    </Compile>
-    <Compile Include="LoadingScreen.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="GlobalSession.vb" />
     <Compile Include="LoginForm.Designer.vb">
       <DependentUpon>LoginForm.vb</DependentUpon>
     </Compile>
@@ -414,6 +412,12 @@
       <DependentUpon>sales.vb</DependentUpon>
     </Compile>
     <Compile Include="sales.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SplashScreen1.Designer.vb">
+      <DependentUpon>SplashScreen1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SplashScreen1.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="stockin.Designer.vb">
@@ -523,9 +527,6 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LoadingScreen.resx">
-      <DependentUpon>LoadingScreen.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.vb</DependentUpon>
     </EmbeddedResource>
@@ -543,6 +544,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="sales.resx">
       <DependentUpon>sales.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashScreen1.resx">
+      <DependentUpon>SplashScreen1.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="stockin.resx">
       <DependentUpon>stockin.vb</DependentUpon>
@@ -770,6 +774,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\logout1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
