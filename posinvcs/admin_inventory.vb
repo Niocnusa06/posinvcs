@@ -6,6 +6,7 @@ Imports Org.BouncyCastle.Asn1.X509
 Imports ZXing
 Imports ZXing.Common
 Imports System.Globalization
+Imports Org.BouncyCastle.Pkix
 
 
 
@@ -84,6 +85,9 @@ Public Class inv
         cmbQuickFilter.Items.Add("This Month")
         cmbQuickFilter.Items.Add("This Year")
         cmbQuickFilter.SelectedIndex = 0
+
+        Remarks.Visible = False
+        Label29.Visible = False
     End Sub
 
     Private Sub inv_Activated(sender As Object, e As EventArgs) Handles Me.Activated
@@ -189,70 +193,93 @@ Public Class inv
 
 
     Private Sub SaveItem()
+
         If Not AllFieldsFilled() Then Exit Sub
+
         If Not IsValidItemName(item_name.Text) Then
             MessageBox.Show("Item name cannot contain special symbols. Only letters and numbers are allowed.",
-                    "Invalid Item Name",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning)
+            "Invalid Item Name",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Warning)
             item_name.Focus()
             Exit Sub
         End If
 
         If ItemNameExists(item_name.Text) Then
             MessageBox.Show("Item name already exists!", "Duplicate Item",
-                     MessageBoxButtons.OK, MessageBoxIcon.Warning)
+             MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
-
 
         Try
             Using conn As MySqlConnection = DBConnection.GetConnection()
                 conn.Open()
 
                 Dim cmd As New MySqlCommand("
-                INSERT INTO products (SKU, item_name, catg, price, qty, barcode)
-                VALUES (@SKU, @item_name, @catg, @price, @qty, @barcode)", conn)
-
+            INSERT INTO products (SKU, item_name, catg, price, qty, Boxes, treshold, barcode)
+            VALUES (@SKU, @item_name, @catg, @price, @qty, @Boxes, @treshold, @barcode)", conn)
 
                 Dim ms As New IO.MemoryStream()
                 barcode.Image.Save(ms, Imaging.ImageFormat.Png)
                 Dim barcodeBytes As Byte() = ms.ToArray()
+
                 Dim itemPrice As Decimal
                 Dim itemQty As Integer
+                Dim perBox As Integer = 1
+                Dim threshold As Integer
+                Dim boxValue As Object = DBNull.Value
 
+                'Validate Price
                 If Not Decimal.TryParse(price.Text, itemPrice) Then
                     MessageBox.Show("Please enter a valid price.", "Invalid Input",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                MessageBoxButtons.OK, MessageBoxIcon.Warning)
                     Exit Sub
                 End If
 
+                'Validate Quantity
                 If Not Integer.TryParse(qty.Text, itemQty) Then
                     MessageBox.Show("Please enter a valid quantity.", "Invalid Input",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                MessageBoxButtons.OK, MessageBoxIcon.Warning)
                     Exit Sub
                 End If
 
+                'Boxes optional
+                If Not String.IsNullOrWhiteSpace(Per_Box.Text) Then
+                    If Integer.TryParse(Per_Box.Text, perBox) Then
+                        boxValue = perBox
+                    End If
+                End If
 
+                'Validate Threshold
+                If Not Integer.TryParse(TreshHold.Text, threshold) Then
+                    MessageBox.Show("Please enter a valid Threshold.", "Invalid Input",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    Exit Sub
+                End If
 
+                'Total quantity calculation
+                Dim totalQty As Integer = itemQty * perBox
+
+                'Parameters
                 cmd.Parameters.AddWithValue("@SKU", SKU.Text)
                 cmd.Parameters.AddWithValue("@item_name", item_name.Text)
                 cmd.Parameters.AddWithValue("@catg", cmbcategory.Text)
                 cmd.Parameters.AddWithValue("@price", itemPrice)
-                cmd.Parameters.AddWithValue("@qty", itemQty)
+                cmd.Parameters.AddWithValue("@qty", totalQty)
+                cmd.Parameters.AddWithValue("@Boxes", boxValue)
+                cmd.Parameters.AddWithValue("@treshold", threshold)
                 cmd.Parameters.AddWithValue("@barcode", barcodeBytes)
 
                 cmd.ExecuteNonQuery()
 
                 AlertFormMngr.ShowAlert(New AlertInventorySuccessAddItem(), Me)
 
-
-
             End Using
 
             LoadInventory()
             newitem.Visible = False
             ClearTextboxes()
+            LockInventoryBackground(False)
 
         Catch ex As Exception
             MessageBox.Show("Error saving item: " & ex.Message)
@@ -286,12 +313,14 @@ Public Class inv
 
 
     Public Sub LoadInventory()
+
+
         Try
             Using conn As MySqlConnection = DBConnection.GetConnection()
                 conn.Open()
 
                 Dim sql As String = "
-                SELECT SKU, item_name, catg, price, qty, date_created
+                SELECT SKU, item_name, catg, price, qty, Boxes, treshold, date_created
                 FROM products
                 ORDER BY date_created DESC
             "
@@ -386,87 +415,149 @@ Public Class inv
 
     Private Sub btnSaveDamage_Click(sender As Object, e As EventArgs) Handles btnSaveDamage.Click
 
-        If cmbUnitType.SelectedIndex = -1 Then
-            MessageBox.Show("Please select a unit type.", "Missing Unit", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Exit Sub
-        End If
-
-
-        If damage_qty.Text = "" Or Not IsNumeric(damage_qty.Text) Then
+        ' ================= VALIDATE INPUT =================
+        Dim damagedQty As Integer
+        If Not Integer.TryParse(damage_qty.Text, damagedQty) Or damagedQty <= 0 Then
             MessageBox.Show("Please enter a valid number for damaged quantity.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
 
-        Dim damagedQty As Integer = Val(damage_qty.Text)
-        Dim currentQty As Integer = Val(available_qty.Text)
-        Dim newQty As Integer = currentQty - damagedQty
-
-
-        If damagedQty <= 0 Or damagedQty > currentQty Then
-            MessageBox.Show("Invalid damage quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        If cmbUnitType.SelectedItem Is Nothing Then
+            MessageBox.Show("Please select a unit type.", "Missing Input", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
 
+        If remarks_dmg.SelectedItem Is Nothing Then
+            MessageBox.Show("Please select a remark.", "Missing Input", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+        Dim unitType As String = cmbUnitType.SelectedItem.ToString().ToLower()
+
+        ' ================= COMPUTE TOTAL DAMAGE =================
+        Dim totalDamaged As Integer = 0
+
+        If unitType = "pcs" Then
+            totalDamaged = damagedQty
+
+        ElseIf unitType = "boxes" Then
+
+            Dim selectedRow As DataGridViewRow = datagridview1.CurrentRow
+
+            If selectedRow Is Nothing Then
+                MessageBox.Show("Please select an item.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Exit Sub
+            End If
+
+            Dim perBox As Integer
+            If Not Integer.TryParse(selectedRow.Cells("Boxes").Value.ToString(), perBox) Or perBox <= 0 Then
+                MessageBox.Show("Invalid per box value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Exit Sub
+            End If
+
+            totalDamaged = damagedQty * perBox
+        End If
+
+        ' ================= CHECK STOCK =================
+        Dim currentQty As Integer = Val(available_qty.Text)
+
+        If totalDamaged > currentQty Then
+            MessageBox.Show("Damage quantity exceeds available stock.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Exit Sub
+        End If
+
+        Dim newQty As Integer = currentQty - totalDamaged
+
+        ' ================= GET FINAL REMARKS =================
+        Dim finalRemarks As String = ""
+
+        If remarks_dmg.SelectedItem IsNot Nothing AndAlso
+       remarks_dmg.SelectedItem.ToString().Trim().ToLower() = "other" Then
+
+            ' If "Other" → require textbox input
+            If String.IsNullOrWhiteSpace(Remarks.Text) Then
+                MessageBox.Show("Please specify remarks for 'Other'.", "Missing Input", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Remarks.Focus()
+                Exit Sub
+            End If
+
+            finalRemarks = Remarks.Text.Trim()
+
+        Else
+            ' Use ComboBox selected value
+            finalRemarks = remarks_dmg.SelectedItem.ToString()
+        End If
+
+        ' ================= SAVE TO DATABASE =================
         Try
             Using conn As MySqlConnection = DBConnection.GetConnection()
                 conn.Open()
 
-
+                ' ===== UPDATE STOCK =====
                 Dim updateQuery As String = "UPDATE products SET qty = @newQty WHERE SKU = @sku"
                 Using cmd As New MySqlCommand(updateQuery, conn)
                     cmd.Parameters.AddWithValue("@newQty", newQty)
                     cmd.Parameters.AddWithValue("@sku", SKU_dmg.Text)
-                    If Not IsValidItemName(item_name.Text) Then
-                        MessageBox.Show("Item name cannot contain special symbols. Only letters and numbers are allowed.",
-                    "Invalid Item Name",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning)
-                        item_name.Focus()
-                        Exit Sub
-                    End If
-
                     cmd.ExecuteNonQuery()
                 End Using
 
-
-
-
+                ' ===== INSERT DAMAGE RECORD =====
                 Dim insertQuery As String = "
-                INSERT INTO damage_items 
-                (SKU, item_name, category, price, damage_qty, unit_type, remarks, date_reported, status)
-                VALUES (@sku, @item_name, @category, @price, @damage_qty, @unit_type, @remarks, NOW(), 'Damaged')"
+            INSERT INTO damage_items
+            (SKU, item_name, category, price, damage_qty, unit_type, remarks, date_reported, status)
+            VALUES (@sku, @item_name, @category, @price, @damage_qty, @unit_type, @remarks, NOW(), 'Damaged')"
+
                 Using cmd As New MySqlCommand(insertQuery, conn)
                     cmd.Parameters.AddWithValue("@sku", SKU_dmg.Text)
                     cmd.Parameters.AddWithValue("@item_name", item_dmg.Text)
                     cmd.Parameters.AddWithValue("@category", lblcategory.Text)
                     cmd.Parameters.AddWithValue("@price", Val(price_dmg.Text))
+
+                    ' Save original input (not multiplied)
                     cmd.Parameters.AddWithValue("@damage_qty", damagedQty)
-                    cmd.Parameters.AddWithValue("@unit_type", cmbUnitType.SelectedItem.ToString())
-                    cmd.Parameters.AddWithValue("@remarks", remarks_dmg.Text)
+
+                    ' Save unit type
+                    cmd.Parameters.AddWithValue("@unit_type", unitType)
+
+                    ' ✅ FINAL REMARKS FIXED HERE
+                    cmd.Parameters.AddWithValue("@remarks", finalRemarks)
+
                     cmd.ExecuteNonQuery()
                 End Using
+
             End Using
 
+            ' ================= UI FEEDBACK =================
             AlertFormMngr.ShowAlert(New AlertInventoryDamageSuccess(), Me)
 
-
-
-            If Application.OpenForms().OfType(Of damage).Any() Then
-                Dim dmgForm As damage = Application.OpenForms().OfType(Of damage).First()
-                dmgForm.LoadDamageItems()
-            End If
+            ' Clear inputs after save
+            damage_qty.Clear()
+            remarks_dmg.SelectedIndex = -1
+            Remarks.Clear()
+            Remarks.Visible = False
+            Label29.Visible = False
 
             damage_panel.Visible = False
             LoadInventory()
-
-
-
+            LockInventoryBackground(False)
 
         Catch ex As Exception
-            MessageBox.Show("Error saving damaged item: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error saving damaged item: " & ex.Message)
         End Try
-    End Sub
 
+    End Sub
+    ' Initialize ComboBox
+    Private Sub remarks_dmg_SelectedIndexChanged(sender As Object, e As EventArgs) Handles remarks_dmg.SelectedIndexChanged
+
+        If remarks_dmg.Text = "Other" Then
+            Remarks.Visible = True
+            Label29.Visible = True
+        Else
+            Remarks.Visible = False
+            Label29.Visible = False
+        End If
+
+    End Sub
 
     Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles datagridview1.CellContentClick
         If e.RowIndex < 0 Then Exit Sub
@@ -483,18 +574,22 @@ Public Class inv
             btnSaveChanges.Visible = True
             Label2.Visible = False
             edit.Visible = True
+            Label27.Visible = False
+            Label25.Visible = True
 
             SKU.Text = selectedRow.Cells("SKU").Value.ToString()
             item_name.Text = selectedRow.Cells("item_name").Value.ToString()
             cmbcategory.Text = selectedRow.Cells("catg").Value.ToString()
             price.Text = selectedRow.Cells("price").Value.ToString()
             qty.Text = selectedRow.Cells("qty").Value.ToString()
+            Per_Box.Text = selectedRow.Cells("Boxes").Value.ToString()
+            TreshHold.Text = selectedRow.Cells("treshold").Value.ToString()
             qty.ReadOnly = True
             qty.BackColor = Color.LightGray
 
 
             barcode.Image = GenerateBarcodeWithText(SKU.Text, item_name.Text)
-
+            LockInventoryBackground(True)
         End If
 
 
@@ -509,9 +604,10 @@ Public Class inv
             available_qty.Text = selectedRow.Cells("qty").Value.ToString()
             price_dmg.Text = selectedRow.Cells("price").Value.ToString()
 
-
             damage_qty.Text = ""
             remarks_dmg.SelectedIndex = -1
+            cmbUnitType.SelectedIndex = 1
+            LockInventoryBackground(True)
         End If
 
         If datagridview1.Columns(e.ColumnIndex).Name = "StockIn" Then
@@ -520,16 +616,31 @@ Public Class inv
             Dim category As String = selectedRow.Cells("catg").Value.ToString()
             Dim price As String = selectedRow.Cells("price").Value.ToString()
             Dim qty As String = selectedRow.Cells("qty").Value.ToString()
+            Dim Boxes As String = selectedRow.Cells("Boxes").Value.ToString()
 
-            Dim stockForm As New stockin(sku, itemName, category, price, qty, Me)
-            stockForm.ShowDialog()
+            datagridview1.Enabled = False
+            additembtn.Enabled = False
+            ' Create the stockin form and pass Me as the parent
+            Dim stockForm As New stockin(sku, itemName, category, price, qty, Boxes, Me)
 
+            ' Re-enable the DataGridView when the stockin form closes
+            AddHandler stockForm.FormClosed, Sub(sender2, e2)
+                                                 datagridview1.Enabled = True
+                                                 additembtn.Enabled = True
+                                             End Sub
+
+            stockForm.Show()
         End If
 
     End Sub
 
+
+
     Private Sub btnSaveChanges_Click(sender As Object, e As EventArgs) Handles btnSaveChanges.Click
-        If Not isEditing Then Exit Sub
+        If Not isEditing Then
+            LockInventoryBackground(False)
+            Exit Sub
+        End If
 
         Try
             Using conn As MySqlConnection = DBConnection.GetConnection()
@@ -537,14 +648,15 @@ Public Class inv
 
                 Dim cmd As New MySqlCommand("
                 UPDATE products 
-                SET item_name=@item_name, catg=@catg, price=@price
+                SET item_name=@item_name, catg=@catg, price=@price, Boxes=@Boxes, treshold=@treshold
                 WHERE SKU=@SKU", conn)
 
                 cmd.Parameters.AddWithValue("@SKU", SKU.Text)
                 cmd.Parameters.AddWithValue("@item_name", item_name.Text)
                 cmd.Parameters.AddWithValue("@catg", cmbcategory.Text)
                 cmd.Parameters.AddWithValue("@price", Decimal.Parse(price.Text))
-
+                cmd.Parameters.AddWithValue("@Boxes", Per_Box.Text)
+                cmd.Parameters.AddWithValue("@treshold", TreshHold.Text)
                 cmd.ExecuteNonQuery()
 
                 AlertFormMngr.ShowAlert(New AlertInventoryUpdateItem(), Me)
@@ -556,10 +668,12 @@ Public Class inv
             isEditing = False
             btnAdd.Visible = True
             btnSaveChanges.Visible = False
-
+            LockInventoryBackground(False)
         Catch ex As Exception
             MessageBox.Show("Error updating item: " & ex.Message)
         End Try
+
+
     End Sub
 
 
@@ -577,10 +691,14 @@ Public Class inv
         Label2.Visible = True
         edit.Visible = False
         ClearTextboxes()
+        LockInventoryBackground(False)
     End Sub
 
 
     Private Sub additembtn_Click(sender As Object, e As EventArgs) Handles additembtn.Click
+        qty.ReadOnly = False
+        Label27.Visible = True
+        Label25.Visible = False
         newitem.BringToFront()
         newitem.Visible = True
 
@@ -595,6 +713,7 @@ Public Class inv
 
         SKU.Text = GenerateNextSKU()
         barcode.Image = GenerateBarcodeWithText(SKU.Text, item_name.Text)
+        LockInventoryBackground(True)
     End Sub
 
     Private Sub ClearTextboxes()
@@ -603,10 +722,13 @@ Public Class inv
         cmbcategory.SelectedIndex = -1
         price.Clear()
         qty.Clear()
+        TreshHold.Clear()
+        Per_Box.Clear()
     End Sub
 
     Private Sub Guna2Button8_Click(sender As Object, e As EventArgs) Handles Guna2Button8.Click
         damage_panel.Visible = False
+        LockInventoryBackground(False)
     End Sub
 
     Private Sub damage_qty_KeyPress_1(sender As Object, e As KeyPressEventArgs) Handles damage_qty.KeyPress
@@ -846,20 +968,20 @@ Public Class inv
     End Sub
 
     Private Sub datagridview1_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles datagridview1.CellFormatting
-        If datagridview1.Columns.Contains("qty") = False Then Exit Sub
         If e.RowIndex < 0 Then Exit Sub
 
         Dim row As DataGridViewRow = datagridview1.Rows(e.RowIndex)
-        Dim qtyValue As Integer = 0
 
+        Dim qtyValue As Integer = 0
+        Dim tresholdValue As Integer = 0
 
         Integer.TryParse(row.Cells("qty").Value.ToString(), qtyValue)
+        Integer.TryParse(row.Cells("treshold").Value.ToString(), tresholdValue)
 
-
-        If qtyValue < 10 Then
+        If qtyValue < tresholdValue Then
             row.DefaultCellStyle.BackColor = Color.LightCoral
             row.DefaultCellStyle.ForeColor = Color.Black
-        ElseIf qtyValue = 10 Then
+        ElseIf qtyValue = tresholdValue Then
             row.DefaultCellStyle.BackColor = Color.Khaki
             row.DefaultCellStyle.ForeColor = Color.Black
         Else
@@ -1180,6 +1302,16 @@ Public Class inv
 
 
     Private Sub ShowPage(page As Integer)
+
+        If datagridview1.Columns.Contains("treshold") Then
+            datagridview1.Columns("treshold").Visible = False
+        End If
+
+
+        If datagridview1.Columns.Contains("Boxes") Then
+            datagridview1.Columns("Boxes").Visible = False
+        End If
+
         If inventoryView Is Nothing Then Exit Sub
 
         Dim limit As Integer
@@ -1246,12 +1378,18 @@ Public Class inv
     End Sub
 
 
+    Private Sub LockInventoryBackground(lock As Boolean)
+        additembtn.Enabled = Not lock
+        datagridview1.Enabled = Not lock
+    End Sub
     Private Sub LockBackground(lock As Boolean)
         For Each ctrl As Control In Me.Controls
             If ctrl IsNot alertpdfinv Then
                 ctrl.Enabled = Not lock
             End If
         Next
+
+
     End Sub
 
     Private Sub Button2_Click_1(sender As Object, e As EventArgs) Handles Button2.Click
@@ -1265,4 +1403,32 @@ Public Class inv
             "Downloads"
         )
     End Function
+
+    Private Sub Label25_Click(sender As Object, e As EventArgs) Handles Label25.Click
+
+    End Sub
+
+    Private Sub Label26_Click(sender As Object, e As EventArgs) Handles Label26.Click
+
+    End Sub
+
+    Private Sub Label27_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub alertpdfinv_Paint(sender As Object, e As PaintEventArgs) Handles alertpdfinv.Paint
+
+    End Sub
+
+    Private Sub Label27_Click_1(sender As Object, e As EventArgs) Handles Label27.Click
+
+    End Sub
+
+    Private Sub item_dmg_TextChanged(sender As Object, e As EventArgs) Handles item_dmg.TextChanged
+
+    End Sub
+
+    Private Sub Label29_Click(sender As Object, e As EventArgs) Handles Label29.Click
+
+    End Sub
 End Class

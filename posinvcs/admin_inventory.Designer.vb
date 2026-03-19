@@ -23,14 +23,22 @@ Partial Class inv
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Guna2Elipse1 = New Guna.UI2.WinForms.Guna2Elipse(Me.components)
         Me.Guna2Elipse2 = New Guna.UI2.WinForms.Guna2Elipse(Me.components)
         Me.newitem = New System.Windows.Forms.Panel()
+        Me.alertpdfinv = New System.Windows.Forms.Panel()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.TreshHold = New Guna.UI2.WinForms.Guna2TextBox()
+        Me.Label26 = New System.Windows.Forms.Label()
         Me.lblDuplicate = New System.Windows.Forms.Label()
         Me.btnSaveChanges = New Guna.UI2.WinForms.Guna2Button()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -52,8 +60,14 @@ Partial Class inv
         Me.Guna2Button6 = New Guna.UI2.WinForms.Guna2Button()
         Me.Guna2Button7 = New Guna.UI2.WinForms.Guna2Button()
         Me.item_name = New Guna.UI2.WinForms.Guna2TextBox()
+        Me.Per_Box = New Guna.UI2.WinForms.Guna2TextBox()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.Label27 = New System.Windows.Forms.Label()
         Me.Guna2Elipse3 = New Guna.UI2.WinForms.Guna2Elipse(Me.components)
         Me.damage_panel = New System.Windows.Forms.Panel()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.Label28 = New System.Windows.Forms.Label()
+        Me.Remarks = New Guna.UI2.WinForms.Guna2TextBox()
         Me.cmbUnitType = New Guna.UI2.WinForms.Guna2ComboBox()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.damage_qty = New Guna.UI2.WinForms.Guna2TextBox()
@@ -94,22 +108,16 @@ Partial Class inv
         Me.searchtb = New Guna.UI2.WinForms.Guna2TextBox()
         Me.additembtn = New Guna.UI2.WinForms.Guna2Button()
         Me.Guna2MessageDialog1 = New Guna.UI2.WinForms.Guna2MessageDialog()
-        Me.alertpdfinv = New System.Windows.Forms.Panel()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.Label23 = New System.Windows.Forms.Label()
-        Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.Label21 = New System.Windows.Forms.Label()
         Me.newitem.SuspendLayout()
+        Me.alertpdfinv.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel2.SuspendLayout()
         CType(Me.barcode, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Guna2Panel1.SuspendLayout()
         Me.damage_panel.SuspendLayout()
         Me.Guna2Panel2.SuspendLayout()
         CType(Me.datagridview1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.admin_inventory.SuspendLayout()
-        Me.alertpdfinv.SuspendLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Panel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'Guna2Elipse1
@@ -124,6 +132,9 @@ Partial Class inv
         '
         'newitem
         '
+        Me.newitem.Controls.Add(Me.alertpdfinv)
+        Me.newitem.Controls.Add(Me.TreshHold)
+        Me.newitem.Controls.Add(Me.Label26)
         Me.newitem.Controls.Add(Me.lblDuplicate)
         Me.newitem.Controls.Add(Me.btnSaveChanges)
         Me.newitem.Controls.Add(Me.Label8)
@@ -140,11 +151,121 @@ Partial Class inv
         Me.newitem.Controls.Add(Me.qty)
         Me.newitem.Controls.Add(Me.Guna2Panel1)
         Me.newitem.Controls.Add(Me.item_name)
-        Me.newitem.Location = New System.Drawing.Point(394, 239)
+        Me.newitem.Controls.Add(Me.Per_Box)
+        Me.newitem.Controls.Add(Me.Label25)
+        Me.newitem.Controls.Add(Me.Label27)
+        Me.newitem.Location = New System.Drawing.Point(396, 186)
         Me.newitem.Name = "newitem"
-        Me.newitem.Size = New System.Drawing.Size(779, 525)
+        Me.newitem.Size = New System.Drawing.Size(779, 643)
         Me.newitem.TabIndex = 11
         Me.newitem.Visible = False
+        '
+        'alertpdfinv
+        '
+        Me.alertpdfinv.Controls.Add(Me.PictureBox1)
+        Me.alertpdfinv.Controls.Add(Me.Button2)
+        Me.alertpdfinv.Controls.Add(Me.Label23)
+        Me.alertpdfinv.Controls.Add(Me.Panel2)
+        Me.alertpdfinv.Location = New System.Drawing.Point(203, 141)
+        Me.alertpdfinv.Name = "alertpdfinv"
+        Me.alertpdfinv.Size = New System.Drawing.Size(412, 244)
+        Me.alertpdfinv.TabIndex = 49
+        Me.alertpdfinv.Visible = False
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Image = Global.posinvcs.My.Resources.Resources.icons8_success
+        Me.PictureBox1.Location = New System.Drawing.Point(53, 78)
+        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(68, 73)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox1.TabIndex = 53
+        Me.PictureBox1.TabStop = False
+        '
+        'Button2
+        '
+        Me.Button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PowderBlue
+        Me.Button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SkyBlue
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("Lucida Sans", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.ForeColor = System.Drawing.Color.Black
+        Me.Button2.Location = New System.Drawing.Point(36, 193)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(344, 28)
+        Me.Button2.TabIndex = 52
+        Me.Button2.Text = "OK"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Font = New System.Drawing.Font("Lucida Fax", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label23.ForeColor = System.Drawing.Color.Black
+        Me.Label23.Location = New System.Drawing.Point(125, 90)
+        Me.Label23.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(219, 48)
+        Me.Label23.TabIndex = 51
+        Me.Label23.Text = "Report Successfully" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " Exported!"
+        Me.Label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Panel2
+        '
+        Me.Panel2.BackColor = System.Drawing.Color.Black
+        Me.Panel2.Controls.Add(Me.Label21)
+        Me.Panel2.Location = New System.Drawing.Point(0, 3)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(412, 42)
+        Me.Panel2.TabIndex = 49
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Font = New System.Drawing.Font("Lucida Fax", 13.0!)
+        Me.Label21.ForeColor = System.Drawing.Color.White
+        Me.Label21.Location = New System.Drawing.Point(16, 11)
+        Me.Label21.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(164, 21)
+        Me.Label21.TabIndex = 54
+        Me.Label21.Text = "Inventory Report"
+        '
+        'TreshHold
+        '
+        Me.TreshHold.BorderColor = System.Drawing.Color.DimGray
+        Me.TreshHold.BorderRadius = 7
+        Me.TreshHold.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me.TreshHold.DefaultText = ""
+        Me.TreshHold.DisabledState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer))
+        Me.TreshHold.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer))
+        Me.TreshHold.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
+        Me.TreshHold.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
+        Me.TreshHold.FillColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        Me.TreshHold.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.TreshHold.Font = New System.Drawing.Font("Segoe UI Semibold", 14.25!, System.Drawing.FontStyle.Bold)
+        Me.TreshHold.ForeColor = System.Drawing.Color.Black
+        Me.TreshHold.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.TreshHold.Location = New System.Drawing.Point(578, 249)
+        Me.TreshHold.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.TreshHold.Name = "TreshHold"
+        Me.TreshHold.PlaceholderText = ""
+        Me.TreshHold.SelectedText = ""
+        Me.TreshHold.Size = New System.Drawing.Size(177, 36)
+        Me.TreshHold.TabIndex = 52
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.Label26.Font = New System.Drawing.Font("Franklin Gothic Medium", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label26.ForeColor = System.Drawing.Color.Black
+        Me.Label26.Location = New System.Drawing.Point(577, 220)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(114, 24)
+        Me.Label26.TabIndex = 53
+        Me.Label26.Text = "TRESH HOLD"
         '
         'lblDuplicate
         '
@@ -173,7 +294,7 @@ Partial Class inv
         Me.btnSaveChanges.ForeColor = System.Drawing.Color.Black
         Me.btnSaveChanges.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(93, Byte), Integer), CType(CType(114, Byte), Integer), CType(CType(144, Byte), Integer))
         Me.btnSaveChanges.ImageSize = New System.Drawing.Size(30, 30)
-        Me.btnSaveChanges.Location = New System.Drawing.Point(543, 457)
+        Me.btnSaveChanges.Location = New System.Drawing.Point(544, 530)
         Me.btnSaveChanges.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.btnSaveChanges.Name = "btnSaveChanges"
         Me.btnSaveChanges.Size = New System.Drawing.Size(207, 43)
@@ -186,7 +307,7 @@ Partial Class inv
         Me.Label8.BackColor = System.Drawing.SystemColors.ButtonFace
         Me.Label8.Font = New System.Drawing.Font("Franklin Gothic Medium", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.Black
-        Me.Label8.Location = New System.Drawing.Point(570, 220)
+        Me.Label8.Location = New System.Drawing.Point(26, 303)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(59, 24)
         Me.Label8.TabIndex = 26
@@ -274,7 +395,7 @@ Partial Class inv
         Me.price.Font = New System.Drawing.Font("Segoe UI Semibold", 14.25!, System.Drawing.FontStyle.Bold)
         Me.price.ForeColor = System.Drawing.Color.Black
         Me.price.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.price.Location = New System.Drawing.Point(571, 249)
+        Me.price.Location = New System.Drawing.Point(27, 332)
         Me.price.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
         Me.price.Name = "price"
         Me.price.PlaceholderText = ""
@@ -295,7 +416,7 @@ Partial Class inv
         Me.btnAdd.ForeColor = System.Drawing.Color.White
         Me.btnAdd.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(93, Byte), Integer), CType(CType(114, Byte), Integer), CType(CType(144, Byte), Integer))
         Me.btnAdd.ImageSize = New System.Drawing.Size(30, 30)
-        Me.btnAdd.Location = New System.Drawing.Point(543, 457)
+        Me.btnAdd.Location = New System.Drawing.Point(544, 530)
         Me.btnAdd.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.btnAdd.Name = "btnAdd"
         Me.btnAdd.Size = New System.Drawing.Size(207, 43)
@@ -315,7 +436,7 @@ Partial Class inv
         Me.printbtn.Font = New System.Drawing.Font("Segoe UI", 13.8!, System.Drawing.FontStyle.Bold)
         Me.printbtn.ForeColor = System.Drawing.Color.Black
         Me.printbtn.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(93, Byte), Integer), CType(CType(114, Byte), Integer), CType(CType(144, Byte), Integer))
-        Me.printbtn.Location = New System.Drawing.Point(27, 457)
+        Me.printbtn.Location = New System.Drawing.Point(27, 530)
         Me.printbtn.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.printbtn.Name = "printbtn"
         Me.printbtn.Size = New System.Drawing.Size(207, 43)
@@ -325,7 +446,7 @@ Partial Class inv
         'barcode
         '
         Me.barcode.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.barcode.Location = New System.Drawing.Point(141, 321)
+        Me.barcode.Location = New System.Drawing.Point(140, 387)
         Me.barcode.Name = "barcode"
         Me.barcode.Size = New System.Drawing.Size(501, 101)
         Me.barcode.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -495,6 +616,55 @@ Partial Class inv
         Me.item_name.Size = New System.Drawing.Size(723, 36)
         Me.item_name.TabIndex = 13
         '
+        'Per_Box
+        '
+        Me.Per_Box.BorderColor = System.Drawing.Color.DimGray
+        Me.Per_Box.BorderRadius = 7
+        Me.Per_Box.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me.Per_Box.DefaultText = ""
+        Me.Per_Box.DisabledState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer))
+        Me.Per_Box.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer))
+        Me.Per_Box.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
+        Me.Per_Box.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
+        Me.Per_Box.FillColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        Me.Per_Box.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Per_Box.Font = New System.Drawing.Font("Segoe UI Semibold", 14.25!, System.Drawing.FontStyle.Bold)
+        Me.Per_Box.ForeColor = System.Drawing.Color.Black
+        Me.Per_Box.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Per_Box.Location = New System.Drawing.Point(578, 332)
+        Me.Per_Box.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.Per_Box.Name = "Per_Box"
+        Me.Per_Box.PlaceholderText = ""
+        Me.Per_Box.SelectedText = ""
+        Me.Per_Box.Size = New System.Drawing.Size(177, 36)
+        Me.Per_Box.TabIndex = 50
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.Label25.Font = New System.Drawing.Font("Franklin Gothic Medium", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label25.ForeColor = System.Drawing.Color.Black
+        Me.Label25.Location = New System.Drawing.Point(577, 303)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(83, 24)
+        Me.Label25.TabIndex = 51
+        Me.Label25.Text = "PER BOX"
+        Me.Label25.Visible = False
+        '
+        'Label27
+        '
+        Me.Label27.AutoSize = True
+        Me.Label27.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.Label27.Font = New System.Drawing.Font("Franklin Gothic Medium", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label27.ForeColor = System.Drawing.Color.Black
+        Me.Label27.Location = New System.Drawing.Point(577, 305)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(66, 24)
+        Me.Label27.TabIndex = 52
+        Me.Label27.Text = "BOXES"
+        Me.Label27.Visible = False
+        '
         'Guna2Elipse3
         '
         Me.Guna2Elipse3.BorderRadius = 20
@@ -502,6 +672,9 @@ Partial Class inv
         '
         'damage_panel
         '
+        Me.damage_panel.Controls.Add(Me.Label29)
+        Me.damage_panel.Controls.Add(Me.Label28)
+        Me.damage_panel.Controls.Add(Me.Remarks)
         Me.damage_panel.Controls.Add(Me.cmbUnitType)
         Me.damage_panel.Controls.Add(Me.Label17)
         Me.damage_panel.Controls.Add(Me.damage_qty)
@@ -521,9 +694,59 @@ Partial Class inv
         Me.damage_panel.Controls.Add(Me.Guna2Panel2)
         Me.damage_panel.Location = New System.Drawing.Point(425, 239)
         Me.damage_panel.Name = "damage_panel"
-        Me.damage_panel.Size = New System.Drawing.Size(779, 525)
+        Me.damage_panel.Size = New System.Drawing.Size(779, 607)
         Me.damage_panel.TabIndex = 30
         Me.damage_panel.Visible = False
+        '
+        'Label29
+        '
+        Me.Label29.AutoSize = True
+        Me.Label29.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.Label29.Font = New System.Drawing.Font("Franklin Gothic Medium", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label29.ForeColor = System.Drawing.Color.Black
+        Me.Label29.Location = New System.Drawing.Point(37, 284)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(120, 24)
+        Me.Label29.TabIndex = 37
+        Me.Label29.Text = "DESCRIPTION"
+        '
+        'Label28
+        '
+        Me.Label28.AutoSize = True
+        Me.Label28.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.Label28.Font = New System.Drawing.Font("Franklin Gothic Medium", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label28.ForeColor = System.Drawing.Color.Black
+        Me.Label28.Location = New System.Drawing.Point(494, 435)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(92, 24)
+        Me.Label28.TabIndex = 36
+        Me.Label28.Text = "UNIT TYPE"
+        '
+        'Remarks
+        '
+        Me.Remarks.AutoRoundedCorners = True
+        Me.Remarks.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.Remarks.BackColor = System.Drawing.Color.White
+        Me.Remarks.BorderColor = System.Drawing.Color.DimGray
+        Me.Remarks.BorderRadius = 17
+        Me.Remarks.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me.Remarks.DefaultText = ""
+        Me.Remarks.DisabledState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer))
+        Me.Remarks.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer))
+        Me.Remarks.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
+        Me.Remarks.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
+        Me.Remarks.FillColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        Me.Remarks.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Remarks.Font = New System.Drawing.Font("Segoe UI Semibold", 14.25!, System.Drawing.FontStyle.Bold)
+        Me.Remarks.ForeColor = System.Drawing.Color.Black
+        Me.Remarks.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Remarks.Location = New System.Drawing.Point(27, 313)
+        Me.Remarks.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.Remarks.Name = "Remarks"
+        Me.Remarks.PlaceholderText = ""
+        Me.Remarks.SelectedText = ""
+        Me.Remarks.Size = New System.Drawing.Size(723, 36)
+        Me.Remarks.TabIndex = 35
         '
         'cmbUnitType
         '
@@ -539,7 +762,7 @@ Partial Class inv
         Me.cmbUnitType.ForeColor = System.Drawing.Color.Black
         Me.cmbUnitType.ItemHeight = 30
         Me.cmbUnitType.Items.AddRange(New Object() {"pcs", "boxes"})
-        Me.cmbUnitType.Location = New System.Drawing.Point(411, 407)
+        Me.cmbUnitType.Location = New System.Drawing.Point(488, 462)
         Me.cmbUnitType.Name = "cmbUnitType"
         Me.cmbUnitType.Size = New System.Drawing.Size(115, 36)
         Me.cmbUnitType.TabIndex = 34
@@ -550,7 +773,7 @@ Partial Class inv
         Me.Label17.BackColor = System.Drawing.SystemColors.ButtonFace
         Me.Label17.Font = New System.Drawing.Font("Franklin Gothic Medium", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label17.ForeColor = System.Drawing.Color.Black
-        Me.Label17.Location = New System.Drawing.Point(275, 373)
+        Me.Label17.Location = New System.Drawing.Point(210, 433)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(236, 24)
         Me.Label17.TabIndex = 33
@@ -571,7 +794,7 @@ Partial Class inv
         Me.damage_qty.Font = New System.Drawing.Font("Segoe UI Semibold", 14.25!, System.Drawing.FontStyle.Bold)
         Me.damage_qty.ForeColor = System.Drawing.Color.Black
         Me.damage_qty.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.damage_qty.Location = New System.Drawing.Point(225, 407)
+        Me.damage_qty.Location = New System.Drawing.Point(241, 462)
         Me.damage_qty.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
         Me.damage_qty.Name = "damage_qty"
         Me.damage_qty.PlaceholderText = ""
@@ -625,7 +848,7 @@ Partial Class inv
         Me.btnSaveDamage.ForeColor = System.Drawing.Color.Black
         Me.btnSaveDamage.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(93, Byte), Integer), CType(CType(114, Byte), Integer), CType(CType(144, Byte), Integer))
         Me.btnSaveDamage.ImageSize = New System.Drawing.Size(30, 30)
-        Me.btnSaveDamage.Location = New System.Drawing.Point(291, 457)
+        Me.btnSaveDamage.Location = New System.Drawing.Point(291, 523)
         Me.btnSaveDamage.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.btnSaveDamage.Name = "btnSaveDamage"
         Me.btnSaveDamage.Size = New System.Drawing.Size(207, 43)
@@ -638,7 +861,7 @@ Partial Class inv
         Me.Label10.BackColor = System.Drawing.SystemColors.ButtonFace
         Me.Label10.Font = New System.Drawing.Font("Franklin Gothic Medium", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.ForeColor = System.Drawing.Color.Black
-        Me.Label10.Location = New System.Drawing.Point(573, 288)
+        Me.Label10.Location = New System.Drawing.Point(573, 354)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(59, 24)
         Me.Label10.TabIndex = 26
@@ -650,7 +873,7 @@ Partial Class inv
         Me.Label11.BackColor = System.Drawing.SystemColors.ButtonFace
         Me.Label11.Font = New System.Drawing.Font("Franklin Gothic Medium", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.ForeColor = System.Drawing.Color.Black
-        Me.Label11.Location = New System.Drawing.Point(357, 288)
+        Me.Label11.Location = New System.Drawing.Point(357, 354)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(89, 24)
         Me.Label11.TabIndex = 25
@@ -662,7 +885,7 @@ Partial Class inv
         Me.Label12.BackColor = System.Drawing.SystemColors.ButtonFace
         Me.Label12.Font = New System.Drawing.Font("Franklin Gothic Medium", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label12.ForeColor = System.Drawing.Color.Black
-        Me.Label12.Location = New System.Drawing.Point(31, 288)
+        Me.Label12.Location = New System.Drawing.Point(31, 354)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(44, 24)
         Me.Label12.TabIndex = 24
@@ -726,7 +949,7 @@ Partial Class inv
         Me.price_dmg.Font = New System.Drawing.Font("Segoe UI Semibold", 14.25!, System.Drawing.FontStyle.Bold)
         Me.price_dmg.ForeColor = System.Drawing.Color.Black
         Me.price_dmg.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.price_dmg.Location = New System.Drawing.Point(573, 317)
+        Me.price_dmg.Location = New System.Drawing.Point(573, 383)
         Me.price_dmg.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
         Me.price_dmg.Name = "price_dmg"
         Me.price_dmg.PlaceholderText = ""
@@ -777,7 +1000,7 @@ Partial Class inv
         Me.SKU_dmg.Font = New System.Drawing.Font("Segoe UI Semibold", 14.25!, System.Drawing.FontStyle.Bold)
         Me.SKU_dmg.ForeColor = System.Drawing.Color.Black
         Me.SKU_dmg.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.SKU_dmg.Location = New System.Drawing.Point(31, 317)
+        Me.SKU_dmg.Location = New System.Drawing.Point(31, 383)
         Me.SKU_dmg.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
         Me.SKU_dmg.Name = "SKU_dmg"
         Me.SKU_dmg.PlaceholderText = ""
@@ -801,7 +1024,7 @@ Partial Class inv
         Me.available_qty.Font = New System.Drawing.Font("Segoe UI Semibold", 14.25!, System.Drawing.FontStyle.Bold)
         Me.available_qty.ForeColor = System.Drawing.Color.Black
         Me.available_qty.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.available_qty.Location = New System.Drawing.Point(360, 317)
+        Me.available_qty.Location = New System.Drawing.Point(360, 383)
         Me.available_qty.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
         Me.available_qty.Name = "available_qty"
         Me.available_qty.PlaceholderText = ""
@@ -905,50 +1128,50 @@ Partial Class inv
         '
         Me.datagridview1.AllowUserToAddRows = False
         Me.datagridview1.AllowUserToDeleteRows = False
-        DataGridViewCellStyle16.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.datagridview1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle16
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.datagridview1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.datagridview1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.datagridview1.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.datagridview1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
-        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(48, Byte), Integer))
-        DataGridViewCellStyle17.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle17.ForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.datagridview1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle17
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(48, Byte), Integer))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.datagridview1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.datagridview1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle18.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle18.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.Lavender
-        DataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.datagridview1.DefaultCellStyle = DataGridViewCellStyle18
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Lavender
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.datagridview1.DefaultCellStyle = DataGridViewCellStyle3
         Me.datagridview1.EnableHeadersVisualStyles = False
         Me.datagridview1.GridColor = System.Drawing.Color.LightGray
         Me.datagridview1.Location = New System.Drawing.Point(28, 198)
         Me.datagridview1.MultiSelect = False
         Me.datagridview1.Name = "datagridview1"
         Me.datagridview1.ReadOnly = True
-        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle19.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle19.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle19.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.datagridview1.RowHeadersDefaultCellStyle = DataGridViewCellStyle19
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.datagridview1.RowHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.datagridview1.RowHeadersVisible = False
         Me.datagridview1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders
-        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle20.BackColor = System.Drawing.Color.White
-        Me.datagridview1.RowsDefaultCellStyle = DataGridViewCellStyle20
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        Me.datagridview1.RowsDefaultCellStyle = DataGridViewCellStyle5
         Me.datagridview1.RowTemplate.Height = 40
         Me.datagridview1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.datagridview1.Size = New System.Drawing.Size(1538, 742)
+        Me.datagridview1.Size = New System.Drawing.Size(1526, 742)
         Me.datagridview1.TabIndex = 12
         '
         'Label9
@@ -1217,90 +1440,22 @@ Partial Class inv
         Me.Guna2MessageDialog1.Style = Guna.UI2.WinForms.MessageDialogStyle.[Default]
         Me.Guna2MessageDialog1.Text = Nothing
         '
-        'alertpdfinv
-        '
-        Me.alertpdfinv.Controls.Add(Me.PictureBox1)
-        Me.alertpdfinv.Controls.Add(Me.Button2)
-        Me.alertpdfinv.Controls.Add(Me.Label23)
-        Me.alertpdfinv.Controls.Add(Me.Panel2)
-        Me.alertpdfinv.Location = New System.Drawing.Point(592, 378)
-        Me.alertpdfinv.Name = "alertpdfinv"
-        Me.alertpdfinv.Size = New System.Drawing.Size(412, 244)
-        Me.alertpdfinv.TabIndex = 49
-        Me.alertpdfinv.Visible = False
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Image = Global.posinvcs.My.Resources.Resources.icons8_success
-        Me.PictureBox1.Location = New System.Drawing.Point(53, 78)
-        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(68, 73)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox1.TabIndex = 53
-        Me.PictureBox1.TabStop = False
-        '
-        'Button2
-        '
-        Me.Button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PowderBlue
-        Me.Button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SkyBlue
-        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button2.Font = New System.Drawing.Font("Lucida Sans", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.ForeColor = System.Drawing.Color.Black
-        Me.Button2.Location = New System.Drawing.Point(36, 193)
-        Me.Button2.Margin = New System.Windows.Forms.Padding(2)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(344, 28)
-        Me.Button2.TabIndex = 52
-        Me.Button2.Text = "OK"
-        Me.Button2.UseVisualStyleBackColor = True
-        '
-        'Label23
-        '
-        Me.Label23.AutoSize = True
-        Me.Label23.Font = New System.Drawing.Font("Lucida Fax", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label23.ForeColor = System.Drawing.Color.Black
-        Me.Label23.Location = New System.Drawing.Point(125, 90)
-        Me.Label23.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(219, 48)
-        Me.Label23.TabIndex = 51
-        Me.Label23.Text = "Report Successfully" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " Exported!"
-        Me.Label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Panel2
-        '
-        Me.Panel2.BackColor = System.Drawing.Color.Black
-        Me.Panel2.Controls.Add(Me.Label21)
-        Me.Panel2.Location = New System.Drawing.Point(0, 0)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(412, 42)
-        Me.Panel2.TabIndex = 49
-        '
-        'Label21
-        '
-        Me.Label21.AutoSize = True
-        Me.Label21.Font = New System.Drawing.Font("Lucida Fax", 13.0!)
-        Me.Label21.ForeColor = System.Drawing.Color.White
-        Me.Label21.Location = New System.Drawing.Point(16, 11)
-        Me.Label21.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(164, 21)
-        Me.Label21.TabIndex = 54
-        Me.Label21.Text = "Inventory Report"
-        '
         'inv
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1593, 986)
-        Me.Controls.Add(Me.alertpdfinv)
         Me.Controls.Add(Me.admin_inventory)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "inv"
         Me.Text = "admin_inventory"
         Me.newitem.ResumeLayout(False)
         Me.newitem.PerformLayout()
+        Me.alertpdfinv.ResumeLayout(False)
+        Me.alertpdfinv.PerformLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
         CType(Me.barcode, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Guna2Panel1.ResumeLayout(False)
         Me.Guna2Panel1.PerformLayout()
@@ -1311,11 +1466,6 @@ Partial Class inv
         CType(Me.datagridview1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.admin_inventory.ResumeLayout(False)
         Me.admin_inventory.PerformLayout()
-        Me.alertpdfinv.ResumeLayout(False)
-        Me.alertpdfinv.PerformLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Panel2.ResumeLayout(False)
-        Me.Panel2.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1392,4 +1542,12 @@ Partial Class inv
     Friend WithEvents Label23 As Label
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Label21 As Label
+    Friend WithEvents Label25 As Label
+    Friend WithEvents Per_Box As Guna.UI2.WinForms.Guna2TextBox
+    Friend WithEvents TreshHold As Guna.UI2.WinForms.Guna2TextBox
+    Friend WithEvents Label26 As Label
+    Friend WithEvents Label27 As Label
+    Friend WithEvents Remarks As Guna.UI2.WinForms.Guna2TextBox
+    Friend WithEvents Label29 As Label
+    Friend WithEvents Label28 As Label
 End Class
