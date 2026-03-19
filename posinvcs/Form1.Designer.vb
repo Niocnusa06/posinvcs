@@ -23,8 +23,8 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.SKUBarcodee = New Guna.UI2.WinForms.Guna2TextBox()
         Me.ItemName = New Guna.UI2.WinForms.Guna2TextBox()
         Me.Qty = New Guna.UI2.WinForms.Guna2TextBox()
@@ -472,10 +472,10 @@ Partial Class Form1
         Me.HoldPanel.BackColor = System.Drawing.Color.WhiteSmoke
         Me.HoldPanel.Controls.Add(Me.ReturnTransaction)
         Me.HoldPanel.Controls.Add(Me.DataGridView2)
-        Me.HoldPanel.Location = New System.Drawing.Point(1155, 59)
+        Me.HoldPanel.Location = New System.Drawing.Point(0, 52)
         Me.HoldPanel.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.HoldPanel.Name = "HoldPanel"
-        Me.HoldPanel.Size = New System.Drawing.Size(749, 946)
+        Me.HoldPanel.Size = New System.Drawing.Size(1892, 946)
         Me.HoldPanel.TabIndex = 24
         '
         'ReturnTransaction
@@ -500,8 +500,8 @@ Partial Class Form1
         '
         'DataGridView2
         '
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.DataGridView2.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.DataGridView2.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
         Me.DataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView2.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.DataGridView2.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
@@ -510,14 +510,14 @@ Partial Class Form1
         Me.DataGridView2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView2.RowHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView2.RowHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.DataGridView2.RowHeadersWidth = 51
         Me.DataGridView2.Size = New System.Drawing.Size(1804, 831)
         Me.DataGridView2.TabIndex = 1
@@ -567,7 +567,7 @@ Partial Class Form1
         '
         Me.Guna2HtmlLabel7.BackColor = System.Drawing.Color.Transparent
         Me.Guna2HtmlLabel7.Font = New System.Drawing.Font("Segoe UI", 17.0!, System.Drawing.FontStyle.Bold)
-        Me.Guna2HtmlLabel7.Location = New System.Drawing.Point(31, 648)
+        Me.Guna2HtmlLabel7.Location = New System.Drawing.Point(21, 63)
         Me.Guna2HtmlLabel7.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Guna2HtmlLabel7.Name = "Guna2HtmlLabel7"
         Me.Guna2HtmlLabel7.Size = New System.Drawing.Size(99, 33)
@@ -577,7 +577,9 @@ Partial Class Form1
         'CashIn
         '
         Me.CashIn.Controls.Add(Me.Cash)
+        Me.CashIn.Controls.Add(Me.DiscountTextBox)
         Me.CashIn.Controls.Add(Me.Cancel)
+        Me.CashIn.Controls.Add(Me.Guna2HtmlLabel7)
         Me.CashIn.Controls.Add(Me.Okaay)
         Me.CashIn.Controls.Add(Me.Label2)
         Me.CashIn.Controls.Add(Me.Guna2Panel2)
@@ -651,7 +653,7 @@ Partial Class Form1
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(14, 109)
+        Me.Label2.Location = New System.Drawing.Point(25, 181)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(280, 37)
         Me.Label2.TabIndex = 1
@@ -690,12 +692,12 @@ Partial Class Form1
         Me.DiscountTextBox.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.DiscountTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 16.0!)
         Me.DiscountTextBox.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DiscountTextBox.Location = New System.Drawing.Point(31, 700)
+        Me.DiscountTextBox.Location = New System.Drawing.Point(21, 103)
         Me.DiscountTextBox.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
         Me.DiscountTextBox.Name = "DiscountTextBox"
         Me.DiscountTextBox.PlaceholderText = ""
         Me.DiscountTextBox.SelectedText = ""
-        Me.DiscountTextBox.Size = New System.Drawing.Size(713, 58)
+        Me.DiscountTextBox.Size = New System.Drawing.Size(352, 58)
         Me.DiscountTextBox.TabIndex = 31
         '
         'PictureBox1
@@ -717,9 +719,7 @@ Partial Class Form1
         Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1904, 1016)
         Me.Controls.Add(Me.HoldPanel)
-        Me.Controls.Add(Me.DiscountTextBox)
         Me.Controls.Add(Me.CashIn)
-        Me.Controls.Add(Me.Guna2HtmlLabel7)
         Me.Controls.Add(Me.ViewHold)
         Me.Controls.Add(Me.Hold)
         Me.Controls.Add(Me.Panel1)
